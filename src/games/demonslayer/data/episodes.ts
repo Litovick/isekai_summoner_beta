@@ -1,16 +1,12 @@
 import type { Episode } from "../types";
 
-const BASE_URL =
-  (import.meta as { env?: { BASE_URL?: string } }).env?.BASE_URL ?? "/";
-const BG_ROOT = `${BASE_URL.replace(/\/$/, "")}/demonslayer/backgrounds`;
-
 export const EPISODES: Episode[] = [
   {
     id: 1,
     code: "EPISODE 01",
     title: "등나무 산의 최종 선별과 첫 임무",
     location: "후지카사네 산 · 등나무 숲의 관문",
-    background: `${BG_ROOT}/ep01.webp`,
+    stageTheme: "wisteria-mountain",
     sceneDescription:
       "보랏빛 등나무 꽃이 만개한 산길. 일곱 밤낮의 최종 선별을 돌파한 신입 대원 앞에 붉은 눈동자의 소녀를 감싼 탄지로와 차가운 물빛 하오리의 수주 기유가 서 있다.",
     featuredCast: ["tanjiro", "nezuko", "giyu"],
@@ -118,7 +114,7 @@ export const EPISODES: Episode[] = [
     code: "EPISODE 02",
     title: "나비저택의 기능회복훈련",
     location: "나비저택 · 도장 및 정원",
-    background: `${BG_ROOT}/ep02.webp`,
+    stageTheme: "butterfly-mansion",
     sceneDescription:
       "맑은 햇살과 약초 향기가 감도는 나비저택 정원. 컵을 쥔 젠이츠의 비명, 호통치는 이노스케, 그리고 온화한 미소 뒤에 날카로운 시선을 감춘 충주 시노부가 지켜보고 있다.",
     featuredCast: ["zenitsu", "inosuke", "shinobu"],
@@ -225,7 +221,7 @@ export const EPISODES: Episode[] = [
     code: "EPISODE 03",
     title: "무한열차의 악몽과 불꽃의 맹세",
     location: "무한열차 객실 및 선로 위",
-    background: `${BG_ROOT}/ep03.webp`,
+    stageTheme: "mugen-train",
     sceneDescription:
       "칠흑 같은 밤을 가르는 증기기관차. 붉고 황금빛으로 타오르는 하오리의 염주 렌고쿠 쿄쥬로가 객차의 승객들을 등 뒤에 세운 채 아카자의 기운을 노려본다.",
     featuredCast: ["rengoku", "tanjiro", "nezuko"],
@@ -328,7 +324,7 @@ export const EPISODES: Episode[] = [
     code: "EPISODE 04",
     title: "환락의 거리 잠입과 화려한 돌파",
     location: "요시와라 유곽 · 불타는 야경",
-    background: `${BG_ROOT}/ep04.webp`,
+    stageTheme: "entertainment-district",
     sceneDescription:
       "붉은 등불이 흩날리는 환락의 거리 지붕 위. 보석 머리장식을 빛내는 음주 우즈이 텐겐과 두려움에 떨면서도 번개의 각성을 앞둔 젠이츠, 쌍칼을 든 이노스케가 대치한다.",
     featuredCast: ["tengen", "zenitsu", "inosuke"],
@@ -430,7 +426,7 @@ export const EPISODES: Episode[] = [
     code: "EPISODE 05",
     title: "도공 마을의 안개와 사랑의 검",
     location: "도공 마을 · 숲과 대장간",
-    background: `${BG_ROOT}/ep05.webp`,
+    stageTheme: "swordsmith-village",
     sceneDescription:
       "깊은 안개가 자욱한 도공들의 은신 마을. 무표정하게 칼날의 각도를 가늠하는 하주 토키토 무이치로와, 연분홍 칼날의 연주 칸로지 미츠리가 마을을 위협하는 상현의 분신들을 막아선다.",
     featuredCast: ["muichiro", "mitsuri"],
@@ -527,7 +523,7 @@ export const EPISODES: Episode[] = [
     code: "EPISODE 06",
     title: "주(柱) 합동 강화 훈련의 시련",
     location: "교메이의 수련장 · 폭포와 바위",
-    background: `${BG_ROOT}/ep06.webp`,
+    stageTheme: "hashira-training",
     sceneDescription:
       "거대한 바위와 얼음 같은 폭포수 앞. 날카로운 눈빛의 사주 오바나이, 흉터 가득한 풍주 사네미, 그리고 염주를 쥐고 기도하는 최강의 암주 교메이가 신입 대원의 한계를 시험한다.",
     featuredCast: ["sanemi", "obanai", "gyomei"],
@@ -629,7 +625,7 @@ export const EPISODES: Episode[] = [
     code: "EPISODE 07",
     title: "혈귀의 왕, 키부츠지 무잔의 유혹과 습격",
     location: "우부야시키 저택 · 화염 속의 대면",
-    background: `${BG_ROOT}/ep07.webp`,
+    stageTheme: "muzan-ambush",
     sceneDescription:
       "붉은 달빛 아래 폭음과 함께 나타난 혈귀의 왕 키부츠지 무잔. 붉은 눈빛이 인간의 나약함을 비웃고, 탄지로와 기유가 칼날을 세운 채 앞을 가로막는다.",
     featuredCast: ["muzan", "tanjiro", "giyu"],
@@ -733,7 +729,7 @@ export const EPISODES: Episode[] = [
     code: "EPISODE 08",
     title: "무한성 최종 결전 - 새벽을 여는 일격",
     location: "무한성 · 뒤틀린 회랑과 최후의 아침",
-    background: `${BG_ROOT}/ep08.webp`,
+    stageTheme: "infinity-castle",
     sceneDescription:
       "끝없이 뒤틀리는 거대한 무한성, 그리고 마침내 동터 오는 새벽의 지평선. 9명의 주(柱)와 탄지로, 네즈코, 젠이츠, 이노스케까지 귀살대 전원이 칼날을 맞대어 최후의 일격을 준비한다.",
     featuredCast: ["tanjiro", "rengoku", "giyu", "sanemi"],

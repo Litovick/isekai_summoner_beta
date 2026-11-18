@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Flame, Play, Save, Shield, Sword } from "lucide-react";
+import { CHARACTERS } from "./data/characters";
 import { EPISODES } from "./data/episodes";
 import {
   advanceEpisodeOrResult,
@@ -13,8 +14,28 @@ import { HudBar } from "./components/HudBar";
 import { ResultScreen } from "./components/ResultScreen";
 import { SceneStage } from "./components/SceneStage";
 import { playChoiceImpactSound, playTone } from "./sound";
-import type { EndingId, GameState } from "./types";
+import type { CharacterId, EndingId, GameState } from "./types";
 import "./styles.css";
+
+function TitleCharacterLayer({
+  id,
+  slotClass,
+}: {
+  id: CharacterId;
+  slotClass: string;
+}) {
+  const [failed, setFailed] = useState(false);
+  const meta = CHARACTERS[id];
+  if (failed) return null;
+  return (
+    <img
+      src={meta.image}
+      alt={meta.name}
+      className={`ds-title-char ${slotClass}`}
+      onError={() => setFailed(true)}
+    />
+  );
+}
 
 const SAVE_KEY = "isekai:demonslayer:v1";
 const MUTE_KEY = "isekai:demonslayer:muted";
@@ -245,7 +266,23 @@ export function DemonSlayerGame({ onReturnWorldSelect }: DemonSlayerGameProps) {
 
       {state.phase === "title" && (
         <section className="ds-title-screen" aria-label="귀멸의 칼날 시작 화면">
+          {/* Dynamic Taisho Atmospheric Backdrop + Character Layering */}
+          <div className="ds-title-backdrop" aria-hidden="true">
+            <div className="ds-title-mist" />
+            <div className="ds-title-ichimatsu" />
+            <div className="ds-title-wisteria-glow" />
+            <div className="ds-title-characters">
+              <TitleCharacterLayer id="giyu" slotClass="ds-title-char--far-left" />
+              <TitleCharacterLayer id="shinobu" slotClass="ds-title-char--far-right" />
+              <TitleCharacterLayer id="rengoku" slotClass="ds-title-char--center" />
+              <TitleCharacterLayer id="tanjiro" slotClass="ds-title-char--left" />
+              <TitleCharacterLayer id="nezuko" slotClass="ds-title-char--right" />
+            </div>
+            <div className="ds-title-scrim" />
+          </div>
+
           <div className="ds-title-panel">
+            <div className="ds-title-haori-ribbon" aria-hidden="true" />
             <div className="ds-title-crest" aria-hidden="true">
               <svg viewBox="0 0 120 120" className="ds-crest-svg">
                 <defs>
@@ -260,7 +297,7 @@ export function DemonSlayerGame({ onReturnWorldSelect }: DemonSlayerGameProps) {
                   cy="60"
                   r="52"
                   fill="none"
-                  stroke="#6b21a8"
+                  stroke="#a855f7"
                   strokeWidth="2"
                   strokeDasharray="6 4"
                 />
@@ -268,11 +305,10 @@ export function DemonSlayerGame({ onReturnWorldSelect }: DemonSlayerGameProps) {
                   cx="60"
                   cy="60"
                   r="42"
-                  fill="rgba(107, 33, 168, 0.14)"
+                  fill="rgba(107, 33, 168, 0.16)"
                   stroke="#d4af37"
                   strokeWidth="1.5"
                 />
-                {/* Nichirin blade & tsuba */}
                 <path
                   d="M60 12 L65 70 L60 76 L55 70 Z"
                   fill="url(#dsBladeGrad)"
@@ -434,9 +470,8 @@ export function DemonSlayerGame({ onReturnWorldSelect }: DemonSlayerGameProps) {
           />
 
           <SceneStage
-            background={episode.background}
+            stageTheme={episode.stageTheme}
             location={episode.location}
-            sceneDescription={episode.sceneDescription}
             cast={episode.featuredCast}
             activeSpeaker={
               state.phase === "choice"

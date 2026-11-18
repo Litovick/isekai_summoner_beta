@@ -93,31 +93,153 @@
 
 /* Title Screen */
 .ds-title-screen {
+  position: relative;
   min-height: calc(100vh - 58px);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 28px 16px;
+  overflow: hidden;
+}
+
+.ds-title-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 20% 22%, rgba(126, 34, 206, 0.42), transparent 52%),
+    radial-gradient(circle at 80% 28%, rgba(185, 28, 28, 0.36), transparent 48%),
+    radial-gradient(circle at 50% 82%, rgba(212, 175, 55, 0.14), transparent 55%),
+    linear-gradient(170deg, #0b0914 0%, #150e21 55%, #16090e 100%);
+}
+
+.ds-title-mist {
+  position: absolute;
+  inset: -12%;
+  background:
+    radial-gradient(ellipse at 25% 72%, rgba(168, 85, 247, 0.24), transparent 58%),
+    radial-gradient(ellipse at 74% 66%, rgba(220, 38, 38, 0.24), transparent 58%),
+    radial-gradient(ellipse at 50% 35%, rgba(212, 175, 55, 0.12), transparent 62%);
+  animation: ds-mist-drift 14s ease-in-out infinite alternate;
+}
+
+.ds-title-ichimatsu {
+  position: absolute;
+  inset: 0;
+  opacity: 0.24;
+  background-image:
+    repeating-conic-gradient(#10b981 0% 25%, #07080d 0% 50%),
+    repeating-linear-gradient(60deg, rgba(236, 72, 153, 0.18) 0 1px, transparent 1px 26px);
+  background-size: 38px 38px, 100% 100%;
+  -webkit-mask-image: linear-gradient(135deg, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.35) 55%, rgba(0, 0, 0, 0.8) 100%);
+  mask-image: linear-gradient(135deg, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.35) 55%, rgba(0, 0, 0, 0.8) 100%);
+}
+
+.ds-title-wisteria-glow {
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  width: min(820px, 95vw);
+  height: 400px;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at center, rgba(192, 132, 252, 0.28), rgba(153, 27, 27, 0.14) 48%, transparent 72%);
+}
+
+.ds-title-characters {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.ds-title-char {
+  position: absolute;
+  bottom: 0;
+  object-fit: contain;
+  object-position: bottom center;
+  transition: transform 0.5s ease;
+}
+
+.ds-title-char--center {
+  height: min(86vh, 660px);
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0.34;
+  filter: drop-shadow(0 0 28px rgba(239, 68, 68, 0.45));
+}
+
+.ds-title-char--left {
+  height: min(78vh, 590px);
+  left: clamp(0px, 6vw, 120px);
+  opacity: 0.88;
+  filter: drop-shadow(0 12px 24px rgba(16, 185, 129, 0.3));
+}
+
+.ds-title-char--right {
+  height: min(74vh, 560px);
+  right: clamp(0px, 6vw, 120px);
+  opacity: 0.88;
+  filter: drop-shadow(0 12px 24px rgba(236, 72, 153, 0.32));
+}
+
+.ds-title-char--far-left {
+  height: min(72vh, 540px);
+  left: -24px;
+  opacity: 0.35;
+  filter: blur(0.4px) drop-shadow(0 0 18px rgba(37, 99, 235, 0.4));
+}
+
+.ds-title-char--far-right {
+  height: min(70vh, 520px);
+  right: -24px;
+  opacity: 0.35;
+  filter: blur(0.4px) drop-shadow(0 0 18px rgba(168, 85, 247, 0.4));
+}
+
+.ds-title-scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 48%, rgba(12, 10, 18, 0.52) 0%, rgba(10, 8, 15, 0.88) 72%),
+    linear-gradient(180deg, rgba(11, 9, 17, 0.3) 0%, rgba(11, 9, 17, 0.88) 100%);
 }
 
 .ds-title-panel {
-  width: min(680px, 100%);
+  width: min(640px, 100%);
   position: relative;
+  z-index: 2;
+  overflow: hidden;
   text-align: center;
-  padding: clamp(28px, 5vw, 52px) clamp(20px, 4vw, 44px);
-  border: 1px solid rgba(212, 175, 55, 0.38);
+  padding: clamp(28px, 5vw, 48px) clamp(20px, 4vw, 44px);
+  border: 1px solid rgba(212, 175, 55, 0.5);
   border-radius: 18px;
-  background:
-    linear-gradient(160deg, rgba(24, 18, 34, 0.94) 0%, rgba(15, 15, 19, 0.97) 100%);
+  background: linear-gradient(165deg, rgba(20, 15, 30, 0.88) 0%, rgba(12, 10, 17, 0.95) 100%);
   box-shadow:
-    0 24px 60px rgba(0, 0, 0, 0.65),
-    inset 0 0 0 1px rgba(107, 33, 168, 0.35);
+    0 24px 60px rgba(0, 0, 0, 0.78),
+    inset 0 0 0 1px rgba(168, 85, 247, 0.32);
+}
+
+.ds-title-haori-ribbon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 7px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    #10b981 0 18px,
+    #0f0f13 18px 36px
+  );
+  border-bottom: 1px solid rgba(212, 175, 55, 0.45);
 }
 
 .ds-title-crest {
-  width: 96px;
-  height: 96px;
-  margin: 0 auto 14px;
+  width: 92px;
+  height: 92px;
+  margin: 4px auto 12px;
 }
 
 .ds-crest-svg {
@@ -531,97 +653,308 @@
   position: absolute;
   inset: 0;
   z-index: 0;
+  overflow: hidden;
 }
 
-.ds-backdrop-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: brightness(0.72) contrast(1.04);
-}
-
-.ds-backdrop-fallback {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 18px 20px;
-  background:
-    radial-gradient(ellipse at 50% 25%, rgba(107, 33, 168, 0.38), transparent 62%),
-    radial-gradient(ellipse at 80% 80%, rgba(153, 27, 27, 0.28), transparent 55%),
-    linear-gradient(180deg, #1b1428 0%, #0f0f13 100%);
-}
-
-.ds-fallback-pattern {
+.ds-env-sky,
+.ds-env-pattern,
+.ds-env-mist,
+.ds-env-particles {
   position: absolute;
   inset: 0;
-  opacity: 0.16;
-  background-image:
-    repeating-linear-gradient(
-      60deg,
-      rgba(212, 175, 55, 0.25) 0,
-      rgba(212, 175, 55, 0.25) 1px,
-      transparent 1px,
-      transparent 28px
-    ),
-    repeating-linear-gradient(
-      -60deg,
-      rgba(168, 85, 247, 0.25) 0,
-      rgba(168, 85, 247, 0.25) 1px,
-      transparent 1px,
-      transparent 28px
-    );
-}
-
-.ds-fallback-card {
-  position: relative;
-  z-index: 1;
-  max-width: 680px;
-  text-align: center;
-  padding: 10px 16px;
-  border-radius: 10px;
-  background: rgba(15, 15, 19, 0.65);
-  border: 1px solid rgba(212, 175, 55, 0.24);
-}
-
-.ds-fallback-kicker {
-  display: block;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.2em;
-  color: var(--ds-gold);
-  margin-bottom: 4px;
-}
-
-.ds-fallback-desc {
-  font-size: 12.5px;
-  line-height: 1.55;
-  color: #dfd5ec;
+  pointer-events: none;
 }
 
 .ds-backdrop-vignette {
   position: absolute;
   inset: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(180deg, rgba(15, 15, 19, 0.35) 0%, transparent 32%, rgba(15, 15, 19, 0.85) 100%),
-    radial-gradient(ellipse at center, transparent 45%, rgba(10, 8, 15, 0.72) 100%);
-}
-
-.ds-wisteria-mist {
-  position: absolute;
-  inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: radial-gradient(circle at 50% 85%, rgba(168, 85, 247, 0.14), transparent 55%);
+  background:
+    linear-gradient(180deg, rgba(10, 8, 15, 0.3) 0%, transparent 32%, rgba(10, 8, 15, 0.85) 100%),
+    radial-gradient(ellipse at center, transparent 48%, rgba(8, 6, 12, 0.72) 100%);
+}
+
+/* Base Particle */
+.ds-particle {
+  position: absolute;
+  left: var(--p-x, 50%);
+  top: var(--p-y, 50%);
+  width: var(--p-size, 10px);
+  height: var(--p-size, 10px);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* EP 1: 등나무 산 (Night sky + glowing violet wisteria petals + blue night mist) */
+.ds-env--wisteria-mountain .ds-env-sky {
+  background:
+    radial-gradient(circle at 50% 18%, rgba(226, 232, 240, 0.22), transparent 28%),
+    radial-gradient(ellipse at 25% 30%, rgba(139, 92, 246, 0.34), transparent 55%),
+    radial-gradient(ellipse at 78% 24%, rgba(168, 85, 247, 0.3), transparent 52%),
+    linear-gradient(180deg, #0b1128 0%, #191538 56%, #0c0d1b 100%);
+}
+
+.ds-env--wisteria-mountain .ds-env-pattern {
+  background:
+    radial-gradient(ellipse at 18% 8%, rgba(192, 132, 252, 0.32) 0 18%, transparent 42%),
+    radial-gradient(ellipse at 82% 10%, rgba(168, 85, 247, 0.28) 0 16%, transparent 40%),
+    repeating-linear-gradient(176deg, rgba(192, 132, 252, 0.08) 0 2px, transparent 2px 34px);
+}
+
+.ds-env--wisteria-mountain .ds-env-mist {
+  background:
+    radial-gradient(ellipse at 30% 88%, rgba(56, 189, 248, 0.22), transparent 62%),
+    radial-gradient(ellipse at 75% 84%, rgba(168, 85, 247, 0.24), transparent 60%);
+  animation: ds-mist-drift 10s ease-in-out infinite alternate;
+}
+
+.ds-env--wisteria-mountain .ds-particle {
+  width: calc(var(--p-size) * 1.1);
+  height: calc(var(--p-size) * 1.45);
+  border-radius: 75% 15% 75% 15%;
+  background: linear-gradient(135deg, #f3e8ff 0%, #c084fc 55%, #7e22ce 100%);
+  box-shadow: 0 0 12px rgba(192, 132, 252, 0.75);
+  animation: ds-petal-fall var(--p-dur) linear var(--p-delay) infinite;
+}
+
+/* EP 2: 나비저택 (Warm twilight-lavender glow + floating light orbs + butterfly silhouettes) */
+.ds-env--butterfly-mansion .ds-env-sky {
+  background:
+    radial-gradient(circle at 76% 18%, rgba(253, 186, 116, 0.36), transparent 46%),
+    radial-gradient(ellipse at 26% 36%, rgba(192, 132, 252, 0.28), transparent 55%),
+    linear-gradient(168deg, #271a3e 0%, #3d2446 48%, #181326 100%);
+}
+
+.ds-env--butterfly-mansion .ds-env-pattern {
+  background:
+    linear-gradient(118deg, transparent 22%, rgba(253, 224, 171, 0.1) 30%, transparent 38%),
+    linear-gradient(118deg, transparent 54%, rgba(216, 180, 254, 0.1) 62%, transparent 70%);
+}
+
+.ds-env--butterfly-mansion .ds-env-mist {
+  background: radial-gradient(ellipse at 50% 85%, rgba(244, 114, 182, 0.18), transparent 65%);
+}
+
+.ds-env--butterfly-mansion .ds-particle--a {
+  border-radius: 999px;
+  background: radial-gradient(circle, #fef3c7 0%, rgba(251, 191, 36, 0.5) 55%, transparent 100%);
+  box-shadow: 0 0 14px rgba(253, 224, 171, 0.7);
+  animation: ds-ember-rise var(--p-dur) ease-in-out var(--p-delay) infinite;
+}
+
+.ds-env--butterfly-mansion .ds-particle--b {
+  width: calc(var(--p-size) * 1.5);
+  height: calc(var(--p-size) * 1.2);
+  background: linear-gradient(135deg, #e9d5ff 0%, #a855f7 100%);
+  clip-path: polygon(50% 42%, 14% 8%, 0% 44%, 34% 66%, 16% 94%, 50% 72%, 84% 94%, 66% 66%, 100% 44%, 86% 8%);
+  box-shadow: 0 0 10px rgba(216, 180, 254, 0.7);
+  animation: ds-butterfly-float var(--p-dur) ease-in-out var(--p-delay) infinite;
+}
+
+/* EP 3: 무한열차 (Speeding night train lines + rising Flame Hashira sparks) */
+.ds-env--mugen-train .ds-env-sky {
+  background:
+    radial-gradient(ellipse at 50% 95%, rgba(234, 88, 12, 0.56), transparent 58%),
+    radial-gradient(ellipse at 50% 78%, rgba(220, 38, 38, 0.36), transparent 62%),
+    linear-gradient(180deg, #07080f 0%, #140c16 56%, #240c0a 100%);
+}
+
+.ds-env--mugen-train .ds-env-pattern {
+  inset: 0 -260px 0 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent 0 60px,
+    rgba(255, 237, 213, 0.09) 60px 96px,
+    transparent 96px 190px
+  );
+  background-size: 260px 100%;
+  opacity: 0.6;
+  animation: ds-train-rush 1.4s linear infinite;
+}
+
+.ds-env--mugen-train .ds-env-mist {
+  background: linear-gradient(0deg, rgba(249, 115, 22, 0.34) 0%, rgba(185, 28, 28, 0.14) 38%, transparent 72%);
+  animation: ds-heat-flicker 2.2s ease-in-out infinite alternate;
+}
+
+.ds-env--mugen-train .ds-particle {
+  top: 92%;
+  width: calc(var(--p-size) * 0.72);
+  height: calc(var(--p-size) * 1.4);
+  border-radius: 50% 50% 50% 50% / 65% 65% 35% 35%;
+  background: linear-gradient(180deg, #fef08a 0%, #f97316 55%, #dc2626 100%);
+  box-shadow: 0 0 12px rgba(249, 115, 22, 0.9);
+  animation: ds-flame-surge calc(var(--p-dur) * 0.52) ease-out var(--p-delay) infinite;
+}
+
+/* EP 4: 환락의 거리 (Neon magenta + gold Yoshiwara lantern glow + twinkling firework sparks) */
+.ds-env--entertainment-district .ds-env-sky {
+  background:
+    radial-gradient(circle at 20% 24%, rgba(236, 72, 153, 0.44), transparent 45%),
+    radial-gradient(circle at 80% 28%, rgba(245, 158, 11, 0.4), transparent 46%),
+    radial-gradient(circle at 50% 78%, rgba(168, 85, 247, 0.32), transparent 55%),
+    linear-gradient(175deg, #1b0b24 0%, #2a0d29 52%, #130916 100%);
+}
+
+.ds-env--entertainment-district .ds-env-pattern {
+  opacity: 0.28;
+  background-image:
+    radial-gradient(circle at center, rgba(251, 191, 36, 0.45) 0 3px, transparent 4px),
+    radial-gradient(circle at center, rgba(244, 114, 182, 0.4) 0 2px, transparent 3px);
+  background-size: 64px 64px, 44px 44px;
+  background-position: 0 0, 24px 28px;
+}
+
+.ds-env--entertainment-district .ds-env-mist {
+  background:
+    radial-gradient(ellipse at 25% 75%, rgba(236, 72, 153, 0.24), transparent 58%),
+    radial-gradient(ellipse at 75% 75%, rgba(251, 191, 36, 0.22), transparent 58%);
+}
+
+.ds-env--entertainment-district .ds-particle--a {
+  clip-path: polygon(50% 0%, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0% 50%, 38% 38%);
+  background: #fde68a;
+  box-shadow: 0 0 14px rgba(251, 191, 36, 0.95);
+  animation: ds-sparkle-twinkle calc(var(--p-dur) * 0.55) ease-in-out var(--p-delay) infinite;
+}
+
+.ds-env--entertainment-district .ds-particle--b {
+  border-radius: 999px;
+  background: radial-gradient(circle, #fbcfe8 0%, #ec4899 65%, transparent 100%);
+  box-shadow: 0 0 12px rgba(236, 72, 153, 0.85);
+  animation: ds-ember-rise calc(var(--p-dur) * 0.8) ease-in-out var(--p-delay) infinite;
+}
+
+/* EP 5: 도공 마을 (Teal mist layer + cherry blossom radiance) */
+.ds-env--swordsmith-village .ds-env-sky {
+  background:
+    radial-gradient(circle at 22% 58%, rgba(45, 212, 191, 0.34), transparent 52%),
+    radial-gradient(circle at 78% 26%, rgba(244, 114, 182, 0.34), transparent 52%),
+    linear-gradient(170deg, #0d2229 0%, #172030 50%, #241323 100%);
+}
+
+.ds-env--swordsmith-village .ds-env-mist {
+  background:
+    radial-gradient(ellipse at 26% 72%, rgba(45, 212, 191, 0.28), transparent 62%),
+    radial-gradient(ellipse at 74% 38%, rgba(249, 168, 212, 0.24), transparent 60%);
+  animation: ds-mist-drift 9s ease-in-out infinite alternate;
+}
+
+.ds-env--swordsmith-village .ds-particle--a {
+  width: calc(var(--p-size) * 1.4);
+  height: calc(var(--p-size) * 1.4);
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(153, 246, 228, 0.72), transparent 72%);
+  filter: blur(1px);
+  animation: ds-mist-drift var(--p-dur) ease-in-out var(--p-delay) infinite alternate;
+}
+
+.ds-env--swordsmith-village .ds-particle--b {
+  width: calc(var(--p-size) * 1.15);
+  height: calc(var(--p-size) * 0.9);
+  border-radius: 80% 10% 80% 10%;
+  background: linear-gradient(135deg, #fce7f3 0%, #f472b6 100%);
+  box-shadow: 0 0 10px rgba(244, 114, 182, 0.65);
+  animation: ds-petal-fall var(--p-dur) linear var(--p-delay) infinite;
+}
+
+/* EP 6: 주 합동 강화 훈련 (Harsh wind streaks + heavy stone-earth umber) */
+.ds-env--hashira-training .ds-env-sky {
+  background:
+    radial-gradient(ellipse at 50% 22%, rgba(163, 230, 53, 0.12), transparent 48%),
+    radial-gradient(ellipse at 20% 80%, rgba(120, 113, 108, 0.35), transparent 56%),
+    linear-gradient(180deg, #1b1a17 0%, #27211b 55%, #12100e 100%);
+}
+
+.ds-env--hashira-training .ds-env-pattern {
+  inset: -120px -240px 0 0;
+  opacity: 0.32;
+  background-image: repeating-linear-gradient(
+    -24deg,
+    transparent 0 42px,
+    rgba(214, 211, 209, 0.14) 42px 44px,
+    transparent 44px 74px,
+    rgba(74, 222, 128, 0.14) 74px 76px
+  );
+  background-size: 240px 240px;
+  animation: ds-wind-sweep 1.8s linear infinite;
+}
+
+.ds-env--hashira-training .ds-env-mist {
+  background: linear-gradient(0deg, rgba(68, 64, 60, 0.48) 0%, transparent 52%);
+}
+
+.ds-env--hashira-training .ds-particle {
+  width: calc(var(--p-size) * 3.2);
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(134, 239, 172, 0.78), rgba(231, 229, 228, 0.85), transparent);
+  animation: ds-wind-streak calc(var(--p-dur) * 0.42) linear var(--p-delay) infinite;
+}
+
+/* EP 7: 무잔의 습격 (Pitch black void + pulsing crimson fog + blood vignette) */
+.ds-env--muzan-ambush .ds-env-sky {
+  background:
+    radial-gradient(circle at 50% 42%, rgba(185, 28, 28, 0.46), transparent 56%),
+    linear-gradient(180deg, #050306 0%, #140508 55%, #070305 100%);
+}
+
+.ds-env--muzan-ambush .ds-env-mist {
+  background:
+    radial-gradient(circle at 50% 46%, rgba(220, 38, 38, 0.38), transparent 58%),
+    radial-gradient(circle at center, transparent 42%, rgba(127, 29, 29, 0.55) 100%);
+  animation: ds-crimson-pulse 2.8s ease-in-out infinite alternate;
+}
+
+.ds-env--muzan-ambush .ds-particle {
+  border-radius: 999px;
+  background: radial-gradient(circle, #fca5a5 0%, #dc2626 60%, transparent 100%);
+  box-shadow: 0 0 12px rgba(220, 38, 38, 0.85);
+  animation: ds-ember-rise var(--p-dur) ease-in-out var(--p-delay) infinite;
+}
+
+/* EP 8: 무한성 최종 결전 (Geometric golden-russet lattice + surging crimson energy) */
+.ds-env--infinity-castle .ds-env-sky {
+  background:
+    radial-gradient(circle at 50% 50%, rgba(217, 119, 6, 0.32), transparent 56%),
+    radial-gradient(circle at 50% 50%, rgba(153, 27, 27, 0.4), transparent 76%),
+    linear-gradient(175deg, #16090b 0%, #24100d 50%, #0e0608 100%);
+}
+
+.ds-env--infinity-castle .ds-env-pattern {
+  opacity: 0.42;
+  background-image:
+    repeating-linear-gradient(30deg, rgba(212, 175, 55, 0.28) 0 1px, transparent 1px 38px),
+    repeating-linear-gradient(-30deg, rgba(212, 175, 55, 0.28) 0 1px, transparent 1px 38px),
+    repeating-linear-gradient(90deg, rgba(220, 38, 38, 0.2) 0 2px, transparent 2px 76px);
+  animation: ds-castle-shift 12s linear infinite;
+}
+
+.ds-env--infinity-castle .ds-env-mist {
+  background: radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.22), rgba(220, 38, 38, 0.24) 42%, transparent 72%);
+  animation: ds-crimson-pulse 2.4s ease-in-out infinite alternate;
+}
+
+.ds-env--infinity-castle .ds-particle--a {
+  border-radius: 2px;
+  border: 1px solid rgba(253, 224, 71, 0.8);
+  background: rgba(245, 158, 11, 0.35);
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.85);
+  animation: ds-sparkle-twinkle calc(var(--p-dur) * 0.65) ease-in-out var(--p-delay) infinite;
+}
+
+.ds-env--infinity-castle .ds-particle--b {
+  border-radius: 999px;
+  background: radial-gradient(circle, #fde68a 0%, #ef4444 65%, transparent 100%);
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.85);
+  animation: ds-ember-rise calc(var(--p-dur) * 0.75) ease-out var(--p-delay) infinite;
 }
 
 /* Transparent Character Standees (no square card cages!) */
 .ds-cast {
   position: absolute;
-  inset: 58px 16px 0;
+  inset: 14px 16px 0;
   z-index: 2;
   display: flex;
   align-items: flex-end;
@@ -994,45 +1327,179 @@
 }
 
 .ds-ending-visual {
+  position: relative;
   margin-top: 18px;
   border-radius: 14px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  aspect-ratio: 16 / 7;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  height: clamp(240px, 34vw, 350px);
   background: #0d0c12;
 }
 
-.ds-ending-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
+.ds-ending-beams,
+.ds-ending-atmosphere,
+.ds-ending-haori-frame,
+.ds-ending-scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
 }
 
-.ds-ending-fallback {
+.ds-ending-theme--dawn-hashira {
+  background:
+    radial-gradient(circle at 50% 82%, rgba(251, 191, 36, 0.52), transparent 54%),
+    radial-gradient(circle at 20% 25%, rgba(168, 85, 247, 0.32), transparent 52%),
+    linear-gradient(180deg, #1b1432 0%, #3b1c2a 48%, #7c2d12 100%);
+}
+
+.ds-ending-theme--dawn-hashira .ds-ending-beams {
+  background: repeating-conic-gradient(
+    from -35deg at 50% 92%,
+    rgba(254, 240, 138, 0.18) 0deg 8deg,
+    transparent 8deg 22deg
+  );
+}
+
+.ds-ending-theme--crimson-bonds {
+  background:
+    radial-gradient(circle at 50% 72%, rgba(244, 114, 182, 0.42), transparent 52%),
+    radial-gradient(circle at 50% 30%, rgba(251, 146, 60, 0.32), transparent 58%),
+    linear-gradient(180deg, #28142b 0%, #441928 52%, #1b111c 100%);
+}
+
+.ds-ending-theme--crimson-bonds .ds-ending-beams {
+  background: radial-gradient(circle at 50% 60%, rgba(253, 224, 171, 0.25), transparent 62%);
+}
+
+.ds-ending-theme--solitary-blade {
+  background:
+    radial-gradient(circle at 50% 24%, rgba(147, 197, 253, 0.32), transparent 44%),
+    linear-gradient(180deg, #0a1222 0%, #141b2e 58%, #090b12 100%);
+}
+
+.ds-ending-theme--solitary-blade .ds-ending-beams {
+  background: linear-gradient(115deg, transparent 35%, rgba(191, 219, 254, 0.14) 48%, transparent 60%);
+}
+
+.ds-ending-theme--survivor-veranda {
+  background:
+    radial-gradient(circle at 24% 25%, rgba(168, 85, 247, 0.34), transparent 52%),
+    radial-gradient(circle at 76% 72%, rgba(251, 191, 36, 0.25), transparent 52%),
+    linear-gradient(180deg, #1b152a 0%, #241932 54%, #110e17 100%);
+}
+
+.ds-ending-haori-frame {
+  opacity: 0.14;
+  background-image: repeating-conic-gradient(#d4af37 0% 25%, transparent 0% 50%);
+  background-size: 28px 28px;
+  -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.65) 0%, transparent 45%);
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.65) 0%, transparent 45%);
+}
+
+.ds-ending-ensemble {
   position: relative;
-  width: 100%;
+  z-index: 2;
   height: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
-  padding: 20px;
-  text-align: center;
-  background:
-    radial-gradient(circle at 50% 40%, rgba(107, 33, 168, 0.34), transparent 65%),
-    linear-gradient(135deg, #171222 0%, #0f0f13 100%);
+  padding: 18px 16px 0;
+  gap: clamp(2px, 1.4vw, 14px);
 }
 
-.ds-ending-fallback-inner {
-  position: relative;
+.ds-ending-member {
+  --char-accent: #d4af37;
+  height: 86%;
+  width: clamp(72px, 16vw, 175px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.ds-ending-member--lead {
+  z-index: 3;
+  height: 98%;
+  filter: drop-shadow(0 0 22px color-mix(in srgb, var(--char-accent) 55%, rgba(255, 240, 200, 0.4)));
+}
+
+.ds-ending-member--d1 {
+  z-index: 2;
+  height: 88%;
+  opacity: 0.94;
+}
+
+.ds-ending-member--d2 {
   z-index: 1;
-  max-width: 60ch;
+  height: 78%;
+  opacity: 0.84;
 }
 
-.ds-ending-fallback-inner p {
-  font-size: 14px;
-  line-height: 1.65;
-  color: #e4dcf0;
+.ds-ending-member-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.8));
+}
+
+.ds-ending-member-seal {
+  width: 86%;
+  margin-bottom: 58px;
+  padding: 13px 8px;
+  text-align: center;
+  border-radius: 999px 999px 10px 10px;
+  border-top: 2px solid var(--char-accent);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--char-accent) 28%, rgba(16, 14, 24, 0.92)), rgba(12, 10, 16, 0.94));
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.65);
+}
+
+.ds-ending-member-seal span {
+  display: block;
+  font-size: 9.5px;
+  color: var(--ds-muted);
+}
+
+.ds-ending-member-seal strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--ds-cream);
+  word-break: keep-all;
+}
+
+.ds-ending-scrim {
+  z-index: 4;
+  background: linear-gradient(180deg, transparent 44%, rgba(11, 9, 16, 0.92) 100%);
+}
+
+.ds-ending-banner-mark {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 12px;
+  z-index: 5;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ds-ending-banner-mark span {
+  font-size: 10.5px;
+  font-weight: 900;
+  letter-spacing: 0.24em;
+  color: var(--ds-gold);
+}
+
+.ds-ending-banner-mark strong {
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: 900;
+  font-size: clamp(14px, 1.9vw, 18px);
+  letter-spacing: -0.01em;
+  color: #fff8ee;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95);
 }
 
 .ds-ending-desc {
@@ -1481,6 +1948,148 @@
   }
 }
 
+@keyframes ds-mist-drift {
+  0% {
+    transform: translate3d(-2%, 0, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(3%, -2%, 0) scale(1.06);
+  }
+}
+
+@keyframes ds-petal-fall {
+  0% {
+    opacity: 0;
+    transform: translate3d(-12px, -24px, 0) rotate(var(--p-rot, 15deg));
+  }
+  15% {
+    opacity: 0.88;
+  }
+  85% {
+    opacity: 0.78;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(48px, 140px, 0) rotate(calc(var(--p-rot, 15deg) + 140deg));
+  }
+}
+
+@keyframes ds-butterfly-float {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: translate3d(0, 14px, 0) scale(0.92) rotate(-8deg);
+  }
+  50% {
+    opacity: 0.88;
+    transform: translate3d(18px, -28px, 0) scale(1.08) rotate(10deg);
+  }
+}
+
+@keyframes ds-ember-rise {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 26px, 0) scale(0.7);
+  }
+  25% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(14px, -96px, 0) scale(1.15);
+  }
+}
+
+@keyframes ds-flame-surge {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0) scaleY(0.8);
+  }
+  20% {
+    opacity: 0.95;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(-16px, -260px, 0) scaleY(1.45);
+  }
+}
+
+@keyframes ds-train-rush {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-260px, 0, 0);
+  }
+}
+
+@keyframes ds-heat-flicker {
+  0% {
+    opacity: 0.78;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes ds-sparkle-twinkle {
+  0%,
+  100% {
+    opacity: 0.15;
+    transform: scale(0.6) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.25) rotate(45deg);
+  }
+}
+
+@keyframes ds-wind-sweep {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-240px, 120px, 0);
+  }
+}
+
+@keyframes ds-wind-streak {
+  0% {
+    opacity: 0;
+    transform: translate3d(80px, -24px, 0) rotate(-22deg);
+  }
+  25% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(-180px, 68px, 0) rotate(-22deg);
+  }
+}
+
+@keyframes ds-crimson-pulse {
+  0% {
+    opacity: 0.65;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes ds-castle-shift {
+  0% {
+    transform: scale(1.04) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: scale(1.08) translate3d(-14px, 10px, 0);
+  }
+  100% {
+    transform: scale(1.04) translate3d(0, 0, 0);
+  }
+}
+
 /* Mobile Responsive Reflow */
 @media (max-width: 760px) {
   .ds-prologue-stats,
@@ -1529,7 +2138,22 @@
     font-size: 11.5px;
   }
 
-  /* Keep character portraits cleanly below fallback scene text and above dialogue/choices on mobile */
+  /* Keep character portraits centered cleanly on mobile */
+  .ds-title-char--far-left,
+  .ds-title-char--far-right {
+    display: none;
+  }
+
+  .ds-title-char--left {
+    left: -18px;
+    height: 52vh;
+  }
+
+  .ds-title-char--right {
+    right: -18px;
+    height: 50vh;
+  }
+
   .ds-stage {
     flex: none;
     height: 292px;
@@ -1541,26 +2165,13 @@
     min-height: 274px;
   }
 
-  .ds-backdrop-fallback {
-    padding: 10px 10px;
-  }
-
-  .ds-fallback-card {
-    padding: 7px 10px;
-  }
-
-  .ds-fallback-desc {
-    font-size: 11px;
-    line-height: 1.42;
-  }
-
   .ds-cast {
-    inset: 112px 6px 0;
+    inset: 14px 6px 0;
     gap: 5px;
   }
 
   .ds-character-tanzaku {
-    min-height: 45%;
+    min-height: 52%;
     padding: 10px 6px;
   }
 
@@ -1583,7 +2194,11 @@
   }
 
   .ds-ending-visual {
-    aspect-ratio: 16 / 9;
+    height: 210px;
+  }
+
+  .ds-ending-member--d2 {
+    display: none;
   }
 
   .ds-dialogue-card {

@@ -4,6 +4,7 @@ import { CHARACTERS } from "../data/characters";
 import { ENDINGS, ENDING_ORDER } from "../data/endings";
 import type {
   CharacterEvaluation,
+  CharacterId,
   EndingId,
   EndingInfo,
   Stats,
@@ -18,6 +19,48 @@ interface ResultScreenProps {
   onReturnWorldSelect: () => void;
 }
 
+function EndingShowcaseMember({
+  id,
+  slotIndex,
+  total,
+}: {
+  id: CharacterId;
+  slotIndex: number;
+  total: number;
+}) {
+  const meta = CHARACTERS[id];
+  const [imgError, setImgError] = useState(false);
+
+  useEffect(() => {
+    setImgError(false);
+  }, [meta.image]);
+
+  const centerIdx = Math.floor(total / 2);
+  const dist = Math.abs(slotIndex - centerIdx);
+  const isCenter = dist === 0;
+
+  return (
+    <div
+      className={`ds-ending-member ${isCenter ? "ds-ending-member--lead" : ""} ds-ending-member--d${dist}`}
+      style={{ "--char-accent": meta.accentColor } as React.CSSProperties}
+    >
+      {!imgError ? (
+        <img
+          src={meta.image}
+          alt={meta.name}
+          className="ds-ending-member-img"
+          onError={() => setImgError(true)}
+        />
+      ) : (
+        <div className="ds-ending-member-seal" aria-label={meta.name}>
+          <span>{meta.title}</span>
+          <strong>{meta.name}</strong>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function ResultScreen({
   ending,
   stats,
@@ -26,11 +69,9 @@ export function ResultScreen({
   onRestart,
   onReturnWorldSelect,
 }: ResultScreenProps) {
-  const [endingImgError, setEndingImgError] = useState(false);
   const [quoteCharError, setQuoteCharError] = useState(false);
 
   useEffect(() => {
-    setEndingImgError(false);
     setQuoteCharError(false);
   }, [ending.id]);
 
@@ -48,26 +89,28 @@ export function ResultScreen({
         <h1 className="ds-ending-title">{ending.title}</h1>
         <p className="ds-ending-subtitle">{ending.subtitle}</p>
 
-        {/* Ending Artwork with safe text fallback */}
-        <div className="ds-ending-visual">
-          {!endingImgError ? (
-            <img
-              src={ending.image}
-              alt={ending.title}
-              className="ds-ending-img"
-              onError={() => setEndingImgError(true)}
-            />
-          ) : (
-            <div className="ds-ending-fallback">
-              <div className="ds-fallback-pattern" aria-hidden="true" />
-              <div className="ds-ending-fallback-inner">
-                <span className="ds-fallback-kicker">
-                  ENDING SCENE · {ending.id.toUpperCase()}
-                </span>
-                <p>{ending.fallbackDescription}</p>
-              </div>
-            </div>
-          )}
+        {/* Pure CSS Ending Stage + Layered Character PNG Ensemble */}
+        <div className={`ds-ending-visual ds-ending-theme--${ending.theme}`}>
+          <div className="ds-ending-beams" aria-hidden="true" />
+          <div className="ds-ending-atmosphere" aria-hidden="true" />
+          <div className="ds-ending-haori-frame" aria-hidden="true" />
+
+          <div className="ds-ending-ensemble" aria-label="엔딩 주요 인물">
+            {ending.showcaseCast.map((charId, idx) => (
+              <EndingShowcaseMember
+                key={charId}
+                id={charId}
+                slotIndex={idx}
+                total={ending.showcaseCast.length}
+              />
+            ))}
+          </div>
+
+          <div className="ds-ending-scrim" aria-hidden="true" />
+          <div className="ds-ending-banner-mark" aria-hidden="true">
+            <span>ENDING 0{ending.priority}</span>
+            <strong>{ending.title}</strong>
+          </div>
         </div>
 
         <p className="ds-ending-desc">{ending.description}</p>

@@ -66,12 +66,28 @@ export interface EpisodeChoice {
   reactions: DialogueLine[];
 }
 
+export type EpisodeStageTheme =
+  | "wisteria-mountain"
+  | "butterfly-mansion"
+  | "mugen-train"
+  | "entertainment-district"
+  | "swordsmith-village"
+  | "hashira-training"
+  | "muzan-ambush"
+  | "infinity-castle";
+
+export type EndingThemeId =
+  | "dawn-hashira"
+  | "crimson-bonds"
+  | "solitary-blade"
+  | "survivor-veranda";
+
 export interface Episode {
   id: number;
   code: string;
   title: string;
   location: string;
-  background: string;
+  stageTheme: EpisodeStageTheme;
   sceneDescription: string;
   featuredCast: CharacterId[];
   lines: DialogueLine[];
@@ -87,8 +103,8 @@ export interface EndingInfo {
   title: string;
   subtitle: string;
   conditionLabel: string;
-  image: string;
-  fallbackDescription: string;
+  theme: EndingThemeId;
+  showcaseCast: CharacterId[];
   description: string;
   speaker: CorpsCharacterId;
   quote: string;

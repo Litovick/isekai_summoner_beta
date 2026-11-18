@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import { CHARACTERS } from "../data/characters";
-import type { CharacterId } from "../types";
+import type { CharacterId, EpisodeStageTheme } from "../types";
 
 interface SceneStageProps {
-  background: string;
+  stageTheme: EpisodeStageTheme;
   location: string;
-  sceneDescription: string;
   cast: CharacterId[];
   activeSpeaker: CharacterId | "narrator";
   mood?: "neutral" | "good" | "bad";
@@ -13,6 +12,21 @@ interface SceneStageProps {
   isImpacting?: boolean;
   impactTick?: number;
 }
+
+const PARTICLE_SEEDS = [
+  { x: "7%", y: "18%", delay: "0s", dur: "6.4s", size: "11px", rot: "18deg" },
+  { x: "16%", y: "62%", delay: "-1.3s", dur: "5.8s", size: "9px", rot: "-24deg" },
+  { x: "24%", y: "34%", delay: "-2.7s", dur: "7.2s", size: "13px", rot: "42deg" },
+  { x: "35%", y: "76%", delay: "-0.8s", dur: "5.2s", size: "10px", rot: "-15deg" },
+  { x: "45%", y: "22%", delay: "-3.4s", dur: "6.8s", size: "12px", rot: "30deg" },
+  { x: "56%", y: "68%", delay: "-1.9s", dur: "5.6s", size: "9px", rot: "-38deg" },
+  { x: "66%", y: "28%", delay: "-4.1s", dur: "7.0s", size: "14px", rot: "25deg" },
+  { x: "75%", y: "74%", delay: "-2.2s", dur: "5.4s", size: "10px", rot: "-12deg" },
+  { x: "84%", y: "40%", delay: "-0.5s", dur: "6.3s", size: "12px", rot: "48deg" },
+  { x: "92%", y: "58%", delay: "-3.0s", dur: "5.9s", size: "9px", rot: "-30deg" },
+  { x: "51%", y: "86%", delay: "-1.1s", dur: "6.1s", size: "11px", rot: "12deg" },
+  { x: "12%", y: "84%", delay: "-2.6s", dur: "6.6s", size: "10px", rot: "-42deg" },
+];
 
 function CharacterStandee({
   id,
@@ -63,9 +77,8 @@ function CharacterStandee({
 }
 
 export function SceneStage({
-  background,
+  stageTheme,
   location,
-  sceneDescription,
   cast,
   activeSpeaker,
   mood = "neutral",
@@ -73,12 +86,6 @@ export function SceneStage({
   isImpacting = false,
   impactTick = 0,
 }: SceneStageProps) {
-  const [bgError, setBgError] = useState(false);
-
-  useEffect(() => {
-    setBgError(false);
-  }, [background]);
-
   // Guarantee the active speaking character is always visible on stage
   const visibleCast: CharacterId[] = (() => {
     const base = [...cast];
@@ -92,39 +99,46 @@ export function SceneStage({
     return base.slice(0, 4);
   })();
 
-  const shouldShake = isImpacting;
-
   return (
     <div
       className={`ds-stage ${isChoicePhase ? "ds-stage--choice" : ""} ${
-        shouldShake ? "ds-stage--shake" : ""
+        isImpacting ? "ds-stage--shake" : ""
       }`}
+      data-stage-theme={stageTheme}
       data-impacting={isImpacting ? "true" : "false"}
       data-impact-tick={impactTick}
     >
-      {/* Background layer with safe fallback */}
-      <div className="ds-backdrop">
-        {!bgError ? (
-          <img
-            src={background}
-            alt={location}
-            className="ds-backdrop-img"
-            onError={() => setBgError(true)}
-          />
-        ) : (
-          <div className="ds-backdrop-fallback" role="region" aria-label="장면 묘사">
-            <div className="ds-fallback-pattern" aria-hidden="true" />
-            <div className="ds-fallback-card">
-              <span className="ds-fallback-kicker">SCENE ARCHIVE · {location}</span>
-              <p className="ds-fallback-desc">{sceneDescription}</p>
-            </div>
-          </div>
-        )}
+      {/* Pure CSS Atmospheric Episode Stage Backdrop */}
+      <div
+        className={`ds-backdrop ds-env ds-env--${stageTheme}`}
+        role="region"
+        aria-label={location}
+      >
+        <div className="ds-env-sky" aria-hidden="true" />
+        <div className="ds-env-pattern" aria-hidden="true" />
+        <div className="ds-env-mist" aria-hidden="true" />
+
+        <div className="ds-env-particles" aria-hidden="true">
+          {PARTICLE_SEEDS.map((p, idx) => (
+            <span
+              key={idx}
+              className={`ds-particle ${idx % 2 === 0 ? "ds-particle--a" : "ds-particle--b"}`}
+              style={
+                {
+                  "--p-x": p.x,
+                  "--p-y": p.y,
+                  "--p-delay": p.delay,
+                  "--p-dur": p.dur,
+                  "--p-size": p.size,
+                  "--p-rot": p.rot,
+                } as React.CSSProperties
+              }
+            />
+          ))}
+        </div>
+
         <div className="ds-backdrop-vignette" aria-hidden="true" />
       </div>
-
-      {/* Subtle wisteria & nichirin ember atmosphere */}
-      <div className="ds-wisteria-mist" aria-hidden="true" />
 
       {/* Transparent PNG Character Stage */}
       <div className="ds-cast" aria-label="등장인물 무대">
