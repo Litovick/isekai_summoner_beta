@@ -207,7 +207,7 @@ export function DemonSlayerGame({ onReturnWorldSelect }: DemonSlayerGameProps) {
       const sum =
         picked.effects.breathing + picked.effects.trust + picked.effects.resolve;
       const mood = sum >= 10 ? "good" : picked.effects.trust < 0 ? "bad" : "neutral";
-      playChoiceImpactSound(mood, muted);
+      playChoiceImpactSound(mood, muted, choiceIndex);
       setFxMood(mood);
       setImpactTick((tick) => tick + 1);
       setIsImpacting(true);
@@ -217,7 +217,7 @@ export function DemonSlayerGame({ onReturnWorldSelect }: DemonSlayerGameProps) {
       impactTimerRef.current = window.setTimeout(() => {
         setIsImpacting(false);
         impactTimerRef.current = null;
-      }, 450);
+      }, 440);
       setState((prev) => applyChoice(prev, choiceIndex));
     },
     [state.phase, episode, muted],

@@ -1,120 +1,8 @@
-import { useState } from "react";
 import { useGame } from "@/contexts/GameContext";
 import { ANIME_WORLDS } from "@/data/animeWorlds";
 import { AnimeWorld } from "@/data/types";
 import { Lock, Sparkles, ArrowLeft, Play } from "lucide-react";
 import Starfield from "./Starfield";
-
-const DS_CHAR_BASE = `${(import.meta.env.BASE_URL || "/").replace(/\/$/, "")}/demonslayer/characters`;
-
-function SafeCoverSprite({
-  src,
-  alt,
-  className,
-}: {
-  src: string;
-  alt: string;
-  className: string;
-}) {
-  const [hidden, setHidden] = useState(false);
-  if (hidden) return null;
-  return (
-    <img
-      src={src}
-      alt={alt}
-      loading="lazy"
-      className={className}
-      onError={() => setHidden(true)}
-    />
-  );
-}
-
-function DemonSlayerWorldCover() {
-  return (
-    <div
-      className="relative w-full h-full overflow-hidden select-none"
-      style={{
-        background:
-          "radial-gradient(circle at 22% 20%, rgba(126, 34, 206, 0.55), transparent 56%), radial-gradient(circle at 82% 25%, rgba(185, 28, 28, 0.52), transparent 52%), radial-gradient(circle at 50% 82%, rgba(212, 175, 55, 0.22), transparent 55%), linear-gradient(165deg, #0d0a16 0%, #191026 52%, #1a0b12 100%)",
-      }}
-    >
-      {/* Tanjiro emerald-black Ichimatsu haori check pattern */}
-      <div
-        className="absolute inset-0 opacity-20"
-        style={{
-          backgroundImage:
-            "repeating-conic-gradient(#10b981 0% 25%, #07080c 0% 50%)",
-          backgroundSize: "24px 24px",
-          maskImage: "linear-gradient(155deg, rgba(0,0,0,0.85) 0%, transparent 68%)",
-          WebkitMaskImage:
-            "linear-gradient(155deg, rgba(0,0,0,0.85) 0%, transparent 68%)",
-        }}
-      />
-
-      {/* Wisteria night mist & moon crest */}
-      <div
-        className="absolute top-6 left-1/2 -translate-x-1/2 w-32 h-32 rounded-full opacity-50 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(216, 180, 254, 0.72) 0%, rgba(153, 27, 27, 0.42) 56%, transparent 74%)",
-        }}
-      />
-
-      {/* Nichirin blade & wisteria seal backdrop */}
-      <svg
-        viewBox="0 0 180 220"
-        className="absolute inset-x-0 top-5 mx-auto w-[68%] h-auto opacity-80 pointer-events-none drop-shadow-[0_0_16px_rgba(212,175,55,0.4)]"
-        aria-hidden="true"
-      >
-        <defs>
-          <linearGradient id="wsDsBlade" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#fdf8ef" />
-            <stop offset="55%" stopColor="#c084fc" />
-            <stop offset="100%" stopColor="#dc2626" />
-          </linearGradient>
-        </defs>
-        <circle cx="90" cy="94" r="56" fill="none" stroke="rgba(212,175,55,0.55)" strokeWidth="1.5" strokeDasharray="5 4" />
-        <circle cx="90" cy="94" r="44" fill="rgba(22,12,34,0.45)" stroke="rgba(192,132,252,0.55)" strokeWidth="1.2" />
-        <path d="M90 22 L97 112 L90 120 L83 112 Z" fill="url(#wsDsBlade)" />
-        <ellipse cx="90" cy="120" rx="22" ry="6.5" fill="#120d1a" stroke="#d4af37" strokeWidth="2" />
-        <rect x="86" y="126" width="8" height="34" rx="2.5" fill="#991b1b" stroke="#d4af37" strokeWidth="1.2" />
-      </svg>
-
-      {/* Layered transparent character PNGs */}
-      <div className="absolute inset-x-0 bottom-0 top-6 pointer-events-none transition-transform duration-500 group-hover:scale-105">
-        <SafeCoverSprite
-          src={`${DS_CHAR_BASE}/rengoku.png`}
-          alt="렌고쿠 쿄쥬로"
-          className="absolute bottom-2 left-1/2 -translate-x-1/2 h-[88%] w-auto max-w-none object-contain object-bottom opacity-85 drop-shadow-[0_0_14px_rgba(239,68,68,0.55)]"
-        />
-        <SafeCoverSprite
-          src={`${DS_CHAR_BASE}/tanjiro.png`}
-          alt="카마도 탄지로"
-          className="absolute -bottom-1 -left-4 h-[78%] w-auto max-w-none object-contain object-bottom drop-shadow-[0_6px_12px_rgba(0,0,0,0.85)]"
-        />
-        <SafeCoverSprite
-          src={`${DS_CHAR_BASE}/nezuko.png`}
-          alt="카마도 네즈코"
-          className="absolute -bottom-1 -right-4 h-[74%] w-auto max-w-none object-contain object-bottom drop-shadow-[0_6px_12px_rgba(0,0,0,0.85)]"
-        />
-      </div>
-
-      {/* Taisho typography seal & scrim */}
-      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent" />
-      <div className="absolute inset-x-3 bottom-3 text-center pointer-events-none">
-        <p className="text-[9px] font-black tracking-[0.28em] text-amber-300/90 drop-shadow">
-          TAISHO · 惡鬼滅殺
-        </p>
-        <p
-          className="mt-0.5 text-lg sm:text-xl font-black tracking-tight text-amber-50 drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]"
-          style={{ fontFamily: '"Black Han Sans", "Noto Sans KR", sans-serif' }}
-        >
-          귀멸의 칼날
-        </p>
-      </div>
-    </div>
-  );
-}
 
 export default function WorldSelectScreen() {
   const { startAnime, showLockedNotice, openTitle } = useGame();
@@ -207,24 +95,18 @@ export default function WorldSelectScreen() {
                 <div className="relative z-10 w-full flex flex-col h-full rounded-2xl overflow-hidden bg-slate-950/80">
                   {/* Cover image area */}
                   <div className="relative aspect-[3/4] w-full overflow-hidden bg-slate-900">
-                    {w.id === "demonslayer" ? (
-                      <DemonSlayerWorldCover />
-                    ) : (
-                      <>
-                        <img
-                          src={w.coverImage}
-                          alt={w.title}
-                          loading="lazy"
-                          className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 ${
-                            available
-                              ? "filter brightness-105"
-                              : "filter brightness-50 saturate-50"
-                          }`}
-                        />
-                        {/* Gradient shade */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
-                      </>
-                    )}
+                    <img
+                      src={w.coverImage}
+                      alt={w.title}
+                      loading="lazy"
+                      className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 ${
+                        available
+                          ? "filter brightness-105"
+                          : "filter brightness-50 saturate-50"
+                      }`}
+                    />
+                    {/* Gradient shade */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
 
                     {/* Number chip */}
                       <span className="absolute top-2 left-2 px-2 py-0.5 rounded-full text-[10px] font-black tracking-wider bg-black/75 backdrop-blur-sm border border-white/20 text-violet-100">

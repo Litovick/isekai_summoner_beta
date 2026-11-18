@@ -9,6 +9,7 @@ import type {
   EndingInfo,
   Stats,
 } from "../types";
+import { EndingBackdropArt } from "./StageArtwork";
 
 interface ResultScreenProps {
   ending: EndingInfo;
@@ -89,8 +90,9 @@ export function ResultScreen({
         <h1 className="ds-ending-title">{ending.title}</h1>
         <p className="ds-ending-subtitle">{ending.subtitle}</p>
 
-        {/* Pure CSS Ending Stage + Layered Character PNG Ensemble */}
+        {/* Handcrafted Ending Scene Illustration + Layered Character PNG Ensemble */}
         <div className={`ds-ending-visual ds-ending-theme--${ending.theme}`}>
+          <EndingBackdropArt theme={ending.theme} />
           <div className="ds-ending-beams" aria-hidden="true" />
           <div className="ds-ending-atmosphere" aria-hidden="true" />
           <div className="ds-ending-haori-frame" aria-hidden="true" />

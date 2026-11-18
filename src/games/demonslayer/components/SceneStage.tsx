@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { CHARACTERS } from "../data/characters";
 import type { CharacterId, EpisodeStageTheme } from "../types";
+import { EpisodeBackdropArt } from "./StageArtwork";
 
 interface SceneStageProps {
   stageTheme: EpisodeStageTheme;
@@ -108,13 +109,14 @@ export function SceneStage({
       data-impacting={isImpacting ? "true" : "false"}
       data-impact-tick={impactTick}
     >
-      {/* Pure CSS Atmospheric Episode Stage Backdrop */}
+      {/* Handcrafted Taisho Episode Stage Backdrop + Atmospheric Particles */}
       <div
         className={`ds-backdrop ds-env ds-env--${stageTheme}`}
         role="region"
         aria-label={location}
       >
         <div className="ds-env-sky" aria-hidden="true" />
+        <EpisodeBackdropArt stageTheme={stageTheme} />
         <div className="ds-env-pattern" aria-hidden="true" />
         <div className="ds-env-mist" aria-hidden="true" />
 
@@ -155,20 +157,24 @@ export function SceneStage({
       {isImpacting && impactTick > 0 && (
         <div
           key={impactTick}
-          className={`ds-impact-fx ds-impact-fx--${mood}`}
+          className={`ds-impact-fx ds-impact-fx--${mood} ${
+            impactTick % 2 === 0 ? "ds-impact-fx--reverse" : ""
+          }`}
           aria-hidden="true"
         >
           <div className="ds-impact-flash" />
           <svg viewBox="0 0 600 300" className="ds-impact-slash" preserveAspectRatio="none">
             <path
+              className="ds-slash-trail"
               d="M40 250 Q300 130 565 45"
               fill="none"
               stroke="currentColor"
-              strokeWidth="9"
+              strokeWidth="10"
               strokeLinecap="round"
             />
             <path
-              d="M70 265 Q310 150 545 75"
+              className="ds-slash-core"
+              d="M62 256 Q306 140 554 62"
               fill="none"
               stroke="#fff8ee"
               strokeWidth="3.5"

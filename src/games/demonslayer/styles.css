@@ -167,44 +167,44 @@
   height: min(86vh, 660px);
   left: 50%;
   transform: translateX(-50%);
-  opacity: 0.34;
-  filter: drop-shadow(0 0 28px rgba(239, 68, 68, 0.45));
+  opacity: 0.42;
+  filter: drop-shadow(0 0 28px rgba(239, 68, 68, 0.5));
 }
 
 .ds-title-char--left {
-  height: min(78vh, 590px);
-  left: clamp(0px, 6vw, 120px);
-  opacity: 0.88;
-  filter: drop-shadow(0 12px 24px rgba(16, 185, 129, 0.3));
+  height: min(80vh, 600px);
+  left: clamp(12px, 7vw, 130px);
+  opacity: 0.96;
+  filter: drop-shadow(0 12px 28px rgba(16, 185, 129, 0.38));
 }
 
 .ds-title-char--right {
-  height: min(74vh, 560px);
-  right: clamp(0px, 6vw, 120px);
-  opacity: 0.88;
-  filter: drop-shadow(0 12px 24px rgba(236, 72, 153, 0.32));
+  height: min(76vh, 570px);
+  right: clamp(12px, 7vw, 130px);
+  opacity: 0.96;
+  filter: drop-shadow(0 12px 28px rgba(236, 72, 153, 0.4));
 }
 
 .ds-title-char--far-left {
   height: min(72vh, 540px);
-  left: -24px;
-  opacity: 0.35;
-  filter: blur(0.4px) drop-shadow(0 0 18px rgba(37, 99, 235, 0.4));
+  left: -16px;
+  opacity: 0.52;
+  filter: drop-shadow(0 0 20px rgba(37, 99, 235, 0.45));
 }
 
 .ds-title-char--far-right {
   height: min(70vh, 520px);
-  right: -24px;
-  opacity: 0.35;
-  filter: blur(0.4px) drop-shadow(0 0 18px rgba(168, 85, 247, 0.4));
+  right: -16px;
+  opacity: 0.52;
+  filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.45));
 }
 
 .ds-title-scrim {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 50% 48%, rgba(12, 10, 18, 0.52) 0%, rgba(10, 8, 15, 0.88) 72%),
-    linear-gradient(180deg, rgba(11, 9, 17, 0.3) 0%, rgba(11, 9, 17, 0.88) 100%);
+    radial-gradient(circle at 50% 50%, rgba(12, 10, 18, 0.62) 0%, rgba(12, 10, 18, 0.22) 56%, rgba(10, 8, 15, 0.55) 100%),
+    linear-gradient(180deg, rgba(11, 9, 17, 0.18) 0%, rgba(11, 9, 17, 0.72) 100%);
 }
 
 .ds-title-panel {
@@ -590,7 +590,8 @@
 }
 
 .ds-stage--shake {
-  animation: ds-shake 0.42s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  animation: ds-shake 0.42s cubic-bezier(0.36, 0.07, 0.19, 0.97) both,
+    ds-stage-glint 0.42s ease-out both;
 }
 
 /* Nichirin Slash & Strike Impact Overlay */
@@ -602,6 +603,10 @@
   z-index: 6;
   pointer-events: none;
   overflow: hidden;
+}
+
+.ds-impact-fx--reverse .ds-impact-slash {
+  transform: scaleX(-1);
 }
 
 .ds-impact-fx--good {
@@ -633,7 +638,14 @@
   height: 100%;
   color: var(--impact-color);
   filter: drop-shadow(0 0 14px var(--impact-color));
-  animation: ds-impact-slash 0.36s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: ds-impact-slash 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.ds-slash-trail,
+.ds-slash-core {
+  stroke-dasharray: 640;
+  stroke-dashoffset: 640;
+  animation: ds-slash-draw 0.34s cubic-bezier(0.12, 0.92, 0.28, 1) forwards;
 }
 
 .ds-impact-ring {
@@ -656,6 +668,15 @@
   overflow: hidden;
 }
 
+.ds-scene-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
 .ds-env-sky,
 .ds-env-pattern,
 .ds-env-mist,
@@ -671,8 +692,8 @@
   z-index: 1;
   pointer-events: none;
   background:
-    linear-gradient(180deg, rgba(10, 8, 15, 0.3) 0%, transparent 32%, rgba(10, 8, 15, 0.85) 100%),
-    radial-gradient(ellipse at center, transparent 48%, rgba(8, 6, 12, 0.72) 100%);
+    linear-gradient(180deg, rgba(10, 8, 15, 0.22) 0%, transparent 30%, rgba(10, 8, 15, 0.68) 100%),
+    radial-gradient(ellipse at center, transparent 58%, rgba(8, 6, 12, 0.56) 100%);
 }
 
 /* Base Particle */
@@ -1336,6 +1357,15 @@
   background: #0d0c12;
 }
 
+.ds-ending-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
 .ds-ending-beams,
 .ds-ending-atmosphere,
 .ds-ending-haori-frame,
@@ -1353,9 +1383,10 @@
 }
 
 .ds-ending-theme--dawn-hashira .ds-ending-beams {
+  opacity: 0.45;
   background: repeating-conic-gradient(
     from -35deg at 50% 92%,
-    rgba(254, 240, 138, 0.18) 0deg 8deg,
+    rgba(254, 240, 138, 0.14) 0deg 8deg,
     transparent 8deg 22deg
   );
 }
@@ -1368,7 +1399,8 @@
 }
 
 .ds-ending-theme--crimson-bonds .ds-ending-beams {
-  background: radial-gradient(circle at 50% 60%, rgba(253, 224, 171, 0.25), transparent 62%);
+  opacity: 0.5;
+  background: radial-gradient(circle at 50% 60%, rgba(253, 224, 171, 0.22), transparent 62%);
 }
 
 .ds-ending-theme--solitary-blade {
@@ -1389,7 +1421,7 @@
 }
 
 .ds-ending-haori-frame {
-  opacity: 0.14;
+  opacity: 0.05;
   background-image: repeating-conic-gradient(#d4af37 0% 25%, transparent 0% 50%);
   background-size: 28px 28px;
   -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.65) 0%, transparent 45%);
@@ -1470,7 +1502,7 @@
 
 .ds-ending-scrim {
   z-index: 4;
-  background: linear-gradient(180deg, transparent 44%, rgba(11, 9, 16, 0.92) 100%);
+  background: linear-gradient(180deg, transparent 56%, rgba(11, 9, 16, 0.78) 100%);
 }
 
 .ds-ending-banner-mark {
@@ -1922,18 +1954,40 @@
   }
 }
 
+@keyframes ds-stage-glint {
+  0% {
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.6);
+  }
+  18% {
+    box-shadow: 0 0 30px rgba(245, 158, 11, 0.45), 0 18px 45px rgba(0, 0, 0, 0.65);
+    border-color: rgba(253, 224, 71, 0.85);
+  }
+  100% {
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.6);
+  }
+}
+
+@keyframes ds-slash-draw {
+  0% {
+    stroke-dashoffset: 640;
+  }
+  42% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -120;
+  }
+}
+
 @keyframes ds-impact-slash {
   0% {
-    opacity: 0;
-    transform: translateX(-16%) scale(0.86);
+    opacity: 0.25;
   }
-  25% {
+  20% {
     opacity: 1;
-    transform: translateX(0%) scale(1.02);
   }
   100% {
     opacity: 0;
-    transform: translateX(10%) scale(1.08);
   }
 }
 
