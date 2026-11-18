@@ -5,8 +5,8 @@ export const ENDINGS: Record<EndingId, EndingInfo> = {
     id: "ending-01",
     priority: 1,
     title: "새벽을 여는 최강의 주(柱)",
-    subtitle: "전집중 호흡 · 신뢰도 · 결의 모두 80 이상 달성",
-    conditionLabel: "모든 능력치 80 이상",
+    subtitle: "전집중 호흡 · 귀살대 신뢰도 · 불굴의 결의 모두 75 이상",
+    conditionLabel: "모든 능력치 75 이상",
     theme: "dawn-hashira",
     showcaseCast: ["giyu", "rengoku", "tanjiro", "shinobu", "gyomei"],
     description:
@@ -19,8 +19,8 @@ export const ENDINGS: Record<EndingId, EndingInfo> = {
     id: "ending-02",
     priority: 2,
     title: "인연을 잇는 귀살의 칼날",
-    subtitle: "귀살대 신뢰도 75 이상 & 불굴의 결의 70 이상",
-    conditionLabel: "신뢰도 75 이상 & 결의 70 이상",
+    subtitle: "귀살대 신뢰도 65 이상 & 불굴의 결의 65 이상",
+    conditionLabel: "신뢰도 65 이상 & 결의 65 이상",
     theme: "crimson-bonds",
     showcaseCast: ["zenitsu", "tanjiro", "nezuko", "inosuke", "mitsuri"],
     description:
@@ -32,30 +32,34 @@ export const ENDINGS: Record<EndingId, EndingInfo> = {
   "ending-03": {
     id: "ending-03",
     priority: 3,
-    title: "고독한 수련의 검객",
-    subtitle: "전집중 호흡 80 이상 & 귀살대 신뢰도 50 미만",
-    conditionLabel: "전집중 호흡 80 이상 & 신뢰도 50 미만",
+    title: "상처뿐인 고독한 생존자",
+    subtitle: "전집중 호흡 70 이상 & 귀살대 신뢰도 45 미만",
+    conditionLabel: "전집중 호흡 70 이상 & 신뢰도 45 미만",
     theme: "solitary-blade",
     showcaseCast: ["muichiro", "giyu", "obanai"],
     description:
-      "감정을 배제한 채 오직 칼끝과 호흡의 극한만을 추구한 당신. 압도적인 검술 실력으로 수많은 혈귀를 베어 냈지만, 스스로 쌓아 올린 고독의 벽 때문에 동료들의 진심을 곁에 두지 못했다. 밤은 물러갔으나, 혼자 남은 칼날은 여전히 다음 수련의 길을 찾아 조용히 떠난다.",
+      "감정을 배제한 채 오직 칼끝과 호흡의 극한만을 추구한 당신. 압도적인 검술 실력으로 혈귀의 목을 베고 홀로 살아남았지만, 등을 맞댈 동료들의 신뢰를 모두 잃어 버렸다. 찢어진 하오리와 식어 가는 온기 속에서, 고독한 생존자의 칼끝에는 깊은 상흔만이 남아 있다.",
     speaker: "giyu",
     quote:
-      "……칼은 누구보다 날카로워졌군. 하지만 혼자 걷는 길 끝에서는 지켜야 할 온기마저 식어 버릴지 모른다.",
+      "……살아남긴 했군. 하지만 누구도 믿지 않고 곁을 내주지 않은 칼날 끝에는 결국 공허한 상처만 남을 뿐이다.",
   },
   "ending-04": {
     id: "ending-04",
     priority: 4,
-    title: "끝나지 않은 밤의 생존자",
-    subtitle: "격동의 밤을 견뎌 낸 귀살대 대원의 기록",
-    conditionLabel: "기본 엔딩 (우선순위 조건 미충족)",
-    theme: "survivor-veranda",
-    showcaseCast: ["tanjiro", "shinobu", "zenitsu"],
+    title: "붉은 밤에 삼켜진 칼날",
+    subtitle: "평균 능력치 45 미만 또는 조건 미달 · 무한성의 어둠에 무너진 밤",
+    conditionLabel: "평균 45 미만 · 조건 미충족 (새드엔딩)",
+    theme: "crimson-abyss",
+    showcaseCast: ["tanjiro", "muzan", "giyu"],
     description:
-      "압도적인 재앙과 혹독한 시련 속에서도 끝까지 포기하지 않고 살아남았다. 아직 주(柱)의 경지나 완벽한 해답에 다다르지는 못했지만, 오늘의 상처와 후회 역시 내일의 당신을 강하게 단련할 밑거름이 될 것이다. 검을 놓지 않는 한, 당신의 이야기는 여기서 끝나지 않는다.",
-    speaker: "shinobu",
+      "결정적인 순간마다 어긋난 판단과 흔들린 칼끝은 결국 무한성의 어둠을 막아 내지 못했다. 부러진 일륜도와 흩어진 호흡 속에서 혈귀의 왕 무잔의 기운이 전장을 집어삼켰고, 동료들의 절규는 끝없는 붉은 밤 너머로 삼켜져 갔다. 새벽은 오지 않았고, 차가운 잿더미 위에 멈춰 선 칼날만이 패배의 밤을 증언한다.",
+    speaker: "giyu",
     quote:
-      "살아남으셨다는 것만으로도 충분히 대단한 거예요. 상처를 치료한 뒤에, 이번엔 조금 더 확실한 각오로 다시 걸어가 보도록 하죠.",
+      "……늦었나. 내가 조금만 더 단단히 막아섰더라면… 이 붉은 밤에 너희까지 삼켜지진 않았을 텐데.",
+    companionQuote: {
+      speaker: "tanjiro",
+      text: "제발… 누가 대답해 줘…! 호흡이 더는 이어지지 않아… 미안해, 내가 모두를 끝까지 지키지 못했어……",
+    },
   },
 };
 

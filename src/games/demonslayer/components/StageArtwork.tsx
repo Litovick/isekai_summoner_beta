@@ -785,38 +785,63 @@ export function EndingBackdropArt({ theme }: { theme: EndingThemeId }) {
         </svg>
       );
 
-    case "survivor-veranda":
+    case "crimson-abyss":
       return (
         <svg
-          className="ds-ending-svg"
+          className="ds-scene-svg ds-ending-svg"
           viewBox="0 0 1200 440"
           preserveAspectRatio="xMidYMid slice"
           aria-hidden="true"
         >
           <defs>
-            <linearGradient id="ed4-sky" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#19132b" />
-              <stop offset="55%" stopColor="#2c1d3d" />
-              <stop offset="100%" stopColor="#1b1220" />
+            <linearGradient id="ed4-abyss" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#070305" />
+              <stop offset="52%" stopColor="#1b0609" />
+              <stop offset="100%" stopColor="#090304" />
             </linearGradient>
+            <radialGradient id="ed4-bloodmoon" cx="50%" cy="32%" r="42%">
+              <stop offset="0%" stopColor="#dc2626" stopOpacity="0.62" />
+              <stop offset="48%" stopColor="#7f1d1d" stopOpacity="0.28" />
+              <stop offset="100%" stopColor="#090304" stopOpacity="0" />
+            </radialGradient>
           </defs>
 
-          <rect width="1200" height="440" fill="url(#ed4-sky)" />
-          <ellipse cx="600" cy="285" rx="460" ry="85" fill="#f59e0b" opacity="0.16" />
-          <path d="M0 295 L250 235 L490 280 L760 225 L1010 275 L1200 240 L1200 440 L0 440 Z" fill="#171122" />
+          <rect width="1200" height="440" fill="url(#ed4-abyss)" />
+          <rect width="1200" height="440" fill="url(#ed4-bloodmoon)" />
 
-          {/* Quiet Dawn Veranda & Paper Andon Lantern */}
-          <rect x="0" y="0" width="1200" height="52" fill="#120c18" />
-          <rect x="115" y="52" width="18" height="300" fill="#1b121b" />
-          <rect x="1065" y="52" width="18" height="300" fill="#1b121b" />
+          {/* Cracked Crimson Blood Moon */}
+          <circle cx="600" cy="138" r="76" fill="#991b1b" opacity="0.72" />
+          <path d="M565 82 L598 136 L584 188 M622 92 L602 140 L630 198" fill="none" stroke="#160406" strokeWidth="4" />
 
-          <g transform="translate(205, 275)">
-            <rect x="-18" y="0" width="36" height="54" fill="#fef3c7" opacity="0.88" stroke="#2e1b18" strokeWidth="3" />
-            <circle cx="0" cy="27" r="55" fill="#fbbf24" opacity="0.18" />
+          {/* Tilted collapsing Infinity Castle shoji rooms */}
+          <g fill="#110608" stroke="#7f1d1d" strokeOpacity="0.45" strokeWidth="2">
+            <g transform="translate(-20, 40) rotate(-12)">
+              <rect x="0" y="0" width="250" height="310" />
+              <rect x="30" y="34" width="180" height="105" fill="#450a0a" opacity="0.7" />
+              <rect x="30" y="162" width="180" height="105" fill="#2b0607" opacity="0.65" />
+            </g>
+            <g transform="translate(970, 15) rotate(13)">
+              <rect x="0" y="0" width="250" height="310" />
+              <rect x="35" y="34" width="180" height="105" fill="#450a0a" opacity="0.7" />
+              <rect x="35" y="162" width="180" height="105" fill="#2b0607" opacity="0.65" />
+            </g>
           </g>
 
-          <rect y="335" width="1200" height="105" fill="#181018" />
-          <line x1="0" y1="365" x2="1200" y2="365" stroke="#2d1d29" strokeWidth="2" />
+          {/* Shattered wooden beams & embers */}
+          <polygon points="0,335 1200,335 1200,440 0,440" fill="#090406" />
+          <polygon points="340,335 600,295 860,335 940,440 260,440" fill="#140709" />
+          <g stroke="#dc2626" strokeWidth="2" opacity="0.42">
+            <line x1="210" y1="362" x2="430" y2="395" />
+            <line x1="990" y1="360" x2="770" y2="398" />
+          </g>
+
+          {/* Broken Nichirin Blade planted into ash */}
+          <g transform="translate(600, 342) rotate(-14)">
+            <rect x="-5" y="-58" width="10" height="58" fill="#44403c" />
+            <polygon points="-5,-58 5,-70 5,-58" fill="#78716c" />
+            <rect x="-15" y="-2" width="30" height="6" rx="2" fill="#7f1d1d" />
+            <rect x="-4" y="4" width="8" height="24" fill="#1c1917" />
+          </g>
         </svg>
       );
   }

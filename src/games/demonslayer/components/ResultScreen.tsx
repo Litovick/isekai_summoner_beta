@@ -77,11 +77,15 @@ export function ResultScreen({
   }, [ending.id]);
 
   const speakerMeta = CHARACTERS[ending.speaker];
+  const companionMeta = ending.companionQuote
+    ? CHARACTERS[ending.companionQuote.speaker]
+    : null;
+  const isSadEnding = ending.id === "ending-04";
 
   return (
     <section className="ds-result-screen" aria-label="최종 결과 및 캐릭터 평가">
       {/* Ending Hero Card */}
-      <div className="ds-ending-hero">
+      <div className={`ds-ending-hero ${isSadEnding ? "ds-ending-hero--sad" : ""}`}>
         <div className="ds-ending-badge-row">
           <span className="ds-ending-kicker">FINAL VERDICT · 귀살대 최종 기록</span>
           <span className="ds-ending-cond">{ending.conditionLabel}</span>
@@ -118,7 +122,7 @@ export function ResultScreen({
         <p className="ds-ending-desc">{ending.description}</p>
 
         {/* Key Character Quote with transparent PNG */}
-        <div className="ds-ending-quote-box">
+        <div className={`ds-ending-quote-box ${isSadEnding ? "ds-ending-quote-box--sad" : ""}`}>
           <div className="ds-ending-quote-portrait">
             {!quoteCharError ? (
               <img
@@ -141,6 +145,21 @@ export function ResultScreen({
             <blockquote>“{ending.quote}”</blockquote>
           </div>
         </div>
+
+        {ending.companionQuote && companionMeta && (
+          <div className={`ds-ending-quote-box ds-ending-companion-quote ${isSadEnding ? "ds-ending-quote-box--sad" : ""}`}>
+            <div className="ds-ending-quote-portrait">
+              <img src={companionMeta.image} alt={companionMeta.name} />
+            </div>
+            <div className="ds-ending-quote-copy">
+              <div className="ds-ending-quote-speaker">
+                <strong>{companionMeta.name}</strong>
+                <span>{companionMeta.title}</span>
+              </div>
+              <blockquote>“{ending.companionQuote.text}”</blockquote>
+            </div>
+          </div>
+        )}
 
         {/* Final 3 Stats */}
         <div className="ds-final-stats">

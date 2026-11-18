@@ -206,7 +206,11 @@ export function DemonSlayerGame({ onReturnWorldSelect }: DemonSlayerGameProps) {
       if (!picked) return;
       const sum =
         picked.effects.breathing + picked.effects.trust + picked.effects.resolve;
-      const mood = sum >= 10 ? "good" : picked.effects.trust < 0 ? "bad" : "neutral";
+      const hasPenalty =
+        picked.effects.breathing < 0 ||
+        picked.effects.trust < 0 ||
+        picked.effects.resolve < 0;
+      const mood = !hasPenalty && sum >= 18 ? "good" : sum < 0 ? "bad" : "neutral";
       playChoiceImpactSound(mood, muted, choiceIndex);
       setFxMood(mood);
       setImpactTick((tick) => tick + 1);

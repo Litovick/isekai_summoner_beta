@@ -64,19 +64,19 @@ export function gradeForScore(score: number): Grade {
 
 export function resolveEnding(stats: Stats): EndingInfo {
   const { breathing, trust, resolve } = stats;
-  // Priority 1: all stats >= 80
-  if (breathing >= 80 && trust >= 80 && resolve >= 80) {
+  // Priority 1: all stats >= 75
+  if (breathing >= 75 && trust >= 75 && resolve >= 75) {
     return ENDINGS["ending-01"];
   }
-  // Priority 2: trust >= 75 && resolve >= 70
-  if (trust >= 75 && resolve >= 70) {
+  // Priority 2: trust >= 65 && resolve >= 65
+  if (trust >= 65 && resolve >= 65) {
     return ENDINGS["ending-02"];
   }
-  // Priority 3: breathing >= 80 && trust < 50
-  if (breathing >= 80 && trust < 50) {
+  // Priority 3: breathing >= 70 && trust < 45
+  if (breathing >= 70 && trust < 45) {
     return ENDINGS["ending-03"];
   }
-  // Priority 4: default
+  // Priority 4: Sad Ending (average < 45 or no prior condition met)
   return ENDINGS["ending-04"];
 }
 

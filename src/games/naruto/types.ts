@@ -57,7 +57,7 @@ export type EndingThemeId =
   | "hokage-legacy"
   | "team7-bond"
   | "solitary-anbu"
-  | "leaf-training";
+  | "crimson-eclipse";
 
 export interface Episode {
   id: number;
@@ -84,6 +84,10 @@ export interface EndingInfo {
   description: string;
   speaker: CharacterId;
   quote: string;
+  companionQuote?: {
+    speaker: CharacterId;
+    text: string;
+  };
 }
 
 export interface CharacterEvaluation {

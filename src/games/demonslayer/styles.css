@@ -1413,11 +1413,53 @@
   background: linear-gradient(115deg, transparent 35%, rgba(191, 219, 254, 0.14) 48%, transparent 60%);
 }
 
-.ds-ending-theme--survivor-veranda {
+.ds-ending-theme--crimson-abyss {
+  border-color: rgba(220, 38, 38, 0.52);
   background:
-    radial-gradient(circle at 24% 25%, rgba(168, 85, 247, 0.34), transparent 52%),
-    radial-gradient(circle at 76% 72%, rgba(251, 191, 36, 0.25), transparent 52%),
-    linear-gradient(180deg, #1b152a 0%, #241932 54%, #110e17 100%);
+    radial-gradient(circle at 50% 28%, rgba(185, 28, 28, 0.44), transparent 50%),
+    radial-gradient(circle at 50% 88%, rgba(127, 29, 29, 0.38), transparent 58%),
+    linear-gradient(180deg, #070305 0%, #1b060a 54%, #090406 100%);
+}
+
+.ds-ending-theme--crimson-abyss .ds-ending-beams {
+  opacity: 0.42;
+  background: repeating-linear-gradient(
+    118deg,
+    transparent 0 28px,
+    rgba(220, 38, 38, 0.08) 28px 34px,
+    transparent 34px 66px
+  );
+}
+
+.ds-ending-hero--sad {
+  border-color: rgba(185, 28, 28, 0.48);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(153, 27, 27, 0.24), transparent 62%),
+    linear-gradient(180deg, rgba(16, 7, 10, 0.96), rgba(9, 5, 8, 0.98));
+}
+
+.ds-ending-hero--sad .ds-ending-kicker,
+.ds-ending-hero--sad .ds-ending-banner-mark span {
+  color: #f87171;
+}
+
+.ds-ending-hero--sad .ds-ending-cond {
+  background: rgba(127, 29, 29, 0.36);
+  border-color: rgba(220, 38, 38, 0.55);
+  color: #fecaca;
+}
+
+.ds-ending-hero--sad .ds-ending-subtitle {
+  color: #fca5a5;
+}
+
+.ds-ending-quote-box--sad {
+  background: radial-gradient(circle at 12% 50%, rgba(153, 27, 27, 0.28), rgba(11, 7, 9, 0.92));
+  border-color: rgba(220, 38, 38, 0.42);
+}
+
+.ds-ending-companion-quote {
+  margin-top: 12px;
 }
 
 .ds-ending-haori-frame {

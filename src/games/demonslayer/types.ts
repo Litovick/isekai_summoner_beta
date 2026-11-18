@@ -80,7 +80,7 @@ export type EndingThemeId =
   | "dawn-hashira"
   | "crimson-bonds"
   | "solitary-blade"
-  | "survivor-veranda";
+  | "crimson-abyss";
 
 export interface Episode {
   id: number;
@@ -108,6 +108,10 @@ export interface EndingInfo {
   description: string;
   speaker: CorpsCharacterId;
   quote: string;
+  companionQuote?: {
+    speaker: CorpsCharacterId;
+    text: string;
+  };
 }
 
 export interface CharacterEvaluation {

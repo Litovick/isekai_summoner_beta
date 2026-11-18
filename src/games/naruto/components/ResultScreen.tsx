@@ -55,10 +55,14 @@ export function ResultScreen({
   onReturnWorldSelect,
 }: ResultScreenProps) {
   const speakerMeta = CHARACTERS[ending.speaker];
+  const companionMeta = ending.companionQuote
+    ? CHARACTERS[ending.companionQuote.speaker]
+    : null;
+  const isSadEnding = ending.id === "ending-04";
 
   return (
     <section className="nr-result-screen" aria-label="최종 결과 및 캐릭터 평가">
-      <div className="nr-ending-hero">
+      <div className={`nr-ending-hero ${isSadEnding ? "nr-ending-hero--sad" : ""}`}>
         <div className="nr-ending-badge-row">
           <span className="nr-ending-kicker">SHINOBI RECORD · 나뭇잎 임무 최종 보고</span>
           <span className="nr-ending-cond">{ending.conditionLabel}</span>
@@ -95,7 +99,7 @@ export function ResultScreen({
         <p className="nr-ending-desc">{ending.description}</p>
 
         {/* Key Character Quote with transparent PNG */}
-        <div className="nr-ending-quote-box">
+        <div className={`nr-ending-quote-box ${isSadEnding ? "nr-ending-quote-box--sad" : ""}`}>
           <div className="nr-ending-quote-portrait">
             <img src={speakerMeta.image} alt={speakerMeta.name} />
           </div>
@@ -107,6 +111,21 @@ export function ResultScreen({
             <blockquote>“{ending.quote}”</blockquote>
           </div>
         </div>
+
+        {ending.companionQuote && companionMeta && (
+          <div className={`nr-ending-quote-box nr-ending-companion-quote ${isSadEnding ? "nr-ending-quote-box--sad" : ""}`}>
+            <div className="nr-ending-quote-portrait">
+              <img src={companionMeta.image} alt={companionMeta.name} />
+            </div>
+            <div className="nr-ending-quote-copy">
+              <div className="nr-ending-quote-speaker">
+                <strong>{companionMeta.name}</strong>
+                <span>{companionMeta.title}</span>
+              </div>
+              <blockquote>“{ending.companionQuote.text}”</blockquote>
+            </div>
+          </div>
+        )}
 
         {/* Final 3 Stats */}
         <div className="nr-final-stats">

@@ -5,8 +5,8 @@ export const ENDINGS: Record<EndingId, EndingInfo> = {
     id: "ending-01",
     priority: 1,
     title: "불의 의지를 잇는 차세대 호카게",
-    subtitle: "모든 능력치 80 이상 · 나뭇잎 마을을 비추는 황금빛 섬광",
-    conditionLabel: "인술 · 유대 · 불의 의지 모두 80 이상",
+    subtitle: "모든 능력치 75 이상 · 나뭇잎 마을을 비추는 황금빛 섬광",
+    conditionLabel: "인술 · 유대 · 불의 의지 모두 75 이상",
     theme: "hokage-legacy",
     showcaseCast: ["minato", "kakashi", "naruto", "sakura", "sasuke"],
     description:
@@ -18,13 +18,13 @@ export const ENDINGS: Record<EndingId, EndingInfo> = {
   "ending-02": {
     id: "ending-02",
     priority: 2,
-    title: "제7반의 영원한 유대",
-    subtitle: "동료의 유대 75 이상 & 불의 의지 70 이상 · 함께 달리는 시노비의 길",
-    conditionLabel: "동료의 유대 75+ & 불의 의지 70+",
+    title: "제7반의 꺾이지 않는 유대",
+    subtitle: "동료의 유대 65 이상 & 불의 의지 65 이상 · 함께 달리는 시노비의 길",
+    conditionLabel: "동료의 유대 65+ & 불의 의지 65+",
     theme: "team7-bond",
     showcaseCast: ["kakashi", "naruto", "sakura", "sasuke"],
     description:
-      "혼자만의 화려한 전적보다 동료를 지키는 손을 택한 당신의 신념이 제7반을 하나로 묶었습니다. 방울 뺏기 시험에서 시작된 작은 신뢰는 파도의 나라와 죽음의 숲, 종말의 계곡을 넘어 결코 끊어지지 않는 인연이 되었고, 위기의 순간마다 서로의 등을 맡기는 최강의 팀으로 거듭났습니다.",
+      "혼자만의 완벽한 전적보다 동료를 지키는 손을 택한 당신의 신념이 제7반을 하나로 묶었습니다. 방울 뺏기 시험에서 시작된 작은 신뢰는 파도의 나라와 죽음의 숲, 종말의 계곡을 넘어 결코 끊어지지 않는 유대가 되었고, 위기의 순간마다 서로의 등을 맡기는 최강의 팀으로 거듭났습니다.",
     speaker: "naruto",
     quote:
       "우리가 함께라면 어떤 적도 두렵지 않아니깐! 다음 임무도 제7반 전원이 같이 돌파하는 거다!",
@@ -32,30 +32,34 @@ export const ENDINGS: Record<EndingId, EndingInfo> = {
   "ending-03": {
     id: "ending-03",
     priority: 3,
-    title: "고독한 그림자의 상급 닌자",
-    subtitle: "인술 숙련도 80 이상 & 동료의 유대 50 미만 · 어둠 속에서 마을을 지탱하는 칼날",
-    conditionLabel: "인술 숙련도 80+ & 동료의 유대 50 미만",
+    title: "탈주와 고독의 그림자 닌자",
+    subtitle: "인술 숙련도 70 이상 & 동료의 유대 45 미만 · 어둠 속 홀로 남은 칼날",
+    conditionLabel: "인술 숙련도 70+ & 동료의 유대 45 미만",
     theme: "solitary-anbu",
     showcaseCast: ["itachi", "sasuke", "kakashi"],
     description:
-      "누구보다 냉철한 판단과 압도적인 인술 숙련도를 손에 넣었지만, 곁에 선 동료들과의 유대보다 스스로 어둠을 감당하는 고독한 길을 택했습니다. 빛나는 양지 대신 보이지 않는 그림자 속에서 마을의 위협을 베어내는 당신의 뒷모습은, 마치 어둠 속에서 마을을 지켰던 우치하 이타치를 떠올리게 합니다.",
+      "누구보다 냉철한 판단과 압도적인 인술 숙련도를 손에 넣었지만, 곁에 선 동료들과의 유대를 끊고 홀로 어둠 속을 걷는 길을 택했습니다. 마을의 표식 대신 고독한 탈주와 그림자의 사명을 짊어진 채 떠나는 당신의 뒷모습은, 차가운 붉은 달 아래 쓸쓸히 사라져 갑니다.",
     speaker: "itachi",
     quote:
-      "빛이 닿지 않는 곳에서 홀로 짊어지는 사명 또한 시노비의 길이지. 다만… 언젠가는 곁을 돌아볼 날이 오기를 바란다.",
+      "힘을 얻기 위해 모든 유대를 끊어 낸 것인가… 혼자서 어둠을 짊어지는 길이 얼마나 차가운지 곧 알게 되겠지.",
   },
   "ending-04": {
     id: "ending-04",
     priority: 4,
-    title: "수련을 거듭하는 나뭇잎의 닌자",
-    subtitle: "끝나지 않은 시노비의 여정 · 더 높은 내일을 향한 차크라 연마",
-    conditionLabel: "기본 엔딩 · 새로운 임무의 시작",
-    theme: "leaf-training",
-    showcaseCast: ["kakashi", "sakura", "naruto"],
+    title: "붉은 달 아래 무너진 나뭇잎",
+    subtitle: "평균 능력치 45 미만 또는 조건 미달 · 임무 실패와 결렬의 비극",
+    conditionLabel: "평균 45 미만 · 조건 미충족 (새드엔딩)",
+    theme: "crimson-eclipse",
+    showcaseCast: ["kakashi", "itachi", "naruto"],
     description:
-      "수많은 시련과 갈등 속에서도 끝까지 살아남아 나뭇잎 마을의 닌자로서 첫걸음을 완수했습니다. 아직 제7반의 완벽한 조화나 호카게의 경지에는 다다르지 못했지만, 훈련장에 흩날리는 나뭇잎 아래 당신의 차크라는 여전히 뜨겁게 타오르고 있습니다. 다음 임무에서는 어떤 인술과 유대를 보여줄 것인가요?",
+      "거듭된 오판과 무너진 팀워크는 결국 아카츠키의 습격 앞에 치명적인 파국을 불러왔습니다. 붉은 달빛이 불타는 나뭇잎 마을의 폐허를 비추는 가운데 제7반의 신뢰는 산산이 조각났고, 임무를 실패한 채 마을을 지켜 내지 못한 참담한 밤이 깊게 내려앉았습니다.",
     speaker: "kakashi",
     quote:
-      "오늘의 경험이 내일의 실력이 되는 법이지. 자, 휴식은 여기까지. 다음 수련을 시작해 볼까.",
+      "……미안하다. 내가 너희를 제대로 이끌지 못한 탓이다. 이렇게 붉은 달 아래에서 모든 걸 잃게 될 줄이야…",
+    companionQuote: {
+      speaker: "naruto",
+      text: "젠장… 왜 그때 서로를 믿지 못했던 거야…! 마을도, 동료도… 아무것도 지켜 내지 못했잖아……",
+    },
   },
 };
 

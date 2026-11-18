@@ -64,19 +64,19 @@ export function gradeForScore(score: number): Grade {
 
 export function resolveEnding(stats: Stats): EndingInfo {
   const { ninjutsu, bond, willOfFire } = stats;
-  // Priority 1: all stats >= 80
-  if (ninjutsu >= 80 && bond >= 80 && willOfFire >= 80) {
+  // Priority 1: all stats >= 75
+  if (ninjutsu >= 75 && bond >= 75 && willOfFire >= 75) {
     return ENDINGS["ending-01"];
   }
-  // Priority 2: bond >= 75 && willOfFire >= 70
-  if (bond >= 75 && willOfFire >= 70) {
+  // Priority 2: bond >= 65 && willOfFire >= 65
+  if (bond >= 65 && willOfFire >= 65) {
     return ENDINGS["ending-02"];
   }
-  // Priority 3: ninjutsu >= 80 && bond < 50
-  if (ninjutsu >= 80 && bond < 50) {
+  // Priority 3: ninjutsu >= 70 && bond < 45
+  if (ninjutsu >= 70 && bond < 45) {
     return ENDINGS["ending-03"];
   }
-  // Priority 4: default
+  // Priority 4: Sad Ending (average < 45 or no prior condition met)
   return ENDINGS["ending-04"];
 }
 

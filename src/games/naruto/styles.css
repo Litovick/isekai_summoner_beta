@@ -1433,11 +1433,68 @@
   background: linear-gradient(115deg, transparent 35%, rgba(248, 113, 113, 0.14) 48%, transparent 60%);
 }
 
-.nr-ending-theme--leaf-training .nr-ending-sky {
+.nr-ending-theme--crimson-eclipse {
+  border-color: rgba(220, 38, 38, 0.56);
+}
+
+.nr-ending-theme--crimson-eclipse .nr-ending-sky {
   background:
-    radial-gradient(circle at 26% 24%, rgba(56, 189, 248, 0.3), transparent 52%),
-    radial-gradient(circle at 76% 70%, rgba(249, 115, 22, 0.28), transparent 52%),
-    linear-gradient(180deg, #152538 0%, #1f333a 54%, #101a24 100%);
+    radial-gradient(circle at 50% 28%, rgba(220, 38, 38, 0.45), transparent 46%),
+    radial-gradient(circle at 50% 88%, rgba(127, 29, 29, 0.42), transparent 58%),
+    linear-gradient(180deg, #060308 0%, #1d060a 56%, #080406 100%);
+}
+
+.nr-ending-theme--crimson-eclipse .nr-ending-celestial {
+  background:
+    radial-gradient(circle at 50% 28%, rgba(239, 68, 68, 0.92) 0 46px, rgba(185, 28, 28, 0.36) 56px, transparent 155px),
+    radial-gradient(ellipse 68px 28px at 22% 36%, rgba(185, 28, 28, 0.48) 0 55%, transparent 62%),
+    radial-gradient(ellipse 74px 30px at 78% 34%, rgba(185, 28, 28, 0.46) 0 55%, transparent 62%);
+}
+
+.nr-ending-theme--crimson-eclipse .nr-ending-silhouette {
+  background: linear-gradient(180deg, transparent 62%, #090406 63%, #040203 100%);
+  clip-path: polygon(0 72%, 14% 64%, 27% 73%, 44% 62%, 59% 74%, 76% 63%, 91% 71%, 100% 66%, 100% 100%, 0 100%);
+}
+
+.nr-ending-theme--crimson-eclipse .nr-ending-beams {
+  opacity: 0.45;
+  background: repeating-linear-gradient(
+    122deg,
+    transparent 0 26px,
+    rgba(220, 38, 38, 0.09) 26px 32px,
+    transparent 32px 62px
+  );
+}
+
+.nr-ending-hero--sad {
+  border-color: rgba(220, 38, 38, 0.48);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(185, 28, 28, 0.26), transparent 62%),
+    linear-gradient(180deg, rgba(16, 7, 11, 0.96), rgba(8, 5, 9, 0.98));
+}
+
+.nr-ending-hero--sad .nr-ending-kicker,
+.nr-ending-hero--sad .nr-ending-banner-mark span {
+  color: #f87171;
+}
+
+.nr-ending-hero--sad .nr-ending-cond {
+  background: rgba(127, 29, 29, 0.36);
+  border-color: rgba(220, 38, 38, 0.55);
+  color: #fecaca;
+}
+
+.nr-ending-hero--sad .nr-ending-subtitle {
+  color: #fca5a5;
+}
+
+.nr-ending-quote-box--sad {
+  background: radial-gradient(circle at 12% 50%, rgba(185, 28, 28, 0.28), rgba(10, 6, 9, 0.92));
+  border-color: rgba(220, 38, 38, 0.42);
+}
+
+.nr-ending-companion-quote {
+  margin-top: 12px;
 }
 
 .nr-ending-ensemble {

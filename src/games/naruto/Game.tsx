@@ -198,7 +198,11 @@ export function NarutoGame({ onReturnWorldSelect }: NarutoGameProps) {
         picked.effects.ninjutsu +
         picked.effects.bond +
         picked.effects.willOfFire;
-      const mood = sum >= 15 ? "good" : picked.effects.bond < 0 ? "bad" : "neutral";
+      const hasPenalty =
+        picked.effects.ninjutsu < 0 ||
+        picked.effects.bond < 0 ||
+        picked.effects.willOfFire < 0;
+      const mood = !hasPenalty && sum >= 18 ? "good" : sum < 0 ? "bad" : "neutral";
       playChakraBurstSound(mood, muted, choiceIndex);
       setFxMood(mood);
       setImpactTick((tick) => tick + 1);
