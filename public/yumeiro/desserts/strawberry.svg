@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="540" viewBox="0 0 800 540" role="img" aria-label="STRAWBERRY SHORTCAKE">
+  <defs>
+    <linearGradient id="bg" x2=".9" y2="1"><stop stop-color="#ffe9f1"/><stop offset="1" stop-color="#fff9ee"/></linearGradient>
+    <linearGradient id="cake" x2="0" y2="1"><stop stop-color="#fff4ed"/><stop offset="1" stop-color="#f7abc0"/></linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="17" stdDeviation="16" flood-color="#845c6b" flood-opacity=".22"/></filter>
+  </defs>
+  <rect width="800" height="540" rx="36" fill="url(#bg)"/>
+  <g opacity=".6" fill="#ffc8d9"><path d="M104 73l13 24 26 4-26 8-13 23-11-23-26-8 26-4z"/><circle cx="683" cy="103" r="12"/><circle cx="128" cy="422" r="7"/><path d="M692 373l13 21 24 4-24 7-13 22-9-22-23-7 23-4z"/></g>
+  <ellipse cx="398" cy="444" rx="290" ry="53" fill="#eac4d1" opacity=".48"/>
+  <ellipse cx="398" cy="429" rx="277" ry="55" fill="#fefefe" stroke="#efdee3" stroke-width="8" filter="url(#shadow)"/>
+  <g filter="url(#shadow)">
+    <path d="M198 282Q400 245 603 282V394Q400 438 198 395Z" fill="url(#cake)"/>
+    <path d="M198 313Q400 340 603 313V333Q400 358 198 333Z" fill="#f7abc0"/>
+    <path d="M198 352Q400 377 603 352V372Q400 392 198 372Z" fill="#fffdf6"/>
+    <ellipse cx="400" cy="278" rx="203" ry="70" fill="#fce8e8" stroke="#fffdf6" stroke-width="11"/>
+    <path d="M197 284C231 314 260 302 281 291C308 315 334 304 358 296C390 321 413 315 440 300C472 323 503 312 528 294C556 315 581 302 604 281" stroke="#fffdf6" stroke-width="21" stroke-linecap="round" fill="none"/>
+    <g fill="#fffdf6">
+      <circle cx="247" cy="250" r="23"/><circle cx="315" cy="220" r="22"/><circle cx="398" cy="208" r="22"/><circle cx="490" cy="224" r="22"/><circle cx="558" cy="256" r="23"/>
+    </g>
+    <g fill="#e94664" stroke="#fffaf2" stroke-width="5">
+      <path d="M231 228Q256 185 277 225Q274 258 247 264Q230 253 231 228Z"/>
+      <path d="M303 196Q321 162 340 198Q338 225 314 233Q299 222 303 196Z"/>
+      <path d="M384 185Q407 144 427 188Q422 223 401 232Q383 214 384 185Z"/>
+      <path d="M477 199Q501 169 515 210Q511 238 487 242Q469 229 477 199Z"/>
+      <path d="M542 233Q560 200 581 237Q576 268 552 273Q536 254 542 233Z"/>
+    </g>
+    <g fill="#e35f82"><circle cx="346" cy="261" r="7"/><circle cx="459" cy="267" r="8"/><circle cx="408" cy="258" r="5"/><circle cx="371" cy="293" r="5"/><circle cx="436" cy="297" r="6"/></g>
+  </g>
+  <text x="400" y="503" font-family="Georgia,serif" text-anchor="middle" letter-spacing="5" font-size="19" fill="#a06d83">STRAWBERRY SHORTCAKE</text>
+</svg>

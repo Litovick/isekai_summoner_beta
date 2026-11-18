@@ -1,0 +1,2 @@
+Character PNG assets: chocolat.png, vanilla.png, pierre.png, robin.png.
+Upload the four PNGs to this directory; paths are referenced by SugarSugarRuneGame.tsx.

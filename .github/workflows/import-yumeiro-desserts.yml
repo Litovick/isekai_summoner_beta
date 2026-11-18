@@ -1,0 +1,63 @@
+name: Import anime dessert stills
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/import-yumeiro-desserts.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Fetch and validate actual anime frames
+        run: |
+          python3 -m pip install --quiet Pillow requests
+          python3 - <<'PY'
+          import io,requests
+          from PIL import Image,ImageOps
+          from pathlib import Path
+          dest=Path("public/yumeiro/desserts")
+          dest.mkdir(parents=True,exist_ok=True)
+          images={
+            # Dream strawberry tart: anime episode still served by TMDB/Plex
+            "strawberry":"https://image.tmdb.org/t/p/original/pKyyAiJDVmfZU6qUAag8bk87uN5.jpg",
+            # Layered chocolate cake still
+            "chocolate":"https://i.pinimg.com/originals/d3/4d/f9/d34df94adda685100a9971e5067bcff5.jpg",
+            # Decorative dessert still from Yumeiro Patissiere; grand prix episode unverified
+            "creative":"https://3.bp.blogspot.com/-OSWS5b7SCpY/TfG90pxrDeI/AAAAAAAACpw/GJtz_QSqlfo/s1600/847.bmp",
+          }
+          session=requests.Session()
+          session.headers.update({"User-Agent":"Mozilla/5.0 (compatible; AssetImporter/1.0)"})
+          for name,url in images.items():
+            response=session.get(url,timeout=35)
+            response.raise_for_status()
+            assert len(response.content)>10000, f"Too small: {name}"
+            img=Image.open(io.BytesIO(response.content))
+            img=ImageOps.exif_transpose(img).convert("RGB")
+            assert img.width>=400 and img.height>=300, f"Low resolution: {name}: {img.size}"
+            if max(img.size)>1600:
+              img.thumbnail((1600,1600),Image.Resampling.LANCZOS)
+            output=dest/f"{name}.webp"
+            img.save(output,format="WEBP",quality=91,method=6)
+            print(f"{name}: {img.size}, {output.stat().st_size} bytes, {url}")
+          PY
+      - name: Commit verified anime frames
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/yumeiro/desserts/*.webp
+          if ! git diff --cached --quiet; then
+            git commit -m "Import actual anime dessert stills"
+            for attempt in 1 2 3 4 5; do
+              git fetch origin main
+              git rebase origin/main
+              if git push origin HEAD:main; then exit 0; fi
+              if [ "$attempt" -eq 5 ]; then exit 1; fi
+              sleep 2
+            done
+          fi

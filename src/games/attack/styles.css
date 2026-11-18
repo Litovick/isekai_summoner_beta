@@ -1,0 +1,220 @@
+.aot-stage{position:relative;isolation:isolate;min-height:560px;overflow:hidden;background:radial-gradient(circle at 50% 30%,#52614b,#141d18 75%);border:2px solid #6f7a65;box-shadow:0 12px 35px #0008}
+.aot-backdrop{position:absolute;inset:0;z-index:-3;animation:aot-zoom 12s ease-out both}.aot-backdrop img{width:100%;height:100%;object-fit:cover;filter:brightness(.55) saturate(.65)}
+.aot-fog{position:absolute;inset:0;z-index:-2;background:linear-gradient(100deg,#17221a99,transparent 60%,#17221a88);animation:aot-fog 7s ease-in-out infinite alternate}
+.aot-vignette{position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,#0d1411 3%,transparent 64%),radial-gradient(ellipse,transparent 20%,#0a100c99 100%)}
+.aot-stage-label{position:absolute;top:18px;left:22px;color:#e6d6b2;font-size:11px;letter-spacing:.24em;text-shadow:0 2px 5px #000}.aot-stage-label span{color:#b65c4c}
+.aot-cast{position:absolute;inset:12% 0 180px;display:flex;align-items:flex-end;justify-content:center;gap:min(9vw,130px);pointer-events:none}
+.aot-soldier{--accent:#9ba996;position:relative;width:clamp(90px,16vw,185px);height:clamp(185px,35vw,335px);transform-origin:bottom;filter:drop-shadow(0 12px 8px #0008)}
+.aot-active{animation:aot-enter .75s cubic-bezier(.2,.8,.2,1) both;z-index:2}.aot-secondary{transform:translateX(-20px) scale(.86);opacity:.45;filter:brightness(.6) blur(1px)}
+.aot-head{position:absolute;top:1%;left:34%;width:32%;height:23%;border-radius:46% 46% 42% 42%;background:linear-gradient(115deg,#c0b4a1,#77766c);border-top:12px solid #353b34;box-shadow:inset -9px -4px 0 #0002}
+.aot-cloak{position:absolute;top:22%;left:5%;width:90%;height:77%;background:linear-gradient(110deg,#647568 0%,#303f36 45%,#192c26 100%);clip-path:polygon(32% 0,70% 0,91% 22%,100% 100%,48% 90%,0 100%,9% 20%);border-radius:25px}
+.aot-body{position:absolute;top:29%;left:29%;width:42%;height:49%;border-radius:18% 18% 8% 8%;background:linear-gradient(90deg,#4e584e,#879384 50%,#35483c);border:3px solid #29352c;display:flex;justify-content:center;align-items:center}
+.aot-emblem{font-size:clamp(25px,4vw,48px);color:#e0e4d7;text-shadow:0 2px 3px #1d3027}
+.aot-person-name{position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);white-space:nowrap;background:#18221bd9;border:1px solid var(--accent);color:#f4e6ca;padding:5px 12px;font-size:13px;font-weight:bold}
+.aot-good{filter:drop-shadow(0 0 17px #c7b48a99)}
+.aot-dialogue{position:absolute;bottom:28px;left:4%;right:4%;min-height:150px;max-height:50%;overflow:auto;background:#111b17ef;border:1px solid #a6a48a;box-shadow:7px 7px 0 #080c0a9c;padding:18px 22px;animation:aot-dialogue .3s ease-out}
+.aot-speaker{font-size:15px;font-weight:900;color:#d7b97f;letter-spacing:.06em;margin-bottom:9px}.aot-speaker span{font-size:12px;font-weight:400;color:#aeb5a6}
+.aot-dialogue-button{display:block;width:100%;text-align:left;min-height:72px}.aot-line{font-size:clamp(15px,1.8vw,19px);line-height:1.85;min-height:52px;white-space:pre-wrap}
+.aot-next{display:block;text-align:right;color:#dfc28b;font-size:13px;animation:aot-pulse 1s infinite alternate}.aot-caret{color:#d6b878;animation:aot-pulse .6s infinite alternate}
+.aot-choice{display:flex;gap:14px;align-items:center;width:100%;padding:10px 13px;text-align:left;border:1px solid #687b69;background:#2b3b30ed;transition:transform .2s,background .2s}.aot-choice:hover{transform:translateX(5px);background:#4d644e}.aot-choice b{color:#f1c57c}
+.aot-primary,.aot-outline{padding:12px 23px;font-weight:700;transition:transform .2s}.aot-primary{background:#984f40}.aot-outline{border:1px solid #b9a982}.aot-primary:hover,.aot-outline:hover{transform:translateY(-3px)}
+.aot-hero{margin:auto;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px;height:210px;max-width:570px;background:radial-gradient(circle,#5c6c58,#1a251e 72%);border:1px solid #7d886f;font-size:72px;animation:aot-zoom 5s ease-out both}.aot-hero span{font-size:17px;letter-spacing:.2em}
+.aot-home{animation:aot-dialogue .5s ease-out}.aot-shake{animation:aot-shake .3s ease-out}
+.aot-source{position:absolute;right:12px;top:15px;font-size:10px;color:#c7c8b9;text-decoration:underline}
+@keyframes aot-enter{from{opacity:0;transform:translateX(85px) scale(.89)}to{opacity:1;transform:translateX(0) scale(1.05)}}@keyframes aot-zoom{from{transform:scale(1.12)}to{transform:scale(1)}}@keyframes aot-fog{from{transform:translateX(-3%)}to{transform:translateX(3%)}}@keyframes aot-dialogue{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}@keyframes aot-shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}50%{transform:translateX(8px)}75%{transform:translateX(-4px)}}@keyframes aot-pulse{from{opacity:.35}to{opacity:1}}
+@media(max-width:600px){.aot-stage{min-height:610px}.aot-cast{bottom:245px;inset-inline:0}.aot-dialogue{bottom:16px;left:3%;right:3%;padding:13px;max-height:45%}.aot-choice{font-size:13px}.aot-soldier{height:230px;width:120px}}
+@media(prefers-reduced-motion:reduce){.aot-stage *{animation:none!important;transition:none!important}}
+
+
+/* One-screen visual novel presentation */
+.aot-app{height:100dvh;overflow:hidden;padding:12px}
+.aot-shell{height:100%;display:flex;flex-direction:column;min-height:0}
+.aot-shell>header{flex:none}
+.aot-shell>section{flex:1;min-height:0;display:flex;flex-direction:column}
+.aot-shell>section>.aot-stage{flex:1;min-height:0}
+.aot-stage{height:100%;min-height:0}
+.aot-portrait{height:100%;width:100%;object-fit:contain;object-position:bottom center;filter:drop-shadow(0 12px 12px #000a)}
+.aot-cast{bottom:165px;top:8%}
+.aot-soldier{height:min(42vh,370px);width:clamp(145px,23vw,290px)}
+.aot-home{overflow:auto;justify-content:center}
+.aot-shell>section:has(.aot-stage):not(:has(.aot-dialogue)) {overflow:auto}
+.aot-shell>section:has(.aot-stage)>div:not(.aot-stage){flex:none}
+.aot-shell>section:has(.aot-stage)>.aot-stage{min-height:300px}
+.aot-backdrop img{object-position:center;filter:brightness(.53) saturate(.75)}
+@media(max-width:600px){.aot-app{padding:7px}.aot-shell>header{margin-bottom:5px;padding-bottom:5px}.aot-stage{min-height:0}.aot-cast{bottom:190px;top:7%}.aot-soldier{width:clamp(130px,45vw,220px);height:min(35vh,285px)}.aot-dialogue{max-height:50%;bottom:9px}.aot-shell>section>.mb-3{margin-bottom:6px}}
+
+
+/* Distinct scene atmospheres while dedicated anime background assets are sourced */
+.aot-location-0 .aot-backdrop img{object-position:30% center;filter:brightness(.43) sepia(.3)}
+.aot-location-1 .aot-backdrop img{object-position:65% center;filter:brightness(.62) saturate(.9)}
+.aot-location-2 .aot-backdrop img{object-position:40% center;filter:brightness(.4) hue-rotate(22deg)}
+.aot-location-3 .aot-backdrop img{object-position:70% center;filter:brightness(.38) sepia(.2)}
+.aot-location-4 .aot-backdrop img{object-position:25% center;filter:brightness(.55) saturate(.5)}
+.aot-location-5 .aot-backdrop img{object-position:75% center;filter:brightness(.3) hue-rotate(30deg)}
+.aot-location-6 .aot-backdrop img{object-position:35% center;filter:brightness(.4) contrast(1.25)}
+.aot-location-7 .aot-backdrop img{object-position:65% center;filter:brightness(.45) hue-rotate(14deg)}
+.aot-location-8 .aot-backdrop img{object-position:45% center;filter:brightness(.33) sepia(.5)}
+.aot-location-9 .aot-backdrop img{object-position:55% center;filter:brightness(.48) saturate(.65)}
+/* Cinematic polish for generated scene art */
+.aot-backdrop img{filter:brightness(.62) saturate(.95)!important}
+.aot-location-3 .aot-backdrop img,.aot-location-6 .aot-backdrop img{filter:brightness(.55) saturate(.9)!important}
+.aot-stage.aot-shake::after{content:"";position:absolute;inset:0;z-index:5;pointer-events:none;background:#b3301f;animation:aot-flash .45s ease-out forwards}
+@keyframes aot-flash{from{opacity:.45}to{opacity:0}}
+
+
+/* Stage-aware character placement and accessible gallery (2026-11) */
+.aot-stage{min-height:0}
+.aot-backdrop{z-index:0}
+.aot-fog{z-index:1;pointer-events:none}
+.aot-vignette{z-index:1;pointer-events:none}
+.aot-stage-label{z-index:2}
+.aot-cast{
+  z-index:2;
+  top:6%;
+  bottom:clamp(145px,27%,225px);
+  min-height:0;
+  overflow:visible;
+  align-items:flex-end;
+}
+.aot-soldier{
+  height:min(100%,clamp(150px,32vh,290px));
+  width:clamp(110px,19vw,230px);
+  flex-shrink:0;
+}
+.aot-active{animation:aot-enter-safe .75s cubic-bezier(.2,.8,.2,1) both}
+@keyframes aot-enter-safe{
+  from{opacity:0;transform:translateX(45px) scale(.92)}
+  to{opacity:1;transform:translateX(0) scale(1)}
+}
+.aot-dialogue{
+  z-index:4;
+  max-height:55%;
+}
+.aot-choice{position:relative;z-index:5}
+.aot-stage--choice .aot-cast{
+  bottom:clamp(215px,43%,330px);
+}
+.aot-stage--choice .aot-soldier{
+  height:min(100%,clamp(115px,25vh,230px));
+  width:clamp(100px,17vw,195px);
+}
+.aot-stage--ending{
+  flex:0 0 auto!important;
+  height:clamp(225px,34vh,320px);
+  min-height:225px!important;
+}
+.aot-stage--ending .aot-cast{
+  top:3%;
+  bottom:clamp(110px,44%,160px);
+}
+.aot-stage--ending .aot-soldier{
+  height:min(100%,170px);
+  width:min(35vw,165px);
+}
+.aot-stage--ending .aot-dialogue{
+  bottom:12px;
+  min-height:100px;
+  max-height:55%;
+  padding:12px 16px;
+}
+.aot-stage--ending .aot-line{min-height:0}
+.aot-end-screen{
+  overflow-y:auto;
+  overflow-x:hidden;
+  min-height:0;
+  padding-bottom:20px;
+  scrollbar-gutter:stable;
+}
+.aot-end-screen>.aot-stage{flex-shrink:0}
+.aot-gallery-screen{
+  overflow-y:auto;
+  overflow-x:hidden;
+  min-height:0;
+  padding:12px 6px 24px;
+  scrollbar-gutter:stable;
+}
+.aot-gallery-header{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:24px;
+}
+.aot-gallery-screen .grid>div{min-height:115px}
+.aot-home{justify-content:flex-start;scrollbar-gutter:stable}
+@media(max-width:600px){
+  .aot-stage--choice .aot-cast{top:5%;bottom:clamp(210px,48%,330px)}
+  .aot-stage--choice .aot-soldier{height:min(100%,170px);width:125px}
+  .aot-stage--choice .aot-dialogue{max-height:63%}
+  .aot-stage--ending{height:240px;min-height:240px!important}
+  .aot-stage--ending .aot-cast{bottom:125px}
+  .aot-stage--ending .aot-soldier{height:min(100%,130px);width:120px}
+  .aot-gallery-header{align-items:flex-start}
+}
+@media(prefers-reduced-motion:reduce){.aot-active{animation:none}}
+
+/* Dedicated main menu: distinct from the expedition scene */
+.aot-menu{
+  position:relative;isolation:isolate;overflow:auto;
+  width:100%;min-height:0;
+  background-color:#101b16;background-position:center;background-size:cover;
+  border:1px solid #677363;
+  box-shadow:inset 0 0 0 7px #0b120f55;
+  padding:clamp(20px,4vw,48px);
+  justify-content:space-between;
+}
+.aot-menu::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 75% 45%,transparent 20%,#07100dcc 100%)}
+.aot-menu-top,.aot-menu-bottom{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:#d0b789;font-size:10px;letter-spacing:.28em}
+.aot-menu-content{width:min(100%,610px);margin:auto 0;padding:24px 0}
+.aot-menu-eyebrow{color:#e4c68b;font-size:12px;letter-spacing:.24em;margin-bottom:14px}
+.aot-menu-title{font-family:var(--font-display);font-size:clamp(68px,11vw,144px);line-height:.98;letter-spacing:-.055em;color:#f0e8d5;text-shadow:0 5px 24px #000a}
+.aot-menu-title span{color:#d5c7a5}
+.aot-menu-rule{height:3px;width:84px;background:#a85846;margin:28px 0 22px}
+.aot-menu-subtitle{font-size:clamp(20px,2.6vw,31px);font-weight:800;color:#e4cda1}
+.aot-menu-description{margin-top:12px;color:#c9c9b9;line-height:1.9;font-size:clamp(13px,1.4vw,16px)}
+.aot-menu-actions{display:grid;gap:9px;max-width:430px;margin-top:30px}
+.aot-menu-actions button{min-height:52px;display:flex;align-items:center;gap:16px;text-align:left;padding:12px 18px;font-weight:700;transition:background .2s,transform .2s}
+.aot-menu-actions button:hover{transform:translateX(4px)}
+.aot-menu-actions button>span:first-child{font-size:11px;letter-spacing:.14em;opacity:.75}
+.aot-menu-start{background:#a65b48;color:#fff2dc}
+.aot-menu-start>span:last-child{margin-left:auto;font-size:20px}
+.aot-menu-option{background:#17231edc;border:1px solid #82917a;color:#e5ddc9}
+.aot-menu-option:hover{background:#2a3c30}
+.aot-menu-option small{margin-left:auto;color:#c2ad80;font-size:11px;font-weight:400}
+@media(max-width:600px){
+ .aot-menu{padding:20px;background-position:60% center}
+ .aot-menu-content{padding:30px 0}
+ .aot-menu-title{font-size:clamp(64px,17vw,100px)}
+ .aot-menu-top,.aot-menu-bottom{font-size:9px;letter-spacing:.12em}
+ .aot-menu-description br{display:none}
+}
+
+/* Illustrated ending archive and character reviews */
+.aot-gallery-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.aot-ending-card{min-width:0;border:1px solid #6f7b6b;background:#1b2821;overflow:hidden;text-align:left}
+.aot-ending-art{position:relative;aspect-ratio:16/8;overflow:hidden;background:#0b1511}
+.aot-ending-art img{display:block;width:100%;height:100%;object-fit:cover;filter:brightness(.82) saturate(.83)}
+.aot-ending-card--locked .aot-ending-art img{filter:blur(7px) brightness(.25) grayscale(.8);transform:scale(1.08)}
+.aot-ending-number{position:absolute;top:12px;left:14px;font-size:10px;letter-spacing:.22em;color:#e9d3a4;text-shadow:0 2px 5px #000}
+.aot-ending-lock{position:absolute;inset:0;display:grid;place-items:center;font-size:32px}
+.aot-ending-info{padding:16px 18px 20px}
+.aot-ending-info b{font-size:18px;color:#eee1c7}
+.aot-ending-info p{margin-top:7px;font-size:13px;color:#c0bba8}
+.aot-ending-info .aot-ending-description{line-height:1.7;color:#d4cdbb}
+.aot-review-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:24px;text-align:left}
+.aot-review-card{min-width:0;display:flex;align-items:stretch;gap:12px;min-height:150px;overflow:hidden;background:#242c27;border:1px solid #707b6c}
+.aot-review-portrait{width:38%;min-width:100px;max-width:150px;flex-shrink:0;display:flex;align-items:flex-end;justify-content:center;background:linear-gradient(140deg,#34473a,#101a15);overflow:hidden}
+.aot-review-portrait img{display:block;width:100%;height:150px;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 6px 7px #0008)}
+.aot-review-copy{padding:18px 12px 18px 0;align-self:center}
+.aot-review-copy b{color:#d4c6a4;font-size:17px}
+.aot-review-copy p{margin-top:9px;font-size:13px;line-height:1.75}
+@media(max-width:600px){
+ .aot-gallery-grid,.aot-review-grid{grid-template-columns:1fr;gap:12px}
+ .aot-ending-art{aspect-ratio:16/7}
+ .aot-ending-info{padding:12px 14px 15px}
+ .aot-review-card{min-height:125px}
+ .aot-review-portrait{min-width:100px;width:32%}
+ .aot-review-portrait img{height:130px}
+ .aot-review-copy{padding:12px 10px 12px 0}
+}

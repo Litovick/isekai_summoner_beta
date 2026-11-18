@@ -1,0 +1,135 @@
+/* Standalone Slam Dunk theme values, scoped to its game root. */
+.slam-game {
+  --radius: 0.625rem;
+  --background: oklch(0.16 0.01 30);
+  --foreground: oklch(0.98 0.005 80);
+  --card: oklch(0.98 0.005 80);
+  --card-foreground: oklch(0.16 0.01 30);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.129 0.042 264.695);
+  --primary: oklch(0.55 0.22 25);
+  --primary-foreground: oklch(0.98 0.005 80);
+  --secondary: oklch(0.968 0.007 247.896);
+  --secondary-foreground: oklch(0.208 0.042 265.755);
+  --muted: oklch(0.968 0.007 247.896);
+  --muted-foreground: oklch(0.554 0.046 257.417);
+  --accent: oklch(0.968 0.007 247.896);
+  --accent-foreground: oklch(0.208 0.042 265.755);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.984 0.003 247.858);
+  --border: oklch(0.929 0.013 255.508);
+  --input: oklch(0.929 0.013 255.508);
+  --ring: oklch(0.704 0.04 256.788);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --trust: oklch(0.56 0.22 25);
+  --judgment: oklch(0.72 0.18 55);
+  --court: oklch(0.62 0.1 60);
+  --court-dark: oklch(0.42 0.08 50);
+  --ink: oklch(0.16 0.01 30);
+  --ball: oklch(0.68 0.19 45);
+  --sidebar: oklch(0.984 0.003 247.858);
+  --sidebar-foreground: oklch(0.129 0.042 264.695);
+  --sidebar-primary: oklch(0.208 0.042 265.755);
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.968 0.007 247.896);
+  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
+  --sidebar-border: oklch(0.929 0.013 255.508);
+  --sidebar-ring: oklch(0.704 0.04 256.788);
+}
+
+
+@keyframes fade-in-scene { from { opacity: 0 } to { opacity: 1 } }
+@keyframes shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-8px)} 40%{transform:translateX(8px)} 60%{transform:translateX(-5px)} 80%{transform:translateX(5px)} }
+@keyframes sd-court-shake {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  12% { transform: translate3d(-9px, 7px, 0) scale(1.015); }
+  26% { transform: translate3d(8px, -6px, 0) scale(1.01); }
+  42% { transform: translate3d(-7px, 4px, 0) scale(1.007); }
+  58% { transform: translate3d(6px, -3px, 0) scale(1.004); }
+  75% { transform: translate3d(-3px, 2px, 0) scale(1.001); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+@keyframes sd-scoreboard-flash {
+  0% { box-shadow: 0 0 0 0 rgba(255, 196, 61, 0); filter: brightness(1); }
+  20% { box-shadow: 0 0 28px 4px var(--sd-flash-color, rgba(255, 166, 43, 0.85)); filter: brightness(1.35); }
+  55% { box-shadow: 0 0 12px 1px var(--sd-flash-color, rgba(255, 166, 43, 0.35)); filter: brightness(1.08); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 196, 61, 0); filter: brightness(1); }
+}
+@keyframes sd-court-flash {
+  0% { opacity: 0.88; }
+  35% { opacity: 0.42; }
+  100% { opacity: 0; }
+}
+@keyframes sd-rim-burst {
+  0% { opacity: 0.95; transform: translate(-50%, -50%) scale(0.28); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(2.35); }
+}
+@keyframes bounce-ball { 0%{transform:translateY(0) scale(1)} 50%{transform:translateY(-60px) scale(1.1)} 100%{transform:translateY(0) scale(1)} }
+@keyframes float-up { from{opacity:0;transform:translateY(10px)} 20%{opacity:1} to{opacity:1;transform:translateY(0)} }
+@keyframes sparkle { 0%{opacity:0;transform:scale(.3) rotate(0)} 50%{opacity:1} 100%{opacity:0;transform:scale(1.4) rotate(90deg)} }
+@utility animate-scene { animation: fade-in-scene .6s ease-out both; }
+@utility animate-shake { animation: shake .45s ease-in-out; }
+@utility animate-ball { animation: bounce-ball .7s ease-in-out 2; }
+@utility animate-float-up { animation: float-up .5s ease-out both; }
+@utility animate-sparkle { animation: sparkle 1s ease-out both; }
+
+.slam-game { font-family: "Noto Sans KR",sans-serif; background:var(--background); color:var(--foreground); min-height:100vh; }
+.slam-game .font-display { font-family:"Black Han Sans","Noto Sans KR",sans-serif; }
+
+.slam-game .sd-stage--shake {
+  animation: sd-court-shake 0.48s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+.slam-game .sd-scoreboard--flash {
+  --sd-flash-color: rgba(255, 166, 43, 0.9);
+  animation: sd-scoreboard-flash 0.52s ease-out both;
+}
+
+.slam-game .sd-scoreboard--bad {
+  --sd-flash-color: rgba(239, 68, 68, 0.9);
+}
+
+.slam-game .sd-court-flash {
+  position: absolute;
+  inset: 0;
+  z-index: 15;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 42%, rgba(255, 224, 150, 0.58), rgba(249, 115, 22, 0.25) 45%, transparent 74%);
+  animation: sd-court-flash 0.48s ease-out forwards;
+}
+
+.slam-game .sd-court-flash--bad {
+  background: radial-gradient(circle at 50% 42%, rgba(239, 68, 68, 0.52), rgba(127, 29, 29, 0.28) 48%, transparent 74%);
+}
+
+.slam-game .sd-rim-burst {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  z-index: 16;
+  width: 140px;
+  height: 140px;
+  border-radius: 999px;
+  border: 4px solid #ff9f1c;
+  box-shadow: 0 0 24px rgba(255, 159, 28, 0.7), inset 0 0 18px rgba(255, 255, 255, 0.45);
+  pointer-events: none;
+  animation: sd-rim-burst 0.46s ease-out forwards;
+}
+
+.slam-game .sd-rim-burst--bad {
+  border-color: #ef4444;
+  box-shadow: 0 0 24px rgba(239, 68, 68, 0.72);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slam-game .sd-stage--shake,
+  .slam-game .sd-scoreboard--flash,
+  .slam-game .sd-court-flash,
+  .slam-game .sd-rim-burst {
+    animation: none !important;
+  }
+}

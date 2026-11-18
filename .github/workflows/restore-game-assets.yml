@@ -1,0 +1,57 @@
+name: Restore original game artwork and verify build
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/restore-game-assets.yml"
+permissions:
+  contents: write
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout integrated hub
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Checkout original Attack on Titan
+        uses: actions/checkout@v4
+        with:
+          repository: Litovick/attack-on-titan
+          path: .game-source/attack
+      - name: Checkout original Slam Dunk
+        uses: actions/checkout@v4
+        with:
+          repository: Litovick/slam-dunk-manager
+          path: .game-source/slamdunk
+      - name: Restore all original images and references
+        run: |
+          mkdir -p src/games/attack/assets src/games/slamdunk/assets
+          cp -a .game-source/attack/src/assets/aot/. src/games/attack/assets/
+          cp -a .game-source/slamdunk/src/assets/. src/games/slamdunk/assets/
+          python3 - <<'PY'
+          from pathlib import Path
+          attack = Path(".game-source/attack/src/game/attack-images.ts").read_text()
+          attack = attack.replace("@/assets/aot/", "../assets/")
+          Path("src/games/attack/game/attack-images.ts").write_text(attack)
+          slam = Path(".game-source/slamdunk/src/game/themes/slamdunk.ts").read_text()
+          slam = slam.replace("@/assets/", "../../assets/")
+          Path("src/games/slamdunk/game/themes/slamdunk.ts").write_text(slam)
+          PY
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Verify production build
+        run: npm run build
+      - name: Commit restored artwork and source mappings
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/games/attack/assets src/games/slamdunk/assets src/games/attack/game/attack-images.ts src/games/slamdunk/game/themes/slamdunk.ts
+          if ! git diff --cached --quiet; then
+            git commit -m "Restore original character artwork for Attack on Titan and Slam Dunk"
+            git push
+          fi

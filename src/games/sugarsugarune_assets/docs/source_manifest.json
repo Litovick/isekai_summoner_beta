@@ -1,0 +1,32 @@
+[
+  {
+    "target": "characters/chocolat",
+    "url": "https://www.marv.jp/special/sugarune/charactor/01.html",
+    "note": "official character profile; verify URL"
+  },
+  {
+    "target": "characters/vanilla",
+    "url": "https://www.marv.jp/special/sugarune/charactor/02.html",
+    "note": "official character profile; verify URL"
+  },
+  {
+    "target": "characters/robin",
+    "url": "https://www.marv.jp/special/sugarune/charactor/images/chara_rockin.gif",
+    "note": "official character sheet"
+  },
+  {
+    "target": "characters/pierre",
+    "url": "https://www.marv.jp/special/sugarune/charactor/images/chara_pierre.gif",
+    "note": "official character sheet"
+  },
+  {
+    "target": "main/duo",
+    "url": "https://e7.pngegg.com/pngimages/751/301/png-clipart-sugar-sugar-rune-chocolat-meilleure-anime-chocolate-vanilla-chocolate-manga-cartoon.png",
+    "note": "third-party anime art; rights unverified"
+  },
+  {
+    "target": "main/witches",
+    "url": "https://2img.net/h/shinden.pl/resources/images/genuine/178970.jpg",
+    "note": "third-party anime art; rights unverified"
+  }
+]

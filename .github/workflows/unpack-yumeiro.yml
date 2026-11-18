@@ -1,0 +1,75 @@
+name: Unpack Yumeiro visual assets
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/unpack-yumeiro.yml"
+      - "yumeiro_visual_assets.zip"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Extract character portraits and scene backgrounds
+        run: |
+          set -euo pipefail
+          test -f yumeiro_visual_assets.zip
+          mkdir -p public/yumeiro
+          unzip -oq yumeiro_visual_assets.zip -d public/yumeiro
+          python3 - <<'PY'
+          from pathlib import Path
+          root=Path('public/yumeiro')
+          names=['gam-ddalgi.png','won-gaon.png','an-doha.png','seo-rojin.png','vanilla.png']
+          for name in names:
+              f=root/'characters'/name
+              assert f.is_file() and f.stat().st_size>1000, f'Missing portrait: {f}'
+          for i in range(1,11):
+              f=root/'backgrounds'/f'stage-{i:02d}.webp'
+              assert f.is_file() and f.stat().st_size>1000, f'Missing background: {f}'
+          print('Validated 5 portraits + 10 backgrounds')
+          PY
+      - name: Trim transparent canvas around character illustrations
+        run: |
+          python3 -m pip install --quiet Pillow
+          python3 - <<'PY'
+          from PIL import Image
+          from pathlib import Path
+          for f in sorted(Path('public/yumeiro/characters').glob('*.png')):
+              image=Image.open(f).convert('RGBA')
+              alpha=image.getchannel('A')
+              mask=alpha.point(lambda value:255 if value>30 else 0)
+              bbox=mask.getbbox()
+              if not bbox:
+                  raise RuntimeError(f'No visible character artwork in {f}')
+              left,top,right,bottom=bbox
+              margin=16
+              crop=(max(0,left-margin),max(0,top-margin),min(image.width,right+margin),min(image.height,bottom+margin))
+              image.crop(crop).save(f,optimize=True)
+              print(f, 'trimmed to',crop)
+          PY
+      - name: Commit extracted images into the site
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/yumeiro/
+          if ! git diff --cached --quiet; then
+            git commit -m "Trim Yumeiro transparent character sprite padding"
+            for attempt in 1 2 3 4 5; do
+              git fetch origin main
+              git rebase origin/main
+              if git push origin HEAD:main; then
+                echo "Trimmed sprites pushed successfully"
+                break
+              fi
+              if [ "$attempt" -eq 5 ]; then
+                echo "Unable to push after five attempts" >&2
+                exit 1
+              fi
+              sleep 2
+            done
+          fi
