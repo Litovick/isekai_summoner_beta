@@ -189,7 +189,7 @@ export const ANIME_WORLDS: AnimeWorld[] = [
     number: 19,
     title: "나루토",
     goal: "당신은 닌자가 될 수 있을까?",
-    status: "coming_soon",
+    status: "available",
     coverImage: narutoCover,
     accent: "from-orange-500/70 to-amber-400/70",
   },
