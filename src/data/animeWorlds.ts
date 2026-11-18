@@ -54,7 +54,7 @@ export const ANIME_WORLDS: AnimeWorld[] = [
     number: 4,
     title: "원피스",
     goal: "당신은 해적왕이 될 인재인가?",
-    status: "coming_soon",
+    status: "available",
     coverImage: onepieceCover,
     accent: "from-amber-500/70 to-sky-500/70",
   },
