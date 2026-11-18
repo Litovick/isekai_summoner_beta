@@ -198,7 +198,7 @@ export const ANIME_WORLDS: AnimeWorld[] = [
     number: 20,
     title: "블리치",
     goal: "당신은 사신이 될 수 있을까?",
-    status: "coming_soon",
+    status: "available",
     coverImage: bleachCover,
     accent: "from-red-700/80 to-black/80",
   },

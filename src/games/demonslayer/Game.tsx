@@ -13,7 +13,12 @@ import { DialogueBox } from "./components/DialogueBox";
 import { HudBar } from "./components/HudBar";
 import { ResultScreen } from "./components/ResultScreen";
 import { SceneStage } from "./components/SceneStage";
-import { playChoiceImpactSound, playTone } from "./sound";
+import {
+  playChoiceImpactSound,
+  playTone,
+  preloadDemonSlayerAudio,
+  syncDemonSlayerAudioMute,
+} from "./sound";
 import type { CharacterId, EndingId, GameState } from "./types";
 import "./styles.css";
 
@@ -109,6 +114,11 @@ export function DemonSlayerGame({ onReturnWorldSelect }: DemonSlayerGameProps) {
   }, [state]);
 
   useEffect(() => {
+    preloadDemonSlayerAudio();
+  }, []);
+
+  useEffect(() => {
+    syncDemonSlayerAudioMute(muted);
     try {
       localStorage.setItem(MUTE_KEY, muted ? "1" : "0");
     } catch {

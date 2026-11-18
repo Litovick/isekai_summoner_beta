@@ -1,6 +1,10 @@
 export type ImpactMood = "neutral" | "good" | "bad";
 
+export const SLICE_AUDIO_SRC = "/demonslayer/sounds/slice.mp3";
+
 let sharedAudioCtx: AudioContext | null = null;
+let sliceAudio: HTMLAudioElement | null = null;
+let sliceAudioFailed = false;
 
 function getAudioContext(): AudioContext | null {
   if (typeof window === "undefined") return null;
@@ -11,6 +15,52 @@ function getAudioContext(): AudioContext | null {
     void sharedAudioCtx.resume();
   }
   return sharedAudioCtx;
+}
+
+function getSliceAudio(): HTMLAudioElement | null {
+  if (typeof window === "undefined" || typeof Audio === "undefined") {
+    return null;
+  }
+  if (!sliceAudio && !sliceAudioFailed) {
+    try {
+      const audio = new Audio(SLICE_AUDIO_SRC);
+      audio.preload = "auto";
+      audio.volume = 0.88;
+      audio.addEventListener("error", () => {
+        sliceAudioFailed = true;
+      });
+      sliceAudio = audio;
+    } catch {
+      sliceAudioFailed = true;
+      return null;
+    }
+  }
+  return sliceAudioFailed ? null : sliceAudio;
+}
+
+export function preloadDemonSlayerAudio() {
+  const audio = getSliceAudio();
+  if (!audio) return;
+  try {
+    if (audio.readyState === 0) {
+      audio.load();
+    }
+  } catch {
+    // Ignore preload errors so gameplay never stalls
+  }
+}
+
+export function syncDemonSlayerAudioMute(muted: boolean) {
+  if (!sliceAudio) return;
+  try {
+    sliceAudio.muted = muted;
+    if (muted && !sliceAudio.paused) {
+      sliceAudio.pause();
+      sliceAudio.currentTime = 0;
+    }
+  } catch {
+    // Ignore audio control errors
+  }
 }
 
 function triggerKatanaSlash(
@@ -31,13 +81,11 @@ function triggerKatanaSlash(
   const schedule = () => {
     const now = ctx.currentTime + 0.004;
 
-    // 1. Brisk wind-cutting blade noise burst ("슈악- 촥!")
     const len = Math.floor(ctx.sampleRate * options.duration);
     const buf = ctx.createBuffer(1, len, ctx.sampleRate);
     const data = buf.getChannelData(0);
     for (let i = 0; i < len; i++) {
       const t = i / len;
-      // Snappy 6% attack ramp into brisk exponential decay
       const env = t < 0.06 ? t / 0.06 : Math.pow(1 - (t - 0.06) / 0.94, 1.8);
       data[i] = (Math.random() * 2 - 1) * env;
     }
@@ -62,7 +110,6 @@ function triggerKatanaSlash(
     sweepFilter.connect(sweepGain);
     sweepGain.connect(ctx.destination);
 
-    // Parallel high-frequency razor edge cut
     const edgeFilter = ctx.createBiquadFilter();
     edgeFilter.type = "highpass";
     edgeFilter.frequency.setValueAtTime(options.edgeFreq, now);
@@ -78,7 +125,6 @@ function triggerKatanaSlash(
     noise.start(now);
     noise.stop(now + options.duration);
 
-    // 2. Crisp tempered Nichirin steel ring ("팅- / 스릉!")
     const ringAt = now + 0.014;
     options.steelFreqs.forEach((freq, idx) => {
       const osc = ctx.createOscillator();
@@ -98,7 +144,6 @@ function triggerKatanaSlash(
       osc.stop(ringAt + 0.16);
     });
 
-    // Optional secondary clash glint on heavy/bad clash
     if (options.doubleClash) {
       const clashAt = now + 0.068;
       const cOsc = ctx.createOscillator();
@@ -114,7 +159,6 @@ function triggerKatanaSlash(
       cOsc.stop(clashAt + 0.105);
     }
 
-    // 3. Tight physical slash snap synchronized with the shake peak
     if (options.snapGain > 0) {
       const snapAt = now + 0.022;
       const snap = ctx.createOscillator();
@@ -137,6 +181,56 @@ function triggerKatanaSlash(
     void ctx.resume().then(schedule);
   } else {
     schedule();
+  }
+}
+
+function playWebAudioKatanaSlash(mood: ImpactMood, choiceIndex = 0) {
+  try {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+
+    const pitchFactor = 1 + ((choiceIndex % 3) - 1) * 0.04;
+
+    if (mood === "good") {
+      triggerKatanaSlash(ctx, {
+        duration: 0.18,
+        startFreq: 7400 * pitchFactor,
+        endFreq: 1320 * pitchFactor,
+        edgeFreq: 4000,
+        steelFreqs: [2880 * pitchFactor, 4520 * pitchFactor, 6540 * pitchFactor],
+        slashGain: 0.24,
+        ringGain: 0.046,
+        snapStart: 185,
+        snapGain: 0.085,
+      });
+    } else if (mood === "bad") {
+      triggerKatanaSlash(ctx, {
+        duration: 0.2,
+        startFreq: 5200 * pitchFactor,
+        endFreq: 860 * pitchFactor,
+        edgeFreq: 3100,
+        steelFreqs: [1980 * pitchFactor, 3260 * pitchFactor, 4920 * pitchFactor],
+        slashGain: 0.22,
+        ringGain: 0.042,
+        snapStart: 155,
+        snapGain: 0.1,
+        doubleClash: true,
+      });
+    } else {
+      triggerKatanaSlash(ctx, {
+        duration: 0.17,
+        startFreq: 6500 * pitchFactor,
+        endFreq: 1180 * pitchFactor,
+        edgeFreq: 3700,
+        steelFreqs: [2560 * pitchFactor, 4040 * pitchFactor, 5880 * pitchFactor],
+        slashGain: 0.22,
+        ringGain: 0.042,
+        snapStart: 170,
+        snapGain: 0.08,
+      });
+    }
+  } catch {
+    // Audio feedback is optional
   }
 }
 
@@ -171,7 +265,6 @@ export function playTone(kind: "click" | "good" | "bad" | "slash", muted: boolea
       return;
     }
 
-    // Subtle sheath/tsuba tap for dialogue progression
     const now = ctx.currentTime;
     const len = Math.floor(ctx.sampleRate * 0.028);
     const buf = ctx.createBuffer(1, len, ctx.sampleRate);
@@ -202,63 +295,41 @@ export function playTone(kind: "click" | "good" | "bad" | "slash", muted: boolea
 }
 
 /**
- * Plays a brisk, crisp Nichirin sword-slashing sound (검격음)
- * timed cleanly with the ds-stage--shake recoil and slash arc animation.
+ * Plays /demonslayer/sounds/slice.mp3 on choice click with rapid-click reset
+ * and Web Audio katana slash fallback if the file cannot be loaded or played.
  */
 export function playChoiceImpactSound(
   mood: ImpactMood,
   muted: boolean,
   choiceIndex = 0,
 ) {
-  if (muted) return;
+  if (muted) {
+    syncDemonSlayerAudioMute(true);
+    return;
+  }
+
+  const audio = getSliceAudio();
+  if (!audio) {
+    playWebAudioKatanaSlash(mood, choiceIndex);
+    return;
+  }
+
   try {
-    const ctx = getAudioContext();
-    if (!ctx) return;
+    audio.muted = false;
+    audio.volume = 0.88;
+    try {
+      audio.currentTime = 0;
+    } catch {
+      // Ignore InvalidStateError if metadata is not yet loaded
+    }
 
-    const pitchFactor = 1 + ((choiceIndex % 3) - 1) * 0.04;
-
-    if (mood === "good") {
-      // Brisk, bright "일섬(一閃)" clean slash
-      triggerKatanaSlash(ctx, {
-        duration: 0.18,
-        startFreq: 7400 * pitchFactor,
-        endFreq: 1320 * pitchFactor,
-        edgeFreq: 4000,
-        steelFreqs: [2880 * pitchFactor, 4520 * pitchFactor, 6540 * pitchFactor],
-        slashGain: 0.24,
-        ringGain: 0.046,
-        snapStart: 185,
-        snapGain: 0.085,
-      });
-    } else if (mood === "bad") {
-      // Sharp blade-clash slash ("검격 교차")
-      triggerKatanaSlash(ctx, {
-        duration: 0.2,
-        startFreq: 5200 * pitchFactor,
-        endFreq: 860 * pitchFactor,
-        edgeFreq: 3100,
-        steelFreqs: [1980 * pitchFactor, 3260 * pitchFactor, 4920 * pitchFactor],
-        slashGain: 0.22,
-        ringGain: 0.042,
-        snapStart: 155,
-        snapGain: 0.1,
-        doubleClash: true,
-      });
-    } else {
-      // Swift, crisp katana slash
-      triggerKatanaSlash(ctx, {
-        duration: 0.17,
-        startFreq: 6500 * pitchFactor,
-        endFreq: 1180 * pitchFactor,
-        edgeFreq: 3700,
-        steelFreqs: [2560 * pitchFactor, 4040 * pitchFactor, 5880 * pitchFactor],
-        slashGain: 0.22,
-        ringGain: 0.042,
-        snapStart: 170,
-        snapGain: 0.08,
+    const playPromise = audio.play();
+    if (playPromise && typeof playPromise.catch === "function") {
+      playPromise.catch(() => {
+        playWebAudioKatanaSlash(mood, choiceIndex);
       });
     }
   } catch {
-    // Audio feedback is optional
+    playWebAudioKatanaSlash(mood, choiceIndex);
   }
 }
