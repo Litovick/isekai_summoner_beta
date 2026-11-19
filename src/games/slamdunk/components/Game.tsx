@@ -6,6 +6,7 @@ import type { Line, Theme } from "../game/types";
 import { cn } from "../lib/utils";
 import { Backdrop, Portrait } from "./Scene";
 import { beep, playBasketballSfx, useTypewriter } from "./useTypewriter";
+import { EndingShareAndReward } from "../../../components/EndingShareAndReward";
 
 type Saved = GameState & { step: number };
 const gaugeBg: Record<string, string> = { trust: "bg-trust", judgment: "bg-judgment" };
@@ -230,12 +231,12 @@ export function Game({ theme }: { theme: Theme }) {
             <div className="mt-5 flex flex-wrap justify-center gap-3">
               <button onClick={() => { click(); reset("opening"); }} className="border-4 border-ink bg-primary px-5 py-2 font-display text-lg text-primary-foreground hover:bg-trust">{ending.retryLabel}</button>
               <button onClick={() => { click(); reset("title"); }} className="border-4 border-ink bg-card px-5 py-2 font-display text-lg hover:bg-ball">처음 화면으로</button>
-              {theme.originalWorkUrl ? (
-                <a href={theme.originalWorkUrl} target="_blank" rel="noreferrer" className="border-4 border-ink bg-ink px-5 py-2 font-display text-lg text-foreground hover:bg-primary">슬램덩크 애니메이션 알아보기</a>
-              ) : (
-                <button disabled title="링크 준비 중" className="cursor-not-allowed border-4 border-ink bg-ink px-5 py-2 font-display text-lg text-foreground opacity-60">슬램덩크 애니메이션 알아보기 (준비 중)</button>
-              )}
             </div>
+            <EndingShareAndReward
+              gameId="slamdunk"
+              animeTitle={theme.title}
+              endingTitle={ending.title}
+            />
           </div>
         ) : (
           <div className="mx-auto max-w-4xl">

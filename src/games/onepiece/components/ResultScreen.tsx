@@ -1,4 +1,5 @@
 import { ArrowLeft, Award, Compass, RotateCcw, Shield, Swords } from "lucide-react";
+import { EndingShareAndReward } from "../../../components/EndingShareAndReward";
 import { CHARACTERS } from "../data/characters";
 import { ENDINGS, ENDING_ORDER } from "../data/endings";
 import type {
@@ -265,6 +266,12 @@ export function ResultScreen({
           작품 선택으로 돌아가기
         </button>
       </div>
+
+      <EndingShareAndReward
+        gameId="onepiece"
+        animeTitle="원피스"
+        endingTitle={ending.title}
+      />
     </section>
   );
 }

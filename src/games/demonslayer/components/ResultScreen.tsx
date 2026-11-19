@@ -10,6 +10,7 @@ import type {
   Stats,
 } from "../types";
 import { EndingBackdropArt } from "./StageArtwork";
+import { EndingShareAndReward } from "../../../components/EndingShareAndReward";
 
 interface ResultScreenProps {
   ending: EndingInfo;
@@ -242,6 +243,12 @@ export function ResultScreen({
           작품 선택으로 돌아가기
         </button>
       </div>
+
+      <EndingShareAndReward
+        gameId="demonslayer"
+        animeTitle="귀멸의 칼날"
+        endingTitle={ending.title}
+      />
     </section>
   );
 }

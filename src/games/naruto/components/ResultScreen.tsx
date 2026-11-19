@@ -1,4 +1,5 @@
 import { ArrowLeft, Award, Flame, RotateCcw, Sparkles, Users } from "lucide-react";
+import { EndingShareAndReward } from "../../../components/EndingShareAndReward";
 import { CHARACTERS } from "../data/characters";
 import { ENDINGS, ENDING_ORDER } from "../data/endings";
 import type {
@@ -250,6 +251,12 @@ export function ResultScreen({
           작품 선택으로 돌아가기
         </button>
       </div>
+
+      <EndingShareAndReward
+        gameId="naruto"
+        animeTitle="나루토"
+        endingTitle={ending.title}
+      />
     </section>
   );
 }
