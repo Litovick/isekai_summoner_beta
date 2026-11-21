@@ -2102,15 +2102,25 @@
 }
 
 @media (max-width: 640px) {
+  .op-game,
+  .op-title-screen,
+  .op-prologue {
+    min-height: calc(100vh - 58px);
+    min-height: calc(100dvh - 58px);
+  }
+
   .op-play-shell {
     height: auto;
     min-height: calc(100vh - 58px);
-    padding: 8px 10px 14px;
+    min-height: calc(100dvh - 58px);
+    padding: 8px 10px calc(16px + env(safe-area-inset-bottom, 0px));
     gap: 8px;
   }
 
   .op-hud {
     padding: 8px 10px;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 
   .op-hud-loc {
@@ -2143,12 +2153,12 @@
 
   .op-title-char--left {
     left: -18px;
-    height: 52vh;
+    height: 48dvh;
   }
 
   .op-title-char--right {
     right: -18px;
-    height: 50vh;
+    height: 46dvh;
   }
 
   .op-title-char--center {
@@ -2158,17 +2168,18 @@
 
   .op-stage {
     flex: none;
-    height: 292px;
-    min-height: 292px;
+    height: clamp(220px, 34dvh, 275px);
+    min-height: 220px;
+    overflow: hidden;
   }
 
   .op-stage--choice {
-    height: 274px;
-    min-height: 274px;
+    height: clamp(190px, 28dvh, 240px);
+    min-height: 190px;
   }
 
   .op-cast {
-    inset: 14px 6px 0;
+    inset: 10px 6px 0;
     gap: 4px;
   }
 
@@ -2223,8 +2234,10 @@
   }
 
   .op-dialogue-card {
-    min-height: 150px;
+    min-height: 144px;
     padding: 24px 14px 12px;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 
   .op-dialogue-text {
@@ -2234,11 +2247,12 @@
 
   .op-choices-grid {
     grid-template-columns: 1fr;
-    gap: 8px;
+    gap: 10px;
   }
 
   .op-choice-btn {
-    padding: 10px 11px;
+    min-height: 52px;
+    padding: 12px 13px;
   }
 
   .op-ending-quote-box {

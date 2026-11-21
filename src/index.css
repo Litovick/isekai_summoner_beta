@@ -117,8 +117,21 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    background-color: #100b22;
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+  }
   body {
     @apply bg-background text-foreground;
+    background-color: #100b22;
+    overflow-x: hidden;
+  }
+  button,
+  [role="button"],
+  a[href] {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
@@ -207,3 +220,51 @@
   --color-ink: var(--ink);
   --color-ball: var(--ball);
 }
+
+/* Mobile-safe viewport, safe-area padding & lightweight GPU transitions */
+.app-dvh-shell {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.title-dvh-shell {
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: max(1.25rem, calc(env(safe-area-inset-bottom, 0px) + 1rem));
+}
+
+.world-select-shell {
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding-bottom: max(2rem, calc(env(safe-area-inset-bottom, 0px) + 1.5rem));
+}
+
+.world-card-item {
+  content-visibility: auto;
+  contain-intrinsic-size: 220px 340px;
+}
+
+@keyframes screen-enter-fast {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-screen-fast {
+  animation: screen-enter-fast 0.18s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  will-change: transform, opacity;
+}
+
+@media (max-width: 768px) {
+  .mobile-light-blur {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+}
+

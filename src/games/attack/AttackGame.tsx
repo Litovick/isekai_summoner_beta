@@ -1,4 +1,5 @@
 import {useEffect,useState} from "react";
+import "./styles.css";
 import {EndingShareAndReward} from "../../components/EndingShareAndReward";
 import {missions,endings,outcome,type Outcome} from "./game/attack-data";
 import {Scene,useTypewriter,beep} from "./Scene";

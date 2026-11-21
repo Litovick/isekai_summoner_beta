@@ -45,3 +45,13 @@
 .ssr-judge-body>b{font-size:12px;color:#ffe5aa}
 .ssr-judge-body p{font-size:13px;line-height:1.6;color:#f5e4f6;margin:9px 0 0}
 @media(max-width:650px){.ssr-judge-grid{grid-template-columns:1fr}.ssr-judge-portrait{width:30%;min-width:92px}.ssr-judge-portrait img{height:165px}.ssr-judge-body{padding:12px}}
+@media(max-width:768px){
+  .ssr-game{min-height:calc(100vh - 58px);min-height:calc(100dvh - 58px);overflow-x:hidden;overflow-y:auto;padding-bottom:env(safe-area-inset-bottom, 0px)}
+  .ssr-hud,.ssr-dialog,.ssr-choice-area{-webkit-backdrop-filter:none;backdrop-filter:none}
+  .ssr-backdrop-blur{filter:brightness(.28) saturate(.6)!important}
+  .ssr-cast{min-height:clamp(170px,30dvh,270px)!important}
+  .ssr-avatar{height:clamp(165px,28dvh,255px)!important}
+  .ssr-choices{gap:10px}
+  .ssr-choices button{min-height:50px;padding:12px 14px}
+}
+

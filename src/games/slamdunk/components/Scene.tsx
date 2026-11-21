@@ -13,9 +13,9 @@ export function Portrait({ c, mood, active }: { c: Character; mood: "neutral" | 
   const face = mood === "good" ? "^ ▽ ^" : mood === "bad" ? "︶ ︿ ︶" : "• _ •";
   if (c.image)
     return (
-      <div className={cn("relative transition-all duration-300", active ? "z-10 scale-105 opacity-100" : "scale-95 opacity-70 brightness-75", mood === "bad" && active && "grayscale-[40%]")}>
-        <img src={c.image} alt={c.name} width={768} height={1024} className="h-[38vh] max-h-[420px] min-h-[200px] w-auto object-contain drop-shadow-[0_8px_0_var(--ink)]" />
-        {active && mood !== "neutral" && <span className="absolute right-0 top-2 text-4xl">{mood === "good" ? "✨" : "💢"}</span>}
+      <div className={cn("relative min-w-0 transition-transform duration-200", active ? "z-10 scale-105 opacity-100" : "scale-95 opacity-70 brightness-75", mood === "bad" && active && "grayscale-[40%]")}>
+        <img src={c.image} alt={c.name} width={768} height={1024} decoding="async" className="h-[26dvh] max-h-[240px] min-h-[155px] w-auto object-contain drop-shadow-[0_6px_0_var(--ink)] sm:h-[32dvh] sm:max-h-[300px] md:h-[38vh] md:max-h-[420px] md:min-h-[200px]" />
+        {active && mood !== "neutral" && <span className="absolute right-0 top-2 text-3xl md:text-4xl">{mood === "good" ? "✨" : "💢"}</span>}
       </div>
     );
   return (
