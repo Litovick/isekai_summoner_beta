@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { runWithUnlockedAudioContext } from "../../../utils/mobileAudio";
 
 export function useTypewriter(text: string, speed = 28) {
   const [n, setN] = useState(0);
@@ -10,36 +11,22 @@ export function useTypewriter(text: string, speed = 28) {
   return { shown: text.slice(0, n), done: n >= text.length, finish: () => setN(text.length) };
 }
 
-let ctx: AudioContext | null = null;
-
-function getAudioContext(): AudioContext | null {
-  if (typeof window === "undefined") return null;
-  ctx ??= new AudioContext();
-  if (ctx.state === "suspended") {
-    void ctx.resume();
-  }
-  return ctx;
-}
-
 export function beep(kind: "click" | "good" | "bad", muted: boolean) {
   if (muted || typeof window === "undefined") return;
-  try {
-    const audio = getAudioContext();
-    if (!audio) return;
+  runWithUnlockedAudioContext((audio) => {
+    const now = audio.currentTime + 0.002;
     const o = audio.createOscillator();
     const g = audio.createGain();
     const f: [number, number] = kind === "good" ? [660, 990] : kind === "bad" ? [220, 140] : [520, 520];
     o.type = kind === "bad" ? "sawtooth" : "square";
-    o.frequency.setValueAtTime(f[0], audio.currentTime);
-    o.frequency.linearRampToValueAtTime(f[1], audio.currentTime + 0.15);
-    g.gain.setValueAtTime(0.05, audio.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.0001, audio.currentTime + 0.2);
+    o.frequency.setValueAtTime(f[0], now);
+    o.frequency.linearRampToValueAtTime(f[1], now + 0.15);
+    g.gain.setValueAtTime(0.05, now);
+    g.gain.exponentialRampToValueAtTime(0.0001, now + 0.2);
     o.connect(g).connect(audio.destination);
-    o.start();
-    o.stop(audio.currentTime + 0.2);
-  } catch {
-    /* audio unavailable */
-  }
+    o.start(now);
+    o.stop(now + 0.2);
+  });
 }
 
 /**
@@ -48,10 +35,8 @@ export function beep(kind: "click" | "good" | "bad", muted: boolean) {
  */
 export function playBasketballSfx(good: boolean, choiceIndex: number, muted: boolean) {
   if (muted || typeof window === "undefined") return;
-  try {
-    const audio = getAudioContext();
-    if (!audio) return;
-    const now = audio.currentTime;
+  runWithUnlockedAudioContext((audio) => {
+    const now = audio.currentTime + 0.003;
 
     // 1. Sneaker squeak on hardwood court (quick pitch chirp)
     const sqOsc = audio.createOscillator();
@@ -163,7 +148,5 @@ export function playBasketballSfx(good: boolean, choiceIndex: number, muted: boo
       w2.stop(whistleAt + 0.25);
       lfo.stop(whistleAt + 0.25);
     }
-  } catch {
-    /* audio unavailable */
-  }
+  });
 }

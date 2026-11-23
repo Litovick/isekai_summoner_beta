@@ -1,77 +1,1729 @@
+/* =========================================================
+   꿈빛 파티시엘(Yumeiro Patissiere) — Unified Visual Novel UI System
+   Signature Palette: 파스텔 핑크 (#f472b6 / #fbcfe8) & 크림 골드 (#f5d08a / #fde68a)
+   Matching One Piece / Demon Slayer dark-glass visual novel architecture.
+   ========================================================= */
 
-/* Yumeiro: independent transparent character art over local 16:9 stage artwork. */
-.yumeiro{--ym-pink:#ac5275;--ym-ink:#573a49;--ym-cream:#fffaf2;min-height:calc(100vh - 58px);position:relative;overflow:hidden;font-family:"Noto Sans KR",sans-serif;color:var(--ym-ink);background:radial-gradient(ellipse at 75% 3%,#ffdce9,transparent 48%),linear-gradient(140deg,#fffaf0,#faebf1 67%,#f7e0da)}
-.ym-glitter{position:absolute;top:8%;left:8%;opacity:.24;color:#bb6987;pointer-events:none}
-.ym-crown,.ym-small{font-size:11px;font-weight:900;letter-spacing:.16em;color:#ae7388}
-.ym-title{width:min(620px,100%);min-height:calc(100vh - 58px);margin:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:15px;text-align:center;padding:32px 20px}
-.ym-title h1{font-size:clamp(34px,6.5vw,62px);font-weight:950;line-height:1.17;color:#ac5378;text-shadow:2px 3px #fff}
-.ym-title h2{font:italic 26px Georgia,serif;color:#c79e61}
-.ym-title p{font-size:15px;line-height:1.9;font-weight:650}
-.ym-cover{width:min(220px,52vw);aspect-ratio:3/4;object-fit:cover;border:6px solid #fff;border-radius:20px;box-shadow:0 15px 42px #b5799270;transform:rotate(-2deg)}
-.ym-primary,.ym-outline{display:inline-flex;justify-content:center;align-items:center;gap:9px;border-radius:999px;padding:12px 25px;font-size:14px;font-weight:850;transition:transform .2s,background .2s}
-.ym-primary{background:#ae5377;color:white;box-shadow:0 7px 20px #b3688b55}
-.ym-outline{border:1px solid #ae5377;color:#99516d;background:#fffaf8c9}
-.ym-primary:hover,.ym-outline:hover{transform:translateY(-2px)}
-.ym-primary:focus-visible,.ym-outline:focus-visible,.ym-choices button:focus-visible{outline:3px solid #d89da9;outline-offset:3px}
-.ym-layout{width:min(1100px,100%);margin:0 auto;padding:16px 18px 28px;position:relative}
-.ym-header{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:16px}
-.ym-header h1{font-weight:950;font-size:clamp(22px,3vw,29px);color:#a84f72}
-.ym-header h1 span{color:#d5a252}
-.ym-stats{display:flex;gap:20px;flex-wrap:wrap}
-.ym-stats>div{width:152px}
-.ym-stats label{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:850}
-.ym-stats label b{margin-left:auto;font-variant-numeric:tabular-nums}
-.ym-meter{height:8px;border-radius:99px;background:#e6d4d8;overflow:hidden;margin-top:6px}
-.ym-meter i{height:100%;display:block;border-radius:99px;transition:width .45s}
-.ym-progress{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:0 5px 8px;font-size:12px;font-weight:900;color:#a36a80;letter-spacing:.02em}
-.ym-scene{height:clamp(360px,56vh,570px);position:relative;isolation:isolate;overflow:hidden;border:5px solid #fff;border-radius:23px;background:#f1d4d9;box-shadow:0 16px 43px #a6758b45}
-.ym-stage-background{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;z-index:0}
-.ym-stage-tint{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,#fff8f700 8%,#fffaf10c 45%,#67445b21 100%)}
-.ym-scene-decor{position:absolute;inset:18px;z-index:2;display:flex;justify-content:space-between;align-items:start;font-size:29px;color:#fff4cb;pointer-events:none;opacity:.76;text-shadow:0 2px 8px #956b8b}
-.ym-scene-label{position:absolute;z-index:4;top:16px;left:18px;max-width:70%;border:1px solid #ffffffc9;background:#fff8f1e9;backdrop-filter:blur(10px);padding:8px 16px;border-radius:999px;font-size:12px;font-weight:900;box-shadow:0 4px 14px #815b7a25}
-.ym-character-stage{position:absolute;z-index:3;inset:12px 0 0;display:flex;align-items:flex-end;justify-content:center;pointer-events:none}
-.ym-character-image{display:block;width:auto;max-width:min(56%,440px);height:100%;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 10px 15px #44304373);animation:ym-character-float 3.6s ease-in-out infinite}
-.ym-fairy .ym-character-image{height:57%;max-width:55%;margin-bottom:70px;filter:drop-shadow(0 10px 13px #79577b7a)}
-.ym-dialogue{position:absolute;z-index:5;left:18px;right:18px;bottom:15px;min-height:118px;border:2px solid #fff;background:#fff9f7ef;backdrop-filter:blur(12px);border-radius:17px;padding:24px 23px 17px;box-shadow:0 9px 25px #62465748}
-.ym-name{position:absolute;top:-18px;left:23px;background:var(--ym-pink);padding:7px 19px;border-radius:999px;color:#fff;font-size:13px;letter-spacing:.03em;font-weight:900;box-shadow:0 4px 10px #8f5a7550}
-.ym-dialogue p{font-size:clamp(14px,1.9vw,18px);line-height:1.6;font-weight:750}
-.ym-cursor{color:var(--ym-pink)}
-.ym-change{margin-top:10px;display:flex;gap:14px;flex-wrap:wrap;font-size:12px;font-weight:900;color:#a54e71}
-.ym-actions{display:flex;justify-content:center;align-items:center;min-height:105px;padding:15px 0 11px}
-.ym-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;width:100%}
-.ym-choices button{min-width:0;display:flex;align-items:center;gap:10px;text-align:left;border:2px solid #efced8;border-radius:15px;padding:15px 13px;background:#fffdf9;font-size:13px;font-weight:800;box-shadow:0 5px 12px #b98a9824;transition:transform .17s,border-color .17s,background .17s}
-.ym-choices button:hover{transform:translateY(-3px);border-color:#c17692;background:#fff2f7}
-.ym-choices button b{flex-shrink:0;color:#b66d88}
-.ym-choices button svg{flex-shrink:0;margin-left:auto}
-.ym-footer{display:flex;gap:8px;align-items:center;font-size:11px;color:#a27d87}
-.ym-footer span{margin-left:auto}
-.ym-end{max-width:680px;margin:25px auto;padding:34px 24px;text-align:center;border-radius:25px;border:4px solid #fff;background:#fff9f7ee;box-shadow:0 13px 38px #ae79913b}
-.ym-dessert{width:min(420px,94%);margin:20px auto;aspect-ratio:800/540;overflow:hidden;border:5px solid #fff;border-radius:20px;box-shadow:0 9px 20px #ad83923b}
-.ym-dessert img{display:block;width:100%;height:100%;object-fit:cover}
-.ym-end h2{font-size:clamp(24px,4vw,36px);font-weight:950;color:#a34b6e}
-.ym-end h3{font-size:19px;font-weight:900;margin-top:18px}
-.ym-end p{margin:11px 0;line-height:1.6}
-.ym-end-scores{margin:18px;color:#a94c6d;font-weight:900}
-.ym-end blockquote{background:#fff0f5;padding:16px;border-radius:12px;margin-bottom:21px;font-weight:650}
-@keyframes ym-character-float{50%{transform:translateY(-6px)}}
-@media(max-width:690px){
-  .yumeiro,.ym-title{min-height:calc(100vh - 58px);min-height:calc(100dvh - 58px);overflow-x:hidden;overflow-y:auto}
-  .ym-layout{padding:12px 10px calc(24px + env(safe-area-inset-bottom, 0px))}
-  .ym-header{gap:11px;margin-bottom:12px}
-  .ym-stats{gap:12px;width:100%}
-  .ym-stats>div{flex:1;min-width:112px}
-  .ym-progress{font-size:11px}
-  .ym-scene{height:clamp(340px,50dvh,460px);border-width:3px;border-radius:17px}
-  .ym-character-stage{inset:10px 0 124px}
-  .ym-character-image{max-width:68%;max-height:100%}
-  .ym-fairy .ym-character-image{height:68%;margin-bottom:10px}
-  .ym-scene-label{top:10px;left:10px;font-size:11px;padding:6px 12px;-webkit-backdrop-filter:none;backdrop-filter:none;background:#fff8f1f5}
-  .ym-dialogue{left:10px;right:10px;bottom:10px;min-height:108px;padding:24px 14px 12px;border-radius:13px;-webkit-backdrop-filter:none;backdrop-filter:none;background:#fff9f7f8}
-  .ym-name{left:13px}
-  .ym-choices{grid-template-columns:1fr;gap:10px}
-  .ym-choices button{min-height:50px;padding:12px 14px;font-size:13.5px}
-  .ym-actions{min-height:160px;padding:12px 0}
-  .ym-footer{font-size:10px}
+.yumeiro {
+  --ym-ink: #120a0f;
+  --ym-ink-deep: #1b1017;
+  --ym-surface: rgba(28, 17, 24, 0.88);
+  --ym-surface-strong: rgba(22, 13, 19, 0.94);
+  --ym-border: rgba(244, 114, 182, 0.28);
+  --ym-border-bright: rgba(245, 208, 138, 0.48);
+  --ym-pink: #ec4899;
+  --ym-pink-pastel: #f472b6;
+  --ym-pink-soft: #fbcfe8;
+  --ym-gold: #f5d08a;
+  --ym-gold-soft: #fef3c7;
+  --ym-text: #fdf6f9;
+  --ym-text-muted: #c8b6c0;
+
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  min-height: calc(100vh - 58px);
+  min-height: calc(100dvh - 58px);
+  background: var(--ym-ink);
+  color: var(--ym-text);
+  font-family: "Noto Sans KR", system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+  word-break: keep-all;
 }
-@media(prefers-reduced-motion:reduce){.ym-character-image{animation:none}.ym-primary,.ym-outline,.ym-choices button{transition:none}}
 
+.yumeiro *,
+.yumeiro *::before,
+.yumeiro *::after {
+  box-sizing: border-box;
+}
+
+.yumeiro button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.yumeiro .ym-bg-texture {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 18% 14%, rgba(244, 114, 182, 0.16), transparent 46%),
+    radial-gradient(circle at 84% 84%, rgba(245, 208, 138, 0.14), transparent 46%),
+    linear-gradient(180deg, #11090e 0%, #1a1017 100%);
+}
+
+/* ---------- Shared Buttons ---------- */
+.yumeiro .ym-btn-primary,
+.yumeiro .ym-btn-secondary,
+.yumeiro .ym-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: 15px;
+  padding: 12px 22px;
+  min-height: 46px;
+  transition: transform 0.16s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.yumeiro .ym-btn-lg {
+  min-height: 52px;
+  padding: 14px 28px;
+  font-size: 16px;
+}
+
+.yumeiro .ym-btn-primary {
+  background: linear-gradient(135deg, #db2777 0%, #f472b6 54%, #f5c36c 100%);
+  color: #fff9fc;
+  border: 1px solid rgba(254, 243, 199, 0.52);
+  box-shadow: 0 8px 24px rgba(236, 72, 153, 0.34);
+  text-shadow: 0 1px 4px rgba(80, 18, 45, 0.38);
+}
+
+.yumeiro .ym-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(244, 114, 182, 0.46);
+}
+
+.yumeiro .ym-btn-secondary {
+  background: rgba(38, 22, 32, 0.92);
+  color: var(--ym-gold-soft);
+  border: 1px solid rgba(245, 208, 138, 0.44);
+}
+
+.yumeiro .ym-btn-secondary:hover {
+  transform: translateY(-2px);
+  background: rgba(54, 31, 45, 0.96);
+  border-color: rgba(245, 208, 138, 0.74);
+}
+
+.yumeiro .ym-btn-ghost {
+  background: rgba(255, 255, 255, 0.045);
+  color: var(--ym-text-muted);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.yumeiro .ym-btn-ghost:hover {
+  color: var(--ym-text);
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(251, 207, 232, 0.3);
+}
+
+.yumeiro .ym-btn-primary:focus-visible,
+.yumeiro .ym-btn-secondary:focus-visible,
+.yumeiro .ym-btn-ghost:focus-visible,
+.yumeiro .ym-choice-btn:focus-visible,
+.yumeiro .ym-icon-btn:focus-visible,
+.yumeiro .ym-dialogue-card:focus-visible {
+  outline: 2px solid var(--ym-gold);
+  outline-offset: 2px;
+}
+
+/* ---------- Shared Background Photo Layer ---------- */
+.yumeiro .ym-bg-photo {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(1.5px) brightness(0.84) saturate(1.04);
+  transform: scale(1.03);
+  transition: background-image 0.45s ease-in-out, opacity 0.45s ease-in-out;
+  z-index: 0;
+}
+
+.yumeiro .ym-bg-readability {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(18, 10, 15, 0.42) 0%,
+    rgba(18, 10, 15, 0.28) 45%,
+    rgba(18, 10, 15, 0.8) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ---------- Title Screen ---------- */
+.yumeiro .ym-title-screen {
+  position: relative;
+  z-index: 1;
+  min-height: calc(100vh - 58px);
+  min-height: calc(100dvh - 58px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 18px max(28px, calc(env(safe-area-inset-bottom, 0px) + 20px));
+  overflow: hidden;
+}
+
+.yumeiro .ym-title-backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.yumeiro .ym-title-sunburst {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    radial-gradient(circle at 50% 24%, rgba(244, 114, 182, 0.24), transparent 56%),
+    radial-gradient(circle at 80% 82%, rgba(245, 208, 138, 0.22), transparent 52%);
+}
+
+.yumeiro .ym-title-characters {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.yumeiro .ym-title-char {
+  position: absolute;
+  bottom: 0;
+  object-fit: contain;
+  object-position: bottom center;
+  user-select: none;
+  filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.72));
+}
+
+.yumeiro .ym-title-char--far-left {
+  left: 2%;
+  height: min(68vh, 510px);
+  opacity: 0.64;
+  z-index: 1;
+}
+
+.yumeiro .ym-title-char--left {
+  left: 15%;
+  height: min(74vh, 550px);
+  opacity: 0.84;
+  z-index: 2;
+}
+
+.yumeiro .ym-title-char--right {
+  right: 15%;
+  height: min(74vh, 550px);
+  opacity: 0.84;
+  z-index: 2;
+}
+
+.yumeiro .ym-title-char--far-right {
+  right: 2%;
+  height: min(68vh, 510px);
+  opacity: 0.64;
+  z-index: 1;
+}
+
+.yumeiro .ym-title-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background:
+    radial-gradient(circle at 50% 48%, rgba(18, 10, 15, 0.34), rgba(18, 10, 15, 0.84) 76%),
+    linear-gradient(180deg, rgba(18, 10, 15, 0.34) 0%, rgba(18, 10, 15, 0.78) 100%);
+}
+
+.yumeiro .ym-title-panel {
+  position: relative;
+  z-index: 5;
+  width: min(560px, 100%);
+  padding: 34px 28px 28px;
+  border-radius: 16px;
+  background: rgba(24, 14, 21, 0.88);
+  border: 1px solid var(--ym-border-bright);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.66);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  text-align: center;
+  animation: ym-fade-up 0.36s ease-out both;
+}
+
+.yumeiro .ym-title-badge-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  border-radius: 16px 16px 0 0;
+  background: linear-gradient(90deg, #db2777, #f472b6, #fbcfe8, #f5d08a, #f472b6);
+}
+
+.yumeiro .ym-title-emblem {
+  width: 66px;
+  height: 66px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 35% 30%, rgba(244, 114, 182, 0.38), rgba(217, 119, 6, 0.34));
+  border: 1px solid rgba(254, 243, 199, 0.52);
+  color: var(--ym-gold-soft);
+  box-shadow: 0 0 28px rgba(244, 114, 182, 0.36);
+}
+
+.yumeiro .ym-title-eyebrow {
+  margin: 0 0 8px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ym-gold);
+}
+
+.yumeiro .ym-title-main {
+  margin: 0;
+  font-family: "Black Han Sans", "Noto Sans KR", sans-serif;
+  font-size: clamp(2.65rem, 6vw, 4.1rem);
+  line-height: 1.06;
+  color: #fff6fa;
+  text-shadow: 0 4px 20px rgba(236, 72, 153, 0.42);
+}
+
+.yumeiro .ym-title-main span {
+  display: block;
+  margin-top: 8px;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: clamp(0.95rem, 2.2vw, 1.12rem);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--ym-pink-soft);
+  text-shadow: none;
+}
+
+.yumeiro .ym-title-sub {
+  margin: 14px auto 0;
+  max-width: 44ch;
+  font-size: clamp(13.5px, 1.7vw, 15px);
+  line-height: 1.65;
+  color: var(--ym-text-muted);
+}
+
+.yumeiro .ym-title-actions {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.yumeiro .ym-title-hint {
+  margin: 16px 0 0;
+  font-size: 12px;
+  color: rgba(253, 246, 249, 0.48);
+}
+
+/* ---------- Collection Subview ---------- */
+.yumeiro .ym-prologue-screen {
+  position: relative;
+  z-index: 1;
+  min-height: calc(100vh - 58px);
+  min-height: calc(100dvh - 58px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px max(28px, calc(env(safe-area-inset-bottom, 0px) + 20px));
+}
+
+.yumeiro .ym-prologue-backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.yumeiro .ym-prologue-card {
+  position: relative;
+  z-index: 2;
+  width: min(760px, 100%);
+  padding: 28px 26px;
+  border-radius: 16px;
+  background: rgba(22, 13, 19, 0.92);
+  border: 1px solid var(--ym-border-bright);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  animation: ym-fade-up 0.34s ease-out both;
+}
+
+.yumeiro .ym-prologue-kicker {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: var(--ym-gold);
+  margin-bottom: 8px;
+}
+
+.yumeiro .ym-prologue-card h2 {
+  margin: 0;
+  font-family: "Black Han Sans", "Noto Sans KR", sans-serif;
+  font-size: clamp(1.6rem, 4vw, 2.25rem);
+  color: #fff6fa;
+}
+
+.yumeiro .ym-prologue-actions {
+  margin-top: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* ---------- Play Shell (Unified 3-Band Layout) ---------- */
+.yumeiro .ym-play-shell {
+  position: relative;
+  z-index: 1;
+  width: min(1040px, 100%);
+  height: calc(100vh - 58px);
+  height: calc(100dvh - 58px);
+  min-height: 620px;
+  margin: 0 auto;
+  padding: 12px 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ---------- HUD Bar ---------- */
+.yumeiro .ym-hud {
+  position: relative;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: var(--ym-surface-strong);
+  border: 1px solid var(--ym-border);
+  padding: 10px 14px 12px;
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.yumeiro .ym-hud-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.yumeiro .ym-hud-ep {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+}
+
+.yumeiro .ym-hud-code {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.34), rgba(245, 208, 138, 0.24));
+  border: 1px solid rgba(251, 207, 232, 0.4);
+  color: var(--ym-gold-soft);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.yumeiro .ym-hud-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: #fff6fa;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.yumeiro .ym-hud-location {
+  font-size: 12px;
+  color: var(--ym-text-muted);
+  padding-left: 8px;
+  border-left: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.yumeiro .ym-hud-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.yumeiro .ym-icon-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #f8e9f0;
+  transition: background 0.16s ease, border-color 0.16s ease, color 0.16s ease;
+}
+
+.yumeiro .ym-icon-btn:hover {
+  background: rgba(244, 114, 182, 0.28);
+  border-color: rgba(245, 208, 138, 0.5);
+  color: var(--ym-gold-soft);
+}
+
+.yumeiro .ym-stats-row {
+  margin-top: 9px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.yumeiro .ym-stat-card {
+  padding: 7px 11px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.yumeiro .ym-stat-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 5px;
+}
+
+.yumeiro .ym-stat-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #f5e6ed;
+}
+
+.yumeiro .ym-stat-label--skill svg {
+  color: var(--ym-gold);
+}
+
+.yumeiro .ym-stat-label--team svg {
+  color: var(--ym-pink-pastel);
+}
+
+.yumeiro .ym-stat-values {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-variant-numeric: tabular-nums;
+}
+
+.yumeiro .ym-stat-num {
+  font-size: 13px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.yumeiro .ym-stat-delta {
+  font-size: 11px;
+  font-weight: 800;
+  padding: 1px 6px;
+  border-radius: 999px;
+}
+
+.yumeiro .ym-stat-delta.pos {
+  background: rgba(34, 197, 94, 0.2);
+  color: #86efac;
+}
+
+.yumeiro .ym-stat-delta.neg {
+  background: rgba(239, 68, 68, 0.22);
+  color: #fca5a5;
+}
+
+.yumeiro .ym-stat-bar {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.yumeiro .ym-stat-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.yumeiro .ym-stat-fill--skill {
+  background: linear-gradient(90deg, #d97706, #f5c36c, #fef08a);
+}
+
+.yumeiro .ym-stat-fill--team {
+  background: linear-gradient(90deg, #db2777, #f472b6, #fbcfe8);
+}
+
+.yumeiro .ym-progress-track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.yumeiro .ym-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ec4899, #f472b6, #f5d08a);
+  transition: width 0.4s ease;
+}
+
+/* ---------- Stage & Cast ---------- */
+.yumeiro .ym-stage {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 240px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(244, 114, 182, 0.28);
+  background: #170e14;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.52);
+}
+
+.yumeiro .ym-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.yumeiro .ym-backdrop-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 34%, transparent 38%, rgba(16, 9, 14, 0.58) 100%),
+    linear-gradient(180deg, rgba(16, 9, 14, 0.24) 0%, transparent 28%, rgba(16, 9, 14, 0.72) 100%);
+}
+
+.yumeiro .ym-stage-badge {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  z-index: 4;
+  padding: 4px 11px;
+  border-radius: 999px;
+  background: rgba(22, 13, 19, 0.78);
+  border: 1px solid rgba(245, 208, 138, 0.36);
+  color: var(--ym-gold-soft);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  backdrop-filter: blur(8px);
+}
+
+.yumeiro .ym-cast {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: clamp(10px, 2.5vw, 28px);
+  padding: 18px 18px 0;
+  pointer-events: none;
+}
+
+.yumeiro .ym-character {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 0 1 280px;
+  max-width: 280px;
+  height: 94%;
+  min-width: 0;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease, filter 0.25s ease;
+  transform-origin: bottom center;
+  animation: ym-enter-standee 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.yumeiro .ym-character--active {
+  z-index: 4;
+  transform: translateY(-2px) scale(1.04);
+  opacity: 1;
+  filter: drop-shadow(0 0 18px rgba(244, 114, 182, 0.38)) drop-shadow(0 14px 20px rgba(0, 0, 0, 0.62));
+}
+
+.yumeiro .ym-character--fairy .ym-character-img {
+  max-height: 70%;
+  margin-bottom: 34px;
+  animation: ym-fairy-float 3.2s ease-in-out infinite;
+}
+
+.yumeiro .ym-character-figure {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.yumeiro .ym-character-img {
+  width: auto;
+  max-width: 100%;
+  max-height: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+  user-select: none;
+  background: transparent;
+}
+
+.yumeiro .ym-character-plate {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 14px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(219, 39, 119, 0.92), rgba(244, 114, 182, 0.9));
+  border: 1px solid rgba(254, 243, 199, 0.62);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+}
+
+/* ---------- Choice Impact VFX ---------- */
+.yumeiro .ym-stage--shake {
+  animation: ym-stage-shake 0.42s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+.yumeiro .ym-sparkle-fx {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 42%, rgba(254, 243, 199, 0.52), rgba(244, 114, 182, 0.24) 48%, transparent 74%);
+  animation: ym-flash-fade 0.46s ease-out forwards;
+}
+
+.yumeiro .ym-sparkle-fx--bad {
+  background: radial-gradient(circle at 50% 42%, rgba(244, 63, 94, 0.44), rgba(136, 19, 55, 0.24) 48%, transparent 74%);
+}
+
+/* ---------- Bottom Dialogue & Choices ---------- */
+.yumeiro .ym-bottom-panel {
+  flex-shrink: 0;
+  position: relative;
+  z-index: 5;
+}
+
+.yumeiro .ym-dialogue-card {
+  position: relative;
+  width: 100%;
+  min-height: 146px;
+  padding: 26px 22px 14px;
+  border-radius: 14px;
+  background: var(--ym-surface-strong);
+  border: 1px solid var(--ym-border-bright);
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.56);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+  transition: border-color 0.2s ease;
+}
+
+.yumeiro .ym-dialogue-card:hover {
+  border-color: rgba(245, 208, 138, 0.78);
+}
+
+.yumeiro .ym-speaker-plate {
+  position: absolute;
+  top: -15px;
+  left: 18px;
+  padding: 5px 15px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #db2777 0%, #f472b6 100%);
+  border: 1px solid rgba(254, 243, 199, 0.62);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  box-shadow: 0 6px 16px rgba(219, 39, 119, 0.4);
+}
+
+.yumeiro .ym-dialogue-text {
+  margin: 0;
+  font-size: clamp(15px, 1.8vw, 18px);
+  line-height: 1.7;
+  color: #fff8fb;
+}
+
+.yumeiro .ym-caret {
+  display: inline-block;
+  margin-left: 2px;
+  color: var(--ym-gold);
+  animation: ym-blink 0.8s steps(2, start) infinite;
+}
+
+.yumeiro .ym-dialogue-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.yumeiro .ym-reaction-deltas {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.yumeiro .ym-delta-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.yumeiro .ym-delta-pill.pos {
+  background: rgba(34, 197, 94, 0.18);
+  border: 1px solid rgba(74, 222, 128, 0.35);
+  color: #86efac;
+}
+
+.yumeiro .ym-delta-pill.neg {
+  background: rgba(239, 68, 68, 0.18);
+  border: 1px solid rgba(248, 113, 113, 0.38);
+  color: #fca5a5;
+}
+
+.yumeiro .ym-next-indicator {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--ym-gold);
+}
+
+/* ---------- Choice Box ---------- */
+.yumeiro .ym-choice-box {
+  border-radius: 14px;
+  background: var(--ym-surface-strong);
+  border: 1px solid var(--ym-border-bright);
+  padding: 16px 18px 18px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.58);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  animation: ym-fade-up 0.22s ease-out both;
+}
+
+.yumeiro .ym-choice-header {
+  margin-bottom: 12px;
+}
+
+.yumeiro .ym-choice-kicker {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: var(--ym-pink-pastel);
+  margin-bottom: 4px;
+}
+
+.yumeiro .ym-choice-prompt {
+  margin: 0;
+  font-size: clamp(15px, 1.8vw, 17px);
+  font-weight: 800;
+  color: #fff6fa;
+  line-height: 1.45;
+}
+
+.yumeiro .ym-choices-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.yumeiro .ym-choice-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 60px;
+  padding: 12px 13px;
+  border-radius: 11px;
+  background: rgba(38, 22, 32, 0.92);
+  border: 1px solid rgba(244, 114, 182, 0.32);
+  color: #fff6fa;
+  text-align: left;
+  transition: transform 0.16s ease, border-color 0.16s ease, background 0.16s ease, box-shadow 0.16s ease;
+}
+
+.yumeiro .ym-choice-btn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, rgba(219, 39, 119, 0.44), rgba(245, 195, 108, 0.28));
+  border-color: rgba(245, 208, 138, 0.78);
+  box-shadow: 0 10px 24px rgba(244, 114, 182, 0.28);
+}
+
+.yumeiro .ym-choice-badge {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border-radius: 7px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #db2777, #f472b6);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.yumeiro .ym-choice-label {
+  flex: 1 1 auto;
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.45;
+  color: #fff6fa;
+}
+
+.yumeiro .ym-choice-arrow {
+  flex-shrink: 0;
+  color: var(--ym-gold);
+  opacity: 0.74;
+  transition: transform 0.16s ease, opacity 0.16s ease;
+}
+
+.yumeiro .ym-choice-btn:hover .ym-choice-arrow {
+  transform: translateX(3px);
+  opacity: 1;
+}
+
+/* ---------- Result / Ending Screen ---------- */
+.yumeiro .ym-result-screen {
+  position: relative;
+  z-index: 1;
+  width: min(1040px, 100%);
+  margin: 0 auto;
+  padding: 20px 16px max(40px, calc(env(safe-area-inset-bottom, 0px) + 28px));
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.yumeiro .ym-ending-hero {
+  position: relative;
+  z-index: 2;
+  border-radius: 16px;
+  background: var(--ym-surface-strong);
+  border: 1px solid var(--ym-border-bright);
+  padding: 24px 22px;
+  box-shadow: 0 22px 54px rgba(0, 0, 0, 0.6);
+}
+
+.yumeiro .ym-ending-badge-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.yumeiro .ym-ending-type-group {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.yumeiro .ym-ending-type-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 11px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.yumeiro .ym-ending-type--hidden {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.32), rgba(236, 72, 153, 0.34));
+  border: 1px solid rgba(254, 240, 138, 0.78);
+  color: #fef08a;
+  box-shadow: 0 0 18px rgba(245, 208, 138, 0.28);
+}
+
+.yumeiro .ym-ending-type--happy {
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.34), rgba(244, 114, 182, 0.24));
+  border: 1px solid rgba(251, 207, 232, 0.65);
+  color: #fce7f3;
+}
+
+.yumeiro .ym-ending-type--normal {
+  background: rgba(148, 163, 184, 0.2);
+  border: 1px solid rgba(226, 232, 240, 0.36);
+  color: #f1f5f9;
+}
+
+.yumeiro .ym-ending-type--sad {
+  background: rgba(127, 29, 29, 0.38);
+  border: 1px solid rgba(248, 113, 113, 0.5);
+  color: #fecaca;
+}
+
+.yumeiro .ym-ending-kicker {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: var(--ym-gold);
+}
+
+.yumeiro .ym-ending-cond {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 11px;
+  border-radius: 999px;
+  background: rgba(244, 114, 182, 0.24);
+  border: 1px solid rgba(245, 208, 138, 0.42);
+  color: var(--ym-gold-soft);
+}
+
+.yumeiro .ym-ending-title {
+  margin: 0;
+  font-family: "Black Han Sans", "Noto Sans KR", sans-serif;
+  font-size: clamp(1.95rem, 5.2vw, 3.1rem);
+  line-height: 1.14;
+  color: #fff6fa;
+}
+
+.yumeiro .ym-ending-subtitle {
+  margin: 8px 0 0;
+  font-size: clamp(15px, 2vw, 18px);
+  font-weight: 700;
+  color: var(--ym-pink-soft);
+}
+
+.yumeiro .ym-ending-narration {
+  margin: 16px 0 0;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(245, 208, 138, 0.24);
+  font-size: 14.5px;
+  line-height: 1.72;
+  color: #f7eaf0;
+}
+
+.yumeiro .ym-ending-visual {
+  position: relative;
+  margin-top: 18px;
+  height: clamp(220px, 34vh, 320px);
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(245, 208, 138, 0.36);
+  background: #1a0f16;
+}
+
+.yumeiro .ym-ending-ensemble {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: clamp(4px, 1.4vw, 16px);
+  padding: 12px 14px 0;
+}
+
+.yumeiro .ym-ending-member {
+  flex: 1 1 0;
+  max-width: 195px;
+  height: 92%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.yumeiro .ym-ending-member--lead {
+  height: 98%;
+  z-index: 2;
+}
+
+.yumeiro .ym-ending-member-img {
+  width: auto;
+  max-width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+  filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.65));
+}
+
+.yumeiro .ym-ending-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: linear-gradient(180deg, transparent 42%, rgba(18, 10, 15, 0.88) 100%);
+  pointer-events: none;
+}
+
+.yumeiro .ym-ending-banner-mark {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 12px;
+  z-index: 4;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.yumeiro .ym-ending-banner-mark span {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: var(--ym-gold);
+}
+
+.yumeiro .ym-ending-banner-mark strong {
+  font-family: "Black Han Sans", sans-serif;
+  font-size: 18px;
+  color: #fff;
+}
+
+.yumeiro .ym-dessert-showcase {
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px;
+  border-radius: 13px;
+  background: rgba(244, 114, 182, 0.08);
+  border: 1px solid rgba(245, 208, 138, 0.3);
+}
+
+.yumeiro .ym-dessert-thumb {
+  width: 124px;
+  aspect-ratio: 4 / 3;
+  flex-shrink: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(254, 243, 199, 0.4);
+  background: #1d1118;
+}
+
+.yumeiro .ym-dessert-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.yumeiro .ym-dessert-copy {
+  min-width: 0;
+  flex: 1;
+}
+
+.yumeiro .ym-dessert-kicker {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--ym-gold);
+}
+
+.yumeiro .ym-dessert-copy h3 {
+  margin: 4px 0 0;
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff6fa;
+}
+
+.yumeiro .ym-dessert-copy p {
+  margin: 5px 0 0;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ym-text-muted);
+}
+
+.yumeiro .ym-ending-quote-box {
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(244, 114, 182, 0.24);
+}
+
+.yumeiro .ym-ending-quote-portrait {
+  width: 72px;
+  height: 88px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.yumeiro .ym-ending-quote-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.5));
+}
+
+.yumeiro .ym-ending-quote-copy blockquote {
+  margin: 4px 0 0;
+  font-size: 15px;
+  line-height: 1.65;
+  color: #fff6fa;
+}
+
+.yumeiro .ym-ending-quote-speaker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.yumeiro .ym-ending-quote-speaker strong {
+  color: var(--ym-gold);
+}
+
+.yumeiro .ym-ending-quote-speaker span {
+  color: var(--ym-text-muted);
+  font-size: 12px;
+}
+
+.yumeiro .ym-final-stats {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.yumeiro .ym-final-stat {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.yumeiro .ym-final-stat--skill svg {
+  color: var(--ym-gold);
+}
+
+.yumeiro .ym-final-stat--team svg {
+  color: var(--ym-pink-pastel);
+}
+
+.yumeiro .ym-final-stat span {
+  font-size: 14px;
+  font-weight: 700;
+  color: #f5e6ed;
+}
+
+.yumeiro .ym-final-stat b {
+  margin-left: auto;
+  font-family: "Black Han Sans", sans-serif;
+  font-size: 26px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ym-gold);
+}
+
+/* ---------- Character Evaluation Grid ---------- */
+.yumeiro .ym-eval-section {
+  position: relative;
+  z-index: 2;
+  border-radius: 16px;
+  background: var(--ym-surface-strong);
+  border: 1px solid var(--ym-border);
+  padding: 22px;
+}
+
+.yumeiro .ym-eval-header {
+  margin-bottom: 16px;
+}
+
+.yumeiro .ym-eval-kicker {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: var(--ym-pink-pastel);
+  margin-bottom: 6px;
+}
+
+.yumeiro .ym-eval-header h2 {
+  margin: 0;
+  font-family: "Black Han Sans", "Noto Sans KR", sans-serif;
+  font-size: clamp(1.35rem, 3vw, 1.85rem);
+  color: #fff6fa;
+}
+
+.yumeiro .ym-eval-header p {
+  margin: 6px 0 0;
+  font-size: 13.5px;
+  color: var(--ym-text-muted);
+}
+
+.yumeiro .ym-eval-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.yumeiro .ym-eval-card {
+  display: flex;
+  align-items: stretch;
+  gap: 14px;
+  padding: 14px;
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(244, 114, 182, 0.22);
+}
+
+.yumeiro .ym-eval-stage {
+  width: 86px;
+  min-height: 108px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background: transparent;
+}
+
+.yumeiro .ym-eval-portrait {
+  width: 100%;
+  height: 108px;
+  object-fit: contain;
+  object-position: bottom center;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.55));
+}
+
+.yumeiro .ym-eval-body {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+}
+
+.yumeiro .ym-eval-role {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ym-pink-pastel);
+}
+
+.yumeiro .ym-eval-name {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--ym-gold-soft);
+}
+
+.yumeiro .ym-eval-comment {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #f3e4ec;
+}
+
+/* ---------- Archive Strip ---------- */
+.yumeiro .ym-archive-strip {
+  position: relative;
+  z-index: 2;
+  border-radius: 14px;
+  background: var(--ym-surface-strong);
+  border: 1px solid var(--ym-border);
+  padding: 18px 20px;
+}
+
+.yumeiro .ym-archive-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ym-gold);
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.yumeiro .ym-archive-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.yumeiro .ym-archive-item {
+  padding: 13px 15px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.yumeiro .ym-archive-item.unlocked {
+  border-color: rgba(245, 208, 138, 0.36);
+  background: rgba(244, 114, 182, 0.12);
+}
+
+.yumeiro .ym-archive-item.current {
+  border-color: var(--ym-gold);
+  box-shadow: 0 0 0 1px rgba(245, 208, 138, 0.42);
+}
+
+.yumeiro .ym-archive-num {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--ym-pink-pastel);
+}
+
+.yumeiro .ym-archive-item strong {
+  font-size: 14.5px;
+  color: #fff;
+}
+
+.yumeiro .ym-archive-item small {
+  font-size: 12px;
+  color: var(--ym-text-muted);
+}
+
+.yumeiro .ym-result-actions {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* ---------- Animations ---------- */
+@keyframes ym-fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ym-enter-standee {
+  from { opacity: 0; transform: translateY(10px) scale(0.96); }
+  to { opacity: 1; transform: translateY(-2px) scale(1.04); }
+}
+
+@keyframes ym-fairy-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes ym-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+@keyframes ym-stage-shake {
+  0% { transform: translate3d(0, 0, 0); }
+  18% { transform: translate3d(-6px, 4px, 0); }
+  40% { transform: translate3d(6px, -3px, 0); }
+  65% { transform: translate3d(-3px, 2px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+@keyframes ym-flash-fade {
+  0% { opacity: 0.85; }
+  100% { opacity: 0; }
+}
+
+/* ---------- Responsive (Tablet & Mobile) ---------- */
+@media (max-width: 768px) {
+  .yumeiro .ym-choices-grid,
+  .yumeiro .ym-eval-grid,
+  .yumeiro .ym-archive-list {
+    grid-template-columns: 1fr;
+  }
+
+  .yumeiro .ym-title-char--far-left,
+  .yumeiro .ym-title-char--far-right {
+    display: none;
+  }
+
+  .yumeiro .ym-title-char--left {
+    left: -2%;
+    height: min(56vh, 420px);
+    opacity: 0.56;
+  }
+
+  .yumeiro .ym-title-char--right {
+    right: -2%;
+    height: min(56vh, 420px);
+    opacity: 0.56;
+  }
+}
+
+@media (max-width: 640px) {
+  .yumeiro,
+  .yumeiro .ym-title-screen,
+  .yumeiro .ym-prologue-screen {
+    min-height: calc(100vh - 49px);
+    min-height: calc(100dvh - 49px);
+  }
+
+  .yumeiro .ym-play-shell {
+    height: calc(100vh - 49px);
+    height: calc(100dvh - 49px);
+    min-height: 0;
+    padding: 6px 8px max(8px, env(safe-area-inset-bottom, 0px));
+    gap: 6px;
+    overflow-y: auto;
+  }
+
+  .yumeiro .ym-hud {
+    padding: 6px 8px 7px;
+    gap: 6px;
+    border-radius: 13px;
+  }
+
+  .yumeiro .ym-hud-top {
+    gap: 6px;
+  }
+
+  .yumeiro .ym-hud-ep {
+    flex-wrap: nowrap;
+    gap: 6px;
+    overflow: hidden;
+  }
+
+  .yumeiro .ym-hud-code {
+    padding: 2px 6px;
+    font-size: 9.5px;
+    flex-shrink: 0;
+  }
+
+  .yumeiro .ym-hud-title {
+    font-size: clamp(12.5px, 3.4vw, 14px);
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .yumeiro .ym-hud-location {
+    display: none;
+  }
+
+  .yumeiro .ym-hud-actions {
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  .yumeiro .ym-icon-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+  }
+
+  .yumeiro .ym-stats-row {
+    gap: 6px;
+  }
+
+  .yumeiro .ym-stat-card {
+    padding: 4px 7px;
+    gap: 3px;
+    border-radius: 9px;
+  }
+
+  .yumeiro .ym-stat-label {
+    font-size: 10.5px;
+  }
+
+  .yumeiro .ym-stat-num {
+    font-size: 11px;
+  }
+
+  .yumeiro .ym-stat-bar {
+    height: 5px;
+  }
+
+  .yumeiro .ym-stage {
+    flex: 1 1 0;
+    height: auto;
+    min-height: 140px;
+    border-radius: 14px;
+  }
+
+  .yumeiro .ym-stage--choice {
+    height: auto;
+    min-height: 118px;
+  }
+
+  .yumeiro .ym-stage-badge {
+    top: 7px;
+    left: 8px;
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+
+  .yumeiro .ym-cast {
+    gap: 4px;
+    padding: 8px 6px 0;
+  }
+
+  .yumeiro .ym-character {
+    height: 95%;
+  }
+
+  .yumeiro .ym-character-figure {
+    height: calc(100% - 18px);
+  }
+
+  .yumeiro .ym-character-plate {
+    font-size: 10px;
+    padding: 2px 8px;
+    bottom: 4px;
+  }
+
+  .yumeiro .ym-bottom-panel {
+    margin-top: 0;
+  }
+
+  .yumeiro .ym-dialogue-card {
+    margin-top: 6px;
+    min-height: clamp(114px, 18dvh, 138px);
+    padding: 19px 13px 10px;
+    gap: 8px;
+    border-radius: 14px;
+  }
+
+  .yumeiro .ym-speaker-plate {
+    top: -13px;
+    left: 12px;
+    font-size: 11.5px;
+    padding: 3px 10px;
+  }
+
+  .yumeiro .ym-dialogue-text {
+    font-size: clamp(13px, 3.6vw, 14.5px);
+    line-height: 1.52;
+    word-break: keep-all;
+  }
+
+  .yumeiro .ym-next-indicator {
+    font-size: 11.5px;
+  }
+
+  .yumeiro .ym-choice-box {
+    padding: 9px 10px 10px;
+    border-radius: 14px;
+  }
+
+  .yumeiro .ym-choice-header {
+    margin-bottom: 6px;
+  }
+
+  .yumeiro .ym-choice-kicker {
+    font-size: 9.5px;
+    margin-bottom: 2px;
+  }
+
+  .yumeiro .ym-choice-prompt {
+    font-size: clamp(13px, 3.6vw, 14.5px);
+    line-height: 1.32;
+    word-break: keep-all;
+  }
+
+  .yumeiro .ym-choices-grid {
+    gap: 6px;
+  }
+
+  .yumeiro .ym-choice-btn {
+    min-height: 44px;
+    padding: 8px 10px;
+    gap: 8px;
+    border-radius: 11px;
+  }
+
+  .yumeiro .ym-choice-badge {
+    width: 24px;
+    height: 24px;
+    font-size: 11.5px;
+  }
+
+  .yumeiro .ym-choice-label {
+    font-size: clamp(12px, 3.2vw, 13px);
+    line-height: 1.35;
+    word-break: keep-all;
+  }
+
+  .yumeiro .ym-choice-arrow {
+    width: 14px;
+    height: 14px;
+  }
+
+  .yumeiro .ym-title-panel,
+  .yumeiro .ym-prologue-card {
+    padding: 20px 16px 18px;
+  }
+
+  .yumeiro .ym-final-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .yumeiro .ym-dessert-showcase {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .yumeiro .ym-dessert-thumb {
+    width: min(240px, 100%);
+  }
+
+  .yumeiro .ym-ending-hero,
+  .yumeiro .ym-eval-section,
+  .yumeiro .ym-archive-strip {
+    padding: 16px 14px;
+  }
+
+  .yumeiro .ym-ending-visual {
+    height: clamp(190px, 30dvh, 240px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .yumeiro *,
+  .yumeiro *::before,
+  .yumeiro *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

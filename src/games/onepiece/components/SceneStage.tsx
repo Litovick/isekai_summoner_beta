@@ -1,4 +1,5 @@
 import { CHARACTERS } from "../data/characters";
+import { getOnePieceStageBackground, toOnePieceBgUrl } from "../data/backgrounds";
 import type { CharacterId, EpisodeStageTheme } from "../types";
 import { applyImageFallback } from "./imageFallback";
 
@@ -91,6 +92,7 @@ export function SceneStage({
   })();
 
   const isEnsemble = visibleCast.length >= 5;
+  const backgroundPath = getOnePieceStageBackground(stageTheme);
 
   return (
     <div
@@ -101,16 +103,18 @@ export function SceneStage({
       data-impacting={isImpacting ? "true" : "false"}
       data-impact-tick={impactTick}
     >
-      {/* Pure CSS Grand Line Sea & Island Environments */}
+      {/* Original Anime Stage Background Photo + Atmospheric Particles */}
       <div
-        className={`op-backdrop op-env op-env--${stageTheme}`}
+        className={`op-backdrop op-env op-env--${stageTheme} op-backdrop--photo`}
         role="region"
         aria-label={location}
       >
-        <div className="op-env-sky" aria-hidden="true" />
-        <div className="op-env-celestial" aria-hidden="true" />
-        <div className="op-env-horizon" aria-hidden="true" />
-        <div className="op-env-waves" aria-hidden="true" />
+        <div
+          className="op-bg-photo"
+          style={{ backgroundImage: toOnePieceBgUrl(backgroundPath) }}
+          data-bg-src={backgroundPath}
+          aria-hidden="true"
+        />
         <div className="op-env-aura" aria-hidden="true" />
 
         <div className="op-env-particles" aria-hidden="true">

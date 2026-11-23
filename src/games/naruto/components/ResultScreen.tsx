@@ -1,6 +1,7 @@
 import { ArrowLeft, Award, Flame, RotateCcw, Sparkles, Users } from "lucide-react";
 import { EndingShareAndReward } from "../../../components/EndingShareAndReward";
 import { CHARACTERS } from "../data/characters";
+import { NARUTO_BACKGROUNDS, toNarutoBgUrl } from "../data/backgrounds";
 import { ENDINGS, ENDING_ORDER } from "../data/endings";
 import type {
   CharacterEvaluation,
@@ -72,11 +73,15 @@ export function ResultScreen({
         <h1 className="nr-ending-title">{ending.title}</h1>
         <p className="nr-ending-subtitle">{ending.subtitle}</p>
 
-        {/* Pure CSS Ending Theme Backdrop + Layered Character PNG Ensemble */}
+        {/* Original Anime Ending Backdrop + Layered Character PNG Ensemble */}
         <div className={`nr-ending-visual nr-ending-theme--${ending.theme}`}>
-          <div className="nr-ending-sky" aria-hidden="true" />
-          <div className="nr-ending-celestial" aria-hidden="true" />
-          <div className="nr-ending-silhouette" aria-hidden="true" />
+          <div
+            className="nr-bg-photo"
+            style={{ backgroundImage: toNarutoBgUrl(NARUTO_BACKGROUNDS.endingSunset) }}
+            data-bg-src={NARUTO_BACKGROUNDS.endingSunset}
+            aria-hidden="true"
+          />
+          <div className="nr-bg-readability" aria-hidden="true" />
           <div className="nr-ending-beams" aria-hidden="true" />
 
           <div className="nr-ending-ensemble" aria-label="엔딩 주요 인물">

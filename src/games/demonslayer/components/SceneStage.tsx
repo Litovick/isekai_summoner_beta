@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { CHARACTERS } from "../data/characters";
+import {
+  getDemonSlayerStageBackground,
+  toDemonSlayerBgUrl,
+} from "../data/backgrounds";
 import type { CharacterId, EpisodeStageTheme } from "../types";
-import { EpisodeBackdropArt } from "./StageArtwork";
 
 interface SceneStageProps {
   stageTheme: EpisodeStageTheme;
@@ -100,6 +103,8 @@ export function SceneStage({
     return base.slice(0, 4);
   })();
 
+  const backgroundPath = getDemonSlayerStageBackground(stageTheme);
+
   return (
     <div
       className={`ds-stage ${isChoicePhase ? "ds-stage--choice" : ""} ${
@@ -109,15 +114,18 @@ export function SceneStage({
       data-impacting={isImpacting ? "true" : "false"}
       data-impact-tick={impactTick}
     >
-      {/* Handcrafted Taisho Episode Stage Backdrop + Atmospheric Particles */}
+      {/* Original Anime Stage Background Photo + Atmospheric Particles */}
       <div
-        className={`ds-backdrop ds-env ds-env--${stageTheme}`}
+        className={`ds-backdrop ds-env ds-env--${stageTheme} ds-backdrop--photo`}
         role="region"
         aria-label={location}
       >
-        <div className="ds-env-sky" aria-hidden="true" />
-        <EpisodeBackdropArt stageTheme={stageTheme} />
-        <div className="ds-env-pattern" aria-hidden="true" />
+        <div
+          className="ds-bg-photo"
+          style={{ backgroundImage: toDemonSlayerBgUrl(backgroundPath) }}
+          data-bg-src={backgroundPath}
+          aria-hidden="true"
+        />
         <div className="ds-env-mist" aria-hidden="true" />
 
         <div className="ds-env-particles" aria-hidden="true">

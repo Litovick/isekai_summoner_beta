@@ -1,6 +1,7 @@
 import { ArrowLeft, Award, Compass, RotateCcw, Shield, Swords } from "lucide-react";
 import { EndingShareAndReward } from "../../../components/EndingShareAndReward";
 import { CHARACTERS } from "../data/characters";
+import { ONEPIECE_BACKGROUNDS, toOnePieceBgUrl } from "../data/backgrounds";
 import { ENDINGS, ENDING_ORDER } from "../data/endings";
 import type {
   CharacterEvaluation,
@@ -74,11 +75,15 @@ export function ResultScreen({
         <h1 className="op-ending-title">{ending.title}</h1>
         <p className="op-ending-subtitle">{ending.subtitle}</p>
 
-        {/* Pure CSS Ending Backdrop + Layered Character PNG Ensemble */}
+        {/* Original Anime Ending Backdrop + Layered Character PNG Ensemble */}
         <div className={`op-ending-visual op-ending-theme--${ending.theme}`}>
-          <div className="op-ending-sky" aria-hidden="true" />
-          <div className="op-ending-celestial" aria-hidden="true" />
-          <div className="op-ending-silhouette" aria-hidden="true" />
+          <div
+            className="op-bg-photo"
+            style={{ backgroundImage: toOnePieceBgUrl(ONEPIECE_BACKGROUNDS.endingSunset) }}
+            data-bg-src={ONEPIECE_BACKGROUNDS.endingSunset}
+            aria-hidden="true"
+          />
+          <div className="op-bg-readability" aria-hidden="true" />
           <div className="op-ending-beams" aria-hidden="true" />
 
           <div className="op-ending-ensemble" aria-label="엔딩 주요 인물">

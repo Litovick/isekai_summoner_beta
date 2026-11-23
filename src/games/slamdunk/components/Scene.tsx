@@ -1,57 +1,216 @@
+import { useEffect, useState } from "react";
 import type { Character, Theme } from "../game/types";
-import { cn } from "../lib/utils";
 
-const toneClass: Record<Character["tone"], string> = {
-  primary: "bg-primary text-primary-foreground",
-  ink: "bg-ink text-foreground",
-  orange: "bg-ball text-ink",
-  court: "bg-court-dark text-foreground",
-  muted: "bg-muted-foreground text-foreground",
-};
+export function useCharacterImageSrc(c?: Character) {
+  const [failedPrimary, setFailedPrimary] = useState(false);
+  const [failedFallback, setFailedFallback] = useState(false);
 
-export function Portrait({ c, mood, active }: { c: Character; mood: "neutral" | "good" | "bad"; active: boolean }) {
-  const face = mood === "good" ? "^ ▽ ^" : mood === "bad" ? "︶ ︿ ︶" : "• _ •";
-  if (c.image)
-    return (
-      <div className={cn("relative min-w-0 transition-transform duration-200", active ? "z-10 scale-105 opacity-100" : "scale-95 opacity-70 brightness-75", mood === "bad" && active && "grayscale-[40%]")}>
-        <img src={c.image} alt={c.name} width={768} height={1024} decoding="async" className="h-[26dvh] max-h-[240px] min-h-[155px] w-auto object-contain drop-shadow-[0_6px_0_var(--ink)] sm:h-[32dvh] sm:max-h-[300px] md:h-[38vh] md:max-h-[420px] md:min-h-[200px]" />
-        {active && mood !== "neutral" && <span className="absolute right-0 top-2 text-3xl md:text-4xl">{mood === "good" ? "✨" : "💢"}</span>}
-      </div>
-    );
+  useEffect(() => {
+    setFailedPrimary(false);
+    setFailedFallback(false);
+  }, [c?.id, c?.image, c?.fallbackImage]);
+
+  const src = !c
+    ? undefined
+    : !failedPrimary && c.image
+      ? c.image
+      : !failedFallback && c.fallbackImage
+        ? c.fallbackImage
+        : undefined;
+
+  const handleError = () => {
+    if (!failedPrimary && c?.image) {
+      setFailedPrimary(true);
+    } else {
+      setFailedFallback(true);
+    }
+  };
+
+  return { src, handleError };
+}
+
+export function Portrait({
+  c,
+  mood,
+  active,
+}: {
+  c: Character;
+  mood: "neutral" | "good" | "bad";
+  active: boolean;
+  compact?: boolean;
+}) {
+  const { src, handleError } = useCharacterImageSrc(c);
+
   return (
-    <div className={cn("flex flex-col items-center transition-all duration-300", active ? "scale-105 opacity-100" : "scale-95 opacity-60")}>
-      <div className="relative flex h-24 w-24 items-center justify-center rounded-full border-4 border-ink bg-card text-lg font-bold text-card-foreground shadow-lg md:h-28 md:w-28">
-        <span>{face}</span>
+    <div
+      className={`sd-character ${active ? "sd-character--active" : "sd-character--idle"} ${
+        mood === "bad" && active ? "sd-character--bad" : ""
+      }`}
+      data-character={c.id}
+      data-active={active ? "true" : "false"}
+    >
+      <div className="sd-character-figure">
+        {src ? (
+          <img
+            src={src}
+            alt={c.name}
+            decoding="async"
+            onError={handleError}
+            className="sd-character-img"
+          />
+        ) : (
+          <div className="sd-character-fallback" aria-label={c.name}>
+            <div className="sd-character-jersey">
+              <small>SHOHOKU</small>
+              <strong>{c.number ?? "M"}</strong>
+            </div>
+          </div>
+        )}
       </div>
-      <div className={cn("-mt-2 flex h-24 w-32 flex-col items-center justify-center rounded-t-3xl border-4 border-ink md:h-28 md:w-36", toneClass[c.tone])}>
-        <span className="font-display text-xs tracking-widest opacity-80">SHOHOKU</span>
-        <span className="font-display text-4xl leading-none">{c.number ?? "M"}</span>
+      <div className="sd-character-plate">
+        <span>{c.name}</span>
       </div>
     </div>
   );
 }
 
-export function Backdrop({ theme, bg, children }: { theme: Theme; bg: string; children?: React.ReactNode }) {
-  const b = theme.backgrounds[bg];
-  const evening = bg === "evening";
+export function CharacterReviewImage({ c }: { c?: Character }) {
+  const { src, handleError } = useCharacterImageSrc(c);
+
+  if (src) {
+    return (
+      <div className="sd-eval-stage">
+        <img
+          src={src}
+          alt={c?.name ?? ""}
+          decoding="async"
+          onError={handleError}
+          className="sd-eval-portrait"
+        />
+      </div>
+    );
+  }
+
   return (
-    <div key={bg} className="animate-scene absolute inset-0 overflow-hidden">
-      {b?.image ? (
-        <img src={b.image} alt={b.label} className="absolute inset-0 h-full w-full object-cover" />
-      ) : (
-        <>
-          <div className={cn("absolute inset-x-0 top-0 h-[58%]", evening ? "bg-court-dark" : "bg-ink")}>
-            {evening && <div className="absolute inset-0 bg-ink/50" />}
-          </div>
-          <div className="absolute inset-x-0 bottom-0 h-[42%] bg-court">
-            <div className="absolute inset-0 opacity-30 [background:repeating-linear-gradient(90deg,transparent_0_60px,var(--court-dark)_60px_62px)]" />
-            <div className="absolute left-1/2 top-6 h-40 w-[60%] -translate-x-1/2 rounded-[50%] border-4 border-foreground/50" />
-            {evening && <div className="absolute inset-0 bg-ink/50" />}
-          </div>
-          <div className="absolute left-4 top-4 rounded bg-primary px-3 py-1 font-display text-sm text-primary-foreground">{b?.label}</div>
-        </>
+    <div className="sd-eval-stage">
+      <div className="sd-character-jersey" style={{ width: 68, height: 86 }}>
+        <small>SHOHOKU</small>
+        <strong style={{ fontSize: 24 }}>{c?.number ?? c?.name?.slice(0, 1) ?? "?"}</strong>
+      </div>
+    </div>
+  );
+}
+
+export function EndingPortraitImg({
+  c,
+  className,
+}: {
+  c: Character;
+  className?: string;
+}) {
+  const { src, handleError } = useCharacterImageSrc(c);
+  if (!src) return null;
+  return (
+    <img
+      src={src}
+      alt={c.name}
+      decoding="async"
+      onError={handleError}
+      className={className}
+    />
+  );
+}
+
+export function Backdrop({
+  theme,
+  bg,
+  children,
+}: {
+  theme: Theme;
+  bg: string;
+  children?: React.ReactNode;
+}) {
+  const b = theme.backgrounds[bg] ?? theme.backgrounds["gym"];
+  const bgUrl = b?.image ? `url('${encodeURI(b.image)}')` : undefined;
+
+  return (
+    <div className="sd-backdrop" role="region" aria-label={b?.label ?? "북산고 체육관"}>
+      {bgUrl && (
+        <div
+          key={bg}
+          className="sd-bg-photo"
+          style={{ backgroundImage: bgUrl }}
+          data-bg-src={b?.image}
+          aria-hidden="true"
+        />
       )}
+      <div className="sd-backdrop-vignette" aria-hidden="true" />
       {children}
+    </div>
+  );
+}
+
+export function SceneStage({
+  theme,
+  bg,
+  cast,
+  activeSpeakerId,
+  mood,
+  isChoicePhase,
+  isImpacting,
+  impactTick,
+  fx,
+}: {
+  theme: Theme;
+  bg: string;
+  cast: string[];
+  activeSpeakerId?: string;
+  mood: "neutral" | "good" | "bad";
+  isChoicePhase: boolean;
+  isImpacting: boolean;
+  impactTick: number;
+  fx: "good" | "bad" | null;
+}) {
+  const b = theme.backgrounds[bg] ?? theme.backgrounds["gym"];
+  const baseCast = cast.filter((id) => theme.characters[id]);
+  const top = baseCast.slice(0, 4);
+  const visibleCast =
+    activeSpeakerId &&
+    activeSpeakerId !== "me" &&
+    theme.characters[activeSpeakerId] &&
+    !top.includes(activeSpeakerId)
+      ? [...top.slice(0, 3), activeSpeakerId]
+      : top;
+
+  return (
+    <div
+      className={`sd-stage ${isChoicePhase ? "sd-stage--choice" : ""} ${
+        isImpacting ? "sd-stage--shake" : ""
+      }`}
+      data-impacting={isImpacting ? "true" : "false"}
+      data-impact-tick={impactTick}
+    >
+      <Backdrop theme={theme} bg={bg} />
+
+      {b?.label && <div className="sd-stage-badge">{b.label}</div>}
+
+      <div className="sd-cast" aria-label="등장인물 무대">
+        {visibleCast.map((id) => (
+          <Portrait
+            key={id}
+            c={theme.characters[id]!}
+            mood={activeSpeakerId === id ? mood : "neutral"}
+            active={activeSpeakerId === id}
+          />
+        ))}
+      </div>
+
+      {isImpacting && impactTick > 0 && (
+        <div key={impactTick} aria-hidden="true">
+          <div className={`sd-court-flash ${fx === "bad" ? "sd-court-flash--bad" : ""}`} />
+          <div className={`sd-rim-burst ${fx === "bad" ? "sd-rim-burst--bad" : ""}`} />
+        </div>
+      )}
     </div>
   );
 }

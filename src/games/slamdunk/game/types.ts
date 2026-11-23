@@ -18,6 +18,8 @@ export type Character = {
   number?: string;
   /** optional image path; falls back to a drawn placeholder portrait */
   image?: string;
+  /** optional bundled fallback image if primary public path fails to load */
+  fallbackImage?: string;
   /** semantic token used for placeholder portrait */
   tone: "primary" | "ink" | "orange" | "court" | "muted";
 };

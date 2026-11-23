@@ -13,6 +13,7 @@
   position: relative;
   isolation: isolate;
   min-height: calc(100vh - 58px);
+  min-height: calc(100dvh - 58px);
   background-color: var(--bl-ink);
   color: var(--bl-white);
   font-family: "Noto Sans KR", sans-serif;
@@ -100,10 +101,11 @@
 .bl-title-screen {
   position: relative;
   min-height: calc(100vh - 58px);
+  min-height: calc(100dvh - 58px);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 28px 16px;
+  padding: 24px 16px calc(24px + env(safe-area-inset-bottom, 0px));
   overflow: hidden;
 }
 
@@ -274,7 +276,7 @@
 
 .bl-title-sub {
   margin-top: 16px;
-  font-size: 14.5px;
+  font-size: clamp(13px, 3.5vw, 14.5px);
   line-height: 1.65;
   color: #e2e8f0;
 }
@@ -300,10 +302,11 @@
 /* Prologue Screen */
 .bl-prologue-screen {
   min-height: calc(100vh - 58px);
+  min-height: calc(100dvh - 58px);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 28px 16px;
+  padding: 24px 16px calc(28px + env(safe-area-inset-bottom, 0px));
 }
 
 .bl-prologue-card {
@@ -334,7 +337,7 @@
   margin-top: 16px;
   display: grid;
   gap: 12px;
-  font-size: 15px;
+  font-size: clamp(13.5px, 3.6vw, 15px);
   line-height: 1.75;
   color: #e2e8f0;
 }
@@ -401,6 +404,7 @@
 .bl-play-shell {
   width: min(1040px, 100%);
   height: calc(100vh - 58px);
+  height: calc(100dvh - 58px);
   margin: 0 auto;
   padding: 12px 16px 16px;
   display: flex;
@@ -1207,10 +1211,10 @@
 
 .bl-choice-btn {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 11px;
   text-align: left;
-  padding: 12px 13px;
+  padding: 13px 14px;
   border-radius: 11px;
   border: 1px solid rgba(56, 189, 248, 0.35);
   background: linear-gradient(155deg, rgba(21, 26, 38, 0.94), rgba(9, 9, 11, 0.98));
@@ -1238,37 +1242,27 @@
   color: #fff;
 }
 
-.bl-choice-copy {
+.bl-choice-label {
   flex: 1;
   min-width: 0;
-}
-
-.bl-choice-stance {
   display: block;
-  font-size: 11px;
-  font-weight: 800;
-  color: var(--bl-blue-bright);
-  margin-bottom: 3px;
-}
-
-.bl-choice-label {
-  display: block;
-  font-size: 13px;
-  line-height: 1.5;
+  font-size: clamp(12.5px, 3.4vw, 13.5px);
+  line-height: 1.48;
   color: var(--bl-white);
+  word-break: keep-all;
 }
 
 .bl-choice-arrow {
   flex-shrink: 0;
   color: var(--bl-orange);
-  margin-top: 3px;
+  margin-top: 0;
 }
 
 /* Result & Character Evaluations Screen */
 .bl-result-screen {
   width: min(1040px, 100%);
   margin: 0 auto;
-  padding: 24px 16px 56px;
+  padding: 24px 16px calc(56px + env(safe-area-inset-bottom, 0px));
 }
 
 .bl-ending-hero {
@@ -1314,7 +1308,7 @@
 
 .bl-ending-subtitle {
   margin-top: 6px;
-  font-size: 15px;
+  font-size: clamp(13.5px, 3.6vw, 15.5px);
   font-weight: 700;
   color: var(--bl-blue-bright);
 }
@@ -1520,7 +1514,7 @@
 
 .bl-ending-desc {
   margin-top: 18px;
-  font-size: 15px;
+  font-size: clamp(13.5px, 3.6vw, 15.5px);
   line-height: 1.8;
   color: #e2e8f0;
 }
@@ -2040,35 +2034,108 @@
 @media (max-width: 640px) {
   .bl-game,
   .bl-title-screen,
-  .bl-prologue {
-    min-height: calc(100vh - 58px);
-    min-height: calc(100dvh - 58px);
+  .bl-prologue-screen {
+    min-height: calc(100vh - 49px);
+    min-height: calc(100dvh - 49px);
   }
 
-  .bl-play-shell {
-    height: auto;
-    min-height: calc(100vh - 58px);
-    min-height: calc(100dvh - 58px);
-    padding: 8px 10px calc(16px + env(safe-area-inset-bottom, 0px));
+  .bl-title-screen,
+  .bl-prologue-screen {
+    padding: 14px 12px calc(18px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .bl-title-panel {
+    padding: 20px 16px 18px;
+  }
+
+  .bl-title-emblem {
+    width: 60px;
+    height: 60px;
+    margin: 4px auto 8px;
+  }
+
+  .bl-title-main {
+    font-size: clamp(32px, 9vw, 44px);
+  }
+
+  .bl-title-sub {
+    margin-top: 10px;
+    font-size: clamp(12.5px, 3.3vw, 13.5px);
+    line-height: 1.5;
+  }
+
+  .bl-title-actions {
+    margin-top: 16px;
     gap: 8px;
   }
 
+  .bl-result-screen {
+    padding: 14px 12px calc(40px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .bl-play-shell {
+    height: calc(100vh - 49px);
+    height: calc(100dvh - 49px);
+    min-height: 0;
+    padding: 6px 8px max(8px, env(safe-area-inset-bottom, 0px));
+    gap: 6px;
+    overflow-y: auto;
+  }
+
   .bl-hud {
-    padding: 8px 10px;
+    padding: 6px 9px 7px;
+    border-radius: 12px;
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
+  }
+
+  .bl-hud-top {
+    flex-wrap: nowrap;
+    gap: 6px;
+  }
+
+  .bl-hud-ep {
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 6px;
+    overflow: hidden;
+  }
+
+  .bl-hud-code {
+    font-size: 10px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .bl-hud-title {
+    font-size: clamp(12.5px, 3.4vw, 14px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .bl-hud-loc {
     display: none;
   }
 
+  .bl-hud-controls {
+    gap: 4px;
+  }
+
+  .bl-icon-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+  }
+
   .bl-stats-row {
+    margin-top: 5px;
     gap: 5px;
   }
 
   .bl-stat-card {
-    padding: 6px 6px;
+    padding: 4px 6px;
+    border-radius: 7px;
   }
 
   .bl-stat-label {
@@ -2079,7 +2146,21 @@
   }
 
   .bl-stat-val {
-    font-size: 11.5px;
+    font-size: 11px;
+  }
+
+  .bl-stat-delta {
+    font-size: 9.5px;
+    padding: 0 4px;
+  }
+
+  .bl-meter {
+    margin-top: 3px;
+    height: 4px;
+  }
+
+  .bl-progress-track {
+    margin-top: 5px;
   }
 
   .bl-title-char--far-left,
@@ -2103,25 +2184,31 @@
   }
 
   .bl-stage {
-    flex: none;
-    height: clamp(220px, 34dvh, 275px);
-    min-height: 220px;
+    flex: 1 1 0;
+    height: auto;
+    min-height: 140px;
+    border-radius: 13px;
     overflow: hidden;
   }
 
   .bl-stage--choice {
-    height: clamp(190px, 28dvh, 240px);
-    min-height: 190px;
+    flex: 1 1 0;
+    height: auto;
+    min-height: 118px;
   }
 
   .bl-cast {
-    inset: 10px 6px 0;
+    inset: 6px 6px 0;
     gap: 4px;
   }
 
   .bl-character {
     width: auto;
     max-width: 28%;
+  }
+
+  .bl-character-figure {
+    height: calc(100% - 20px);
   }
 
   .bl-cast--ensemble {
@@ -2135,26 +2222,30 @@
   }
 
   .bl-character-plate {
-    margin-bottom: 5px;
+    margin-bottom: 4px;
     padding: 2px 7px;
   }
 
   .bl-character-name {
-    font-size: 10px;
+    font-size: 9.5px;
   }
 
   .bl-cast--ensemble .bl-character-plate {
-    padding: 2px 5px;
-    margin-bottom: 4px;
+    padding: 1px 5px;
+    margin-bottom: 3px;
   }
 
   .bl-cast--ensemble .bl-character:nth-child(even) .bl-character-plate {
-    margin-bottom: 22px;
+    margin-bottom: 18px;
   }
 
   .bl-cast--ensemble .bl-character-name {
     font-size: 8px;
     letter-spacing: -0.03em;
+  }
+
+  .bl-bottom-panel {
+    margin-top: 0;
   }
 
   .bl-ending-visual {
@@ -2170,25 +2261,100 @@
   }
 
   .bl-dialogue-card {
-    min-height: 144px;
-    padding: 24px 14px 12px;
+    margin-top: 6px;
+    min-height: clamp(118px, 19dvh, 142px);
+    padding: 20px 13px 10px;
+    border-radius: 12px;
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
   }
 
+  .bl-speaker-plate {
+    top: -13px;
+    left: 12px;
+    padding: 3px 10px;
+    gap: 6px;
+  }
+
+  .bl-speaker-name {
+    font-size: 12px;
+  }
+
+  .bl-speaker-title {
+    font-size: 10px;
+  }
+
   .bl-dialogue-text {
-    font-size: 14px;
-    line-height: 1.6;
+    font-size: clamp(13px, 3.6vw, 14.5px);
+    line-height: 1.52;
+    min-height: 44px;
+  }
+
+  .bl-dialogue-footer {
+    margin-top: 6px;
+    gap: 6px;
+  }
+
+  .bl-reaction-deltas {
+    gap: 5px;
+    font-size: 11px;
+  }
+
+  .bl-reaction-deltas span {
+    padding: 2px 7px;
+  }
+
+  .bl-dialogue-next {
+    font-size: 11.5px;
+  }
+
+  .bl-choice-box {
+    padding: 9px 10px;
+    border-radius: 12px;
+  }
+
+  .bl-choice-header {
+    margin-bottom: 6px;
+  }
+
+  .bl-choice-kicker {
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+  }
+
+  .bl-choice-prompt {
+    margin-top: 2px;
+    font-size: clamp(13px, 3.6vw, 14.5px);
+    line-height: 1.32;
   }
 
   .bl-choices-grid {
     grid-template-columns: 1fr;
-    gap: 10px;
+    gap: 6px;
   }
 
   .bl-choice-btn {
-    min-height: 52px;
-    padding: 12px 13px;
+    min-height: 44px;
+    padding: 8px 10px;
+    gap: 8px;
+    border-radius: 9px;
+    align-items: center;
+  }
+
+  .bl-choice-badge {
+    width: 24px;
+    height: 24px;
+    font-size: 11.5px;
+    border-radius: 6px;
+  }
+
+  .bl-choice-label {
+    font-size: clamp(11.5px, 3.1vw, 12.8px);
+    line-height: 1.34;
+  }
+
+  .bl-choice-arrow {
+    margin-top: 0;
   }
 
   .bl-ending-quote-box {
@@ -2207,6 +2373,79 @@
   .bl-eval-portrait {
     height: 110px;
   }
+}
+
+/* Original Anime Background Photo Layers & Low-Res Compensation */
+.bl-bg-photo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(1.5px) brightness(0.88);
+  transform: scale(1.03);
+  transition: background-image 0.35s ease-in-out;
+  will-change: transform;
+}
+
+.bl-bg-readability,
+.bl-backdrop--photo .bl-backdrop-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle, transparent 40%, rgba(0, 0, 0, 0.65) 100%),
+    linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.75) 0%,
+      rgba(0, 0, 0, 0.15) 60%,
+      rgba(0, 0, 0, 0.3) 100%
+    );
+}
+
+.bl-backdrop--photo .bl-env-aura,
+.bl-backdrop--photo .bl-env-mist {
+  z-index: 1;
+  opacity: 0.5;
+}
+
+.bl-backdrop--photo .bl-env-particles {
+  z-index: 2;
+}
+
+.bl-prologue-screen {
+  position: relative;
+  overflow: hidden;
+}
+
+.bl-prologue-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bl-prologue-card {
+  position: relative;
+  z-index: 2;
+}
+
+.bl-title-characters,
+.bl-ending-ensemble {
+  z-index: 2;
+}
+
+.bl-title-scrim,
+.bl-ending-scrim {
+  z-index: 3;
+}
+
+.bl-ending-banner-mark {
+  z-index: 4;
 }
 
 @media (prefers-reduced-motion: reduce) {

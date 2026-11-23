@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Anchor, ArrowLeft, ArrowRight, Compass, Play, Save, Shield, Swords } from "lucide-react";
 import { CHARACTERS } from "./data/characters";
+import { ONEPIECE_BACKGROUNDS, toOnePieceBgUrl } from "./data/backgrounds";
 import { EPISODES } from "./data/episodes";
 import {
   advanceEpisodeOrResult,
@@ -20,6 +21,11 @@ import {
   preloadOnePieceAudio,
   syncOnePieceAudioMute,
 } from "./sound";
+import {
+  getGlobalAudioMuted,
+  setGlobalAudioMuted,
+  subscribeGlobalAudioMuted,
+} from "../../utils/mobileAudio";
 import type { CharacterId, EndingId, GameState } from "./types";
 import "./styles.css";
 
@@ -64,13 +70,7 @@ export function OnePieceGame({ onReturnWorldSelect }: OnePieceGameProps) {
     return loaded;
   });
 
-  const [muted, setMuted] = useState<boolean>(() => {
-    try {
-      return localStorage.getItem(MUTE_KEY) === "1";
-    } catch {
-      return false;
-    }
-  });
+  const [muted, setMuted] = useState<boolean>(() => getGlobalAudioMuted());
 
   const [visibleChars, setVisibleChars] = useState(0);
   const [fxMood, setFxMood] = useState<"neutral" | "good" | "bad">("neutral");
@@ -98,8 +98,11 @@ export function OnePieceGame({ onReturnWorldSelect }: OnePieceGameProps) {
     preloadOnePieceAudio();
   }, []);
 
+  useEffect(() => subscribeGlobalAudioMuted(setMuted), []);
+
   useEffect(() => {
     syncOnePieceAudioMute(muted);
+    setGlobalAudioMuted(muted);
     try {
       localStorage.setItem(MUTE_KEY, muted ? "1" : "0");
     } catch {
@@ -270,9 +273,13 @@ export function OnePieceGame({ onReturnWorldSelect }: OnePieceGameProps) {
       {state.phase === "title" && (
         <section className="op-title-screen" aria-label="원피스 시작 화면">
           <div className="op-title-backdrop" aria-hidden="true">
-            <div className="op-title-sky" />
+            <div
+              className="op-bg-photo"
+              style={{ backgroundImage: toOnePieceBgUrl(ONEPIECE_BACKGROUNDS.titlePrologue) }}
+              data-bg-src={ONEPIECE_BACKGROUNDS.titlePrologue}
+            />
+            <div className="op-bg-readability" />
             <div className="op-title-sunburst" />
-            <div className="op-title-ocean" />
             <div className="op-title-characters">
               {titleCast.map(({ id, slotClass }) => (
                 <img
@@ -347,6 +354,14 @@ export function OnePieceGame({ onReturnWorldSelect }: OnePieceGameProps) {
 
       {state.phase === "prologue" && (
         <section className="op-prologue-screen" aria-label="프롤로그">
+          <div className="op-prologue-backdrop" aria-hidden="true">
+            <div
+              className="op-bg-photo"
+              style={{ backgroundImage: toOnePieceBgUrl(ONEPIECE_BACKGROUNDS.titlePrologue) }}
+              data-bg-src={ONEPIECE_BACKGROUNDS.titlePrologue}
+            />
+            <div className="op-bg-readability" />
+          </div>
           <div className="op-prologue-card">
             <span className="op-prologue-kicker">PROLOGUE · 대해적 시대의 막이 오른다</span>
             <h2>황금빛 나침반과 밀짚모자 깃발 아래</h2>

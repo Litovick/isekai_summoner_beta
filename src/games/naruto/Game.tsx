@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Flame, Play, Save, Sparkles, Users } from "lucide-react";
 import { CHARACTERS } from "./data/characters";
+import { NARUTO_BACKGROUNDS, toNarutoBgUrl } from "./data/backgrounds";
 import { EPISODES } from "./data/episodes";
 import {
   advanceEpisodeOrResult,
@@ -19,6 +20,11 @@ import {
   preloadNarutoAudio,
   syncNarutoAudioMute,
 } from "./sound";
+import {
+  getGlobalAudioMuted,
+  setGlobalAudioMuted,
+  subscribeGlobalAudioMuted,
+} from "../../utils/mobileAudio";
 import type { CharacterId, EndingId, GameState } from "./types";
 import "./styles.css";
 
@@ -63,13 +69,7 @@ export function NarutoGame({ onReturnWorldSelect }: NarutoGameProps) {
     return loaded;
   });
 
-  const [muted, setMuted] = useState<boolean>(() => {
-    try {
-      return localStorage.getItem(MUTE_KEY) === "1";
-    } catch {
-      return false;
-    }
-  });
+  const [muted, setMuted] = useState<boolean>(() => getGlobalAudioMuted());
 
   const [visibleChars, setVisibleChars] = useState(0);
   const [fxMood, setFxMood] = useState<"neutral" | "good" | "bad">("neutral");
@@ -97,8 +97,11 @@ export function NarutoGame({ onReturnWorldSelect }: NarutoGameProps) {
     preloadNarutoAudio();
   }, []);
 
+  useEffect(() => subscribeGlobalAudioMuted(setMuted), []);
+
   useEffect(() => {
     syncNarutoAudioMute(muted);
+    setGlobalAudioMuted(muted);
     try {
       localStorage.setItem(MUTE_KEY, muted ? "1" : "0");
     } catch {
@@ -271,7 +274,12 @@ export function NarutoGame({ onReturnWorldSelect }: NarutoGameProps) {
       {state.phase === "title" && (
         <section className="nr-title-screen" aria-label="나루토 시작 화면">
           <div className="nr-title-backdrop" aria-hidden="true">
-            <div className="nr-title-sky" />
+            <div
+              className="nr-bg-photo"
+              style={{ backgroundImage: toNarutoBgUrl(NARUTO_BACKGROUNDS.titlePrologue) }}
+              data-bg-src={NARUTO_BACKGROUNDS.titlePrologue}
+            />
+            <div className="nr-bg-readability" />
             <div className="nr-title-spiral" />
             <div className="nr-title-leaves" />
             <div className="nr-title-characters">
@@ -345,6 +353,14 @@ export function NarutoGame({ onReturnWorldSelect }: NarutoGameProps) {
 
       {state.phase === "prologue" && (
         <section className="nr-prologue-screen" aria-label="프롤로그">
+          <div className="nr-prologue-backdrop" aria-hidden="true">
+            <div
+              className="nr-bg-photo"
+              style={{ backgroundImage: toNarutoBgUrl(NARUTO_BACKGROUNDS.titlePrologue) }}
+              data-bg-src={NARUTO_BACKGROUNDS.titlePrologue}
+            />
+            <div className="nr-bg-readability" />
+          </div>
           <div className="nr-prologue-card">
             <span className="nr-prologue-kicker">PROLOGUE · 제7반 배정 통지</span>
             <h2>불의 의지를 잇는 새로운 시노비</h2>

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Flame, Play, Save, Shield, Sword } from "lucide-react";
 import { CHARACTERS } from "./data/characters";
+import { DEMONSLAYER_BACKGROUNDS, toDemonSlayerBgUrl } from "./data/backgrounds";
 import { EPISODES } from "./data/episodes";
 import {
   advanceEpisodeOrResult,
@@ -19,6 +20,11 @@ import {
   preloadDemonSlayerAudio,
   syncDemonSlayerAudioMute,
 } from "./sound";
+import {
+  getGlobalAudioMuted,
+  setGlobalAudioMuted,
+  subscribeGlobalAudioMuted,
+} from "../../utils/mobileAudio";
 import type { CharacterId, EndingId, GameState } from "./types";
 import "./styles.css";
 
@@ -83,13 +89,7 @@ export function DemonSlayerGame({ onReturnWorldSelect }: DemonSlayerGameProps) {
     return loaded;
   });
 
-  const [muted, setMuted] = useState<boolean>(() => {
-    try {
-      return localStorage.getItem(MUTE_KEY) === "1";
-    } catch {
-      return false;
-    }
-  });
+  const [muted, setMuted] = useState<boolean>(() => getGlobalAudioMuted());
 
   const [visibleChars, setVisibleChars] = useState(0);
   const [fxMood, setFxMood] = useState<"neutral" | "good" | "bad">("neutral");
@@ -117,8 +117,11 @@ export function DemonSlayerGame({ onReturnWorldSelect }: DemonSlayerGameProps) {
     preloadDemonSlayerAudio();
   }, []);
 
+  useEffect(() => subscribeGlobalAudioMuted(setMuted), []);
+
   useEffect(() => {
     syncDemonSlayerAudioMute(muted);
+    setGlobalAudioMuted(muted);
     try {
       localStorage.setItem(MUTE_KEY, muted ? "1" : "0");
     } catch {
@@ -282,8 +285,12 @@ export function DemonSlayerGame({ onReturnWorldSelect }: DemonSlayerGameProps) {
         <section className="ds-title-screen" aria-label="귀멸의 칼날 시작 화면">
           {/* Dynamic Taisho Atmospheric Backdrop + Character Layering */}
           <div className="ds-title-backdrop" aria-hidden="true">
-            <div className="ds-title-mist" />
-            <div className="ds-title-ichimatsu" />
+            <div
+              className="ds-bg-photo"
+              style={{ backgroundImage: toDemonSlayerBgUrl(DEMONSLAYER_BACKGROUNDS.titlePrologue) }}
+              data-bg-src={DEMONSLAYER_BACKGROUNDS.titlePrologue}
+            />
+            <div className="ds-bg-readability" />
             <div className="ds-title-wisteria-glow" />
             <div className="ds-title-characters">
               <TitleCharacterLayer id="giyu" slotClass="ds-title-char--far-left" />
@@ -401,6 +408,14 @@ export function DemonSlayerGame({ onReturnWorldSelect }: DemonSlayerGameProps) {
 
       {state.phase === "prologue" && (
         <section className="ds-prologue-screen" aria-label="프롤로그">
+          <div className="ds-prologue-backdrop" aria-hidden="true">
+            <div
+              className="ds-bg-photo"
+              style={{ backgroundImage: toDemonSlayerBgUrl(DEMONSLAYER_BACKGROUNDS.titlePrologue) }}
+              data-bg-src={DEMONSLAYER_BACKGROUNDS.titlePrologue}
+            />
+            <div className="ds-bg-readability" />
+          </div>
           <div className="ds-prologue-card">
             <span className="ds-prologue-kicker">PROLOGUE · 귀살대 입대 서약</span>
             <h2>어둠을 베는 새로운 일륜도</h2>

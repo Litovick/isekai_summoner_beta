@@ -1,6 +1,7 @@
 import { ArrowLeft, Award, Flame, RotateCcw, Shield, Swords } from "lucide-react";
 import { EndingShareAndReward } from "../../../components/EndingShareAndReward";
 import { CHARACTERS } from "../data/characters";
+import { BLEACH_BACKGROUNDS, toBleachBgUrl } from "../data/backgrounds";
 import { ENDINGS, ENDING_ORDER } from "../data/endings";
 import type {
   CharacterEvaluation,
@@ -72,11 +73,15 @@ export function ResultScreen({
         <h1 className="bl-ending-title">{ending.title}</h1>
         <p className="bl-ending-subtitle">{ending.subtitle}</p>
 
-        {/* Pure CSS Ending Theme Backdrop + Layered Character PNG Ensemble */}
+        {/* Original Anime Ending Backdrop + Layered Character PNG Ensemble */}
         <div className={`bl-ending-visual bl-ending-theme--${ending.theme}`}>
-          <div className="bl-ending-sky" aria-hidden="true" />
-          <div className="bl-ending-celestial" aria-hidden="true" />
-          <div className="bl-ending-silhouette" aria-hidden="true" />
+          <div
+            className="bl-bg-photo"
+            style={{ backgroundImage: toBleachBgUrl(BLEACH_BACKGROUNDS.endingRiver) }}
+            data-bg-src={BLEACH_BACKGROUNDS.endingRiver}
+            aria-hidden="true"
+          />
+          <div className="bl-bg-readability" aria-hidden="true" />
           <div className="bl-ending-beams" aria-hidden="true" />
 
           <div className="bl-ending-ensemble" aria-label="엔딩 주요 인물">

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ArrowLeft, Award, Flame, RotateCcw, Shield, Sword } from "lucide-react";
 import { CHARACTERS } from "../data/characters";
+import { DEMONSLAYER_BACKGROUNDS, toDemonSlayerBgUrl } from "../data/backgrounds";
 import { ENDINGS, ENDING_ORDER } from "../data/endings";
 import type {
   CharacterEvaluation,
@@ -9,7 +10,6 @@ import type {
   EndingInfo,
   Stats,
 } from "../types";
-import { EndingBackdropArt } from "./StageArtwork";
 import { EndingShareAndReward } from "../../../components/EndingShareAndReward";
 
 interface ResultScreenProps {
@@ -95,9 +95,15 @@ export function ResultScreen({
         <h1 className="ds-ending-title">{ending.title}</h1>
         <p className="ds-ending-subtitle">{ending.subtitle}</p>
 
-        {/* Handcrafted Ending Scene Illustration + Layered Character PNG Ensemble */}
+        {/* Original Anime Ending Backdrop + Layered Character PNG Ensemble */}
         <div className={`ds-ending-visual ds-ending-theme--${ending.theme}`}>
-          <EndingBackdropArt theme={ending.theme} />
+          <div
+            className="ds-bg-photo"
+            style={{ backgroundImage: toDemonSlayerBgUrl(DEMONSLAYER_BACKGROUNDS.endingSunset) }}
+            data-bg-src={DEMONSLAYER_BACKGROUNDS.endingSunset}
+            aria-hidden="true"
+          />
+          <div className="ds-bg-readability" aria-hidden="true" />
           <div className="ds-ending-beams" aria-hidden="true" />
           <div className="ds-ending-atmosphere" aria-hidden="true" />
           <div className="ds-ending-haori-frame" aria-hidden="true" />

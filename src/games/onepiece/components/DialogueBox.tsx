@@ -48,10 +48,7 @@ export function DialogueBox({
                 className="op-choice-btn"
               >
                 <span className="op-choice-badge">{choice.id}</span>
-                <div className="op-choice-copy">
-                  <span className="op-choice-stance">{choice.stance}</span>
-                  <span className="op-choice-label">{choice.label}</span>
-                </div>
+                <span className="op-choice-label">{choice.label}</span>
                 <ChevronRight size={18} className="op-choice-arrow" aria-hidden="true" />
               </button>
             ))}

@@ -1,26 +1,48 @@
-import { useEffect, useRef, useState } from "react";
-import { Volume2, VolumeX } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Award,
+  BookOpen,
+  Brain,
+  ChevronRight,
+  Flame,
+  Home,
+  Play,
+  RotateCcw,
+  Save,
+  Shield,
+  Trophy,
+  Volume2,
+  VolumeX,
+} from "lucide-react";
 import { characterReviews, readCollection, unlockEnding, type EndingCollection } from "../game/collection";
 import { advance, choose, newGame, resolveEnding, type GameState } from "../game/engine";
 import type { Line, Theme } from "../game/types";
-import { cn } from "../lib/utils";
-import { Backdrop, Portrait } from "./Scene";
+import { CharacterReviewImage, EndingPortraitImg, SceneStage } from "./Scene";
 import { beep, playBasketballSfx, useTypewriter } from "./useTypewriter";
 import { EndingShareAndReward } from "../../../components/EndingShareAndReward";
+import {
+  getGlobalAudioMuted,
+  setGlobalAudioMuted,
+  subscribeGlobalAudioMuted,
+} from "../../../utils/mobileAudio";
 
 type Saved = GameState & { step: number };
-const gaugeBg: Record<string, string> = { trust: "bg-trust", judgment: "bg-judgment" };
-const gaugeText: Record<string, string> = { trust: "text-trust", judgment: "text-judgment" };
+
+const STAT_META = {
+  trust: { icon: Shield, fillClass: "sd-stat-fill--trust" },
+  judgment: { icon: Brain, fillClass: "sd-stat-fill--judgment" },
+} as const;
 
 export function Game({ theme }: { theme: Theme }) {
   const key = `game:${theme.id}`;
   const [s, setS] = useState<Saved>({ ...newGame(theme), step: 0 });
   const [loaded, setLoaded] = useState(false);
-  const [muted, setMuted] = useState(false);
+  const [muted, setMuted] = useState<boolean>(() => getGlobalAudioMuted());
   const [fx, setFx] = useState<"good" | "bad" | null>(null);
   const [collection, setCollection] = useState<EndingCollection>({});
   const [showCollection, setShowCollection] = useState(false);
-  const [showReviews, setShowReviews] = useState(false);
   const [impactTick, setImpactTick] = useState(0);
   const [isImpacting, setIsImpacting] = useState(false);
   const impactTimerRef = useRef<number | null>(null);
@@ -37,20 +59,37 @@ export function Game({ theme }: { theme: Theme }) {
     try {
       const raw = localStorage.getItem(key);
       if (raw) setS(JSON.parse(raw));
-      setMuted(localStorage.getItem("game:muted") === "1");
+      setMuted(getGlobalAudioMuted());
       setCollection(readCollection(theme.id));
-    } catch { /* ignore */ }
+    } catch {
+      /* ignore */
+    }
     setLoaded(true);
-  }, [key]);
-  useEffect(() => { if (loaded) localStorage.setItem(key, JSON.stringify(s)); }, [s, loaded, key]);
-  useEffect(() => { localStorage.setItem("game:muted", muted ? "1" : "0"); }, [muted]);
+  }, [key, theme.id]);
 
-  const click = () => beep("click", muted);
-  const reset = (phase: GameState["phase"]) => { setShowReviews(false); setShowCollection(false); setS({ ...newGame(theme), phase, step: 0 }); };
+  useEffect(() => subscribeGlobalAudioMuted(setMuted), []);
+  useEffect(() => {
+    if (loaded) localStorage.setItem(key, JSON.stringify(s));
+  }, [s, loaded, key]);
+  useEffect(() => {
+    if (loaded) setGlobalAudioMuted(muted);
+  }, [muted, loaded]);
+
+  const click = useCallback(() => beep("click", muted), [muted]);
+
+  const reset = useCallback(
+    (phase: GameState["phase"]) => {
+      setShowCollection(false);
+      setFx(null);
+      setS({ ...newGame(theme), phase, step: 0 });
+    },
+    [theme],
+  );
 
   const q = theme.questions[s.qIndex]!;
   const ending = s.phase === "ending" ? resolveEnding(theme, s.stats) : null;
   const reviews = ending ? characterReviews(s) : [];
+
   useEffect(() => {
     if (!loaded || !ending || s.step < ending.lines.length) return;
     setCollection(unlockEnding(theme.id, ending.id));
@@ -60,18 +99,38 @@ export function Game({ theme }: { theme: Theme }) {
   let lines: Line[] = [];
   let bg = "gym";
   let cast: string[] = [];
-  if (s.phase === "opening") { lines = theme.opening; cast = ["hanna", "baekho", "taewoong", "chisu"]; }
+  if (s.phase === "opening") {
+    lines = theme.opening;
+    cast = ["hanna", "baekho", "taewoong", "chisu"];
+  }
   if (s.phase === "question" || s.phase === "result") {
-    bg = q.background; cast = q.cast;
+    bg = q.background;
+    cast = q.cast;
     lines = s.phase === "question" ? q.lines : q.choices[s.answers[q.id] ?? 0]!.reactions;
   }
-  if (ending) { lines = ending.lines; bg = ending.background; cast = ["chisu", "baekho", "taewoong", "hanna"]; }
+  if (ending) {
+    lines = ending.lines;
+    bg = ending.background;
+    cast = ["chisu", "baekho", "taewoong", "hanna"];
+  }
 
-  const line = lines[Math.min(s.step, lines.length - 1)];
-  const dialogDone = s.step >= lines.length - 1;
+  const line = lines[Math.min(s.step, Math.max(0, lines.length - 1))];
+  const isLastLine = s.step >= lines.length - 1;
   const speaker = line?.speaker ? theme.characters[line.speaker] : undefined;
-  const allCast = Array.from(new Set([...cast, ...lines.map((l) => l.speaker).filter((x): x is string => !!x && x !== "me")]));
-  const mood = s.phase === "result" ? (fx ?? "neutral") : ending ? (ending.id === "happy" ? "good" : "neutral") : "neutral";
+  const allCast = Array.from(
+    new Set([
+      ...cast,
+      ...lines.map((l) => l.speaker).filter((x): x is string => !!x && x !== "me"),
+    ]),
+  );
+  const mood =
+    s.phase === "result"
+      ? (fx ?? "neutral")
+      : ending
+        ? ending.id === "happy"
+          ? "good"
+          : "neutral"
+        : "neutral";
 
   const onPick = (i: number) => {
     if (s.phase !== "question" || q.id in s.answers) return;
@@ -90,212 +149,761 @@ export function Game({ theme }: { theme: Theme }) {
     }, 540);
     setS((prev) => ({ ...choose(theme, prev, i), step: 0 }));
   };
-  const onNext = () => { click(); setFx(null); setS((prev) => ({ ...advance(theme, prev), step: 0 })); };
 
-  if (!loaded) return <div className="min-h-screen bg-ink" />;
+  const onNext = () => {
+    click();
+    setFx(null);
+    setS((prev) => ({ ...advance(theme, prev), step: 0 }));
+  };
 
+  const hasSavedProgress =
+    Object.keys(s.answers).length > 0 && Object.keys(s.answers).length < theme.questions.length;
+
+  const gymBgUrl = theme.backgrounds["gym"]?.image
+    ? `url('${encodeURI(theme.backgrounds["gym"].image)}')`
+    : undefined;
+
+  const titleCast: Array<{ id: string; slotClass: string }> = [
+    { id: "chisu", slotClass: "sd-title-char--far-left" },
+    { id: "baekho", slotClass: "sd-title-char--left" },
+    { id: "taewoong", slotClass: "sd-title-char--right" },
+    { id: "hanna", slotClass: "sd-title-char--far-right" },
+  ];
+
+  // Keyboard support on title screen
+  useEffect(() => {
+    if (s.phase !== "title" || showCollection) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Enter" || e.key === " ") {
+        const tag = (e.target as HTMLElement | null)?.tagName;
+        if (tag === "BUTTON" || tag === "A") return;
+        e.preventDefault();
+        click();
+        reset("opening");
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [s.phase, showCollection, click, reset]);
+
+  if (!loaded) {
+    return <div className="min-h-[calc(100dvh-58px)] bg-[#0c090b]" />;
+  }
+
+  /* ==================== TITLE & SUBVIEWS ==================== */
   if (s.phase === "title" || s.phase === "howto") {
-    return (
-      <main className="relative min-h-[calc(100vh-58px)] min-h-[calc(100dvh-58px)] overflow-x-hidden overflow-y-auto">
-        <Backdrop theme={theme} bg="gym">
-          <div className="absolute bottom-[18%] left-[18%] h-16 w-16 rounded-full border-4 border-ink bg-ball shadow-2xl [background-image:linear-gradient(90deg,transparent_47%,var(--ink)_47%_53%,transparent_53%)]" />
-        </Backdrop>
-        <div className="relative z-10 flex min-h-[calc(100vh-58px)] min-h-[calc(100dvh-58px)] flex-col items-center justify-center px-4 py-8 pb-[max(2rem,calc(env(safe-area-inset-bottom,0px)+1.5rem))] text-center">
-          {showCollection ? (
-            <div className="animate-scene w-full max-w-xl border-4 border-ink bg-card p-5 text-card-foreground shadow-[8px_8px_0_var(--ink)] sm:p-6">
-              <h2 className="font-display text-3xl text-primary">엔딩 컬렉션</h2>
-              <p className="mt-2 text-sm">해금한 엔딩 {theme.endings.filter((e) => collection[e.id]).length} / {theme.endings.length}</p>
-              <div className="mt-5 grid gap-3 sm:grid-cols-2">{theme.endings.map((e) => <div key={e.id} className="border-2 border-ink p-4 text-left"><p className="font-display text-xl">{collection[e.id] ? e.title : "??? 잠긴 엔딩"}</p><p className="mt-2 text-sm">{collection[e.id] ? e.subtitle : "게임을 플레이해 해금하세요."}</p></div>)}</div>
-              <button onClick={() => setShowCollection(false)} className="mt-6 min-h-[48px] border-4 border-ink bg-primary px-5 py-2 font-display text-primary-foreground">돌아가기</button>
+    if (showCollection) {
+      const unlockedCount = theme.endings.filter((e) => collection[e.id]).length;
+      return (
+        <div className="sd-prologue-screen" aria-label="엔딩 컬렉션">
+          <div className="sd-bg-texture" aria-hidden="true" />
+          <div className="sd-prologue-backdrop" aria-hidden="true">
+            {gymBgUrl && <div className="sd-bg-photo" style={{ backgroundImage: gymBgUrl }} />}
+            <div className="sd-bg-readability" />
+          </div>
+
+          <div className="sd-prologue-card">
+            <span className="sd-prologue-kicker">SHOHOKU ARCHIVE · 엔딩 도감</span>
+            <h2>엔딩 컬렉션 ({unlockedCount} / {theme.endings.length})</h2>
+            <p className="sd-title-sub" style={{ margin: "8px 0 18px", textAlign: "left" }}>
+              북산고 농구부 매니저로서의 10가지 선택에 따라 해금된 결말을 확인할 수 있습니다.
+            </p>
+
+            <div className="sd-archive-list">
+              {theme.endings.map((e, idx) => {
+                const unlocked = Boolean(collection[e.id]);
+                return (
+                  <div key={e.id} className={`sd-archive-item ${unlocked ? "unlocked" : ""}`}>
+                    <span className="sd-archive-num">ENDING 0{idx + 1}</span>
+                    <strong>{unlocked ? e.title : "??? 잠긴 엔딩"}</strong>
+                    <small>{unlocked ? e.subtitle : "게임을 플레이해 해금하세요."}</small>
+                  </div>
+                );
+              })}
             </div>
-          ) : s.phase === "title" ? (
-            <div className="animate-scene w-full max-w-2xl">
-              <h1 className="font-display text-[clamp(3.25rem,14vw,8rem)] leading-none text-primary drop-shadow-[0_6px_0_var(--ink)]" style={{ WebkitTextStroke: "2px var(--foreground)" }}>
-                {theme.title}
-              </h1>
-              <p className="mt-4 inline-block max-w-full -rotate-2 bg-ink px-4 py-2 font-display text-[clamp(1rem,4.5vw,1.875rem)] text-foreground sm:px-5">{theme.subtitle}</p>
-              <div className="mt-8 flex flex-col flex-wrap items-center justify-center gap-3 sm:mt-10 sm:flex-row">
-                <button onClick={() => { click(); reset("opening"); }} className="min-h-[52px] w-full max-w-[15rem] border-4 border-ink bg-primary px-6 py-3 font-display text-2xl text-primary-foreground shadow-[6px_6px_0_var(--ink)] transition hover:-translate-y-1 hover:bg-trust sm:w-56">게임 시작</button>
-                <button onClick={() => { click(); setShowCollection(true); }} className="min-h-[52px] w-full max-w-[15rem] border-4 border-ink bg-ball px-6 py-3 font-display text-2xl text-ink shadow-[6px_6px_0_var(--ink)] transition hover:-translate-y-1 sm:w-56">엔딩 컬렉션</button>
-                <button onClick={() => { click(); setS((p) => ({ ...p, phase: "howto" })); }} className="min-h-[52px] w-full max-w-[15rem] border-4 border-ink bg-card px-6 py-3 font-display text-2xl text-card-foreground shadow-[6px_6px_0_var(--ink)] transition hover:-translate-y-1 hover:bg-ball sm:w-56">게임 방법</button>
-              </div>
+
+            <div className="sd-prologue-actions">
+              <button
+                type="button"
+                onClick={() => {
+                  click();
+                  setShowCollection(false);
+                }}
+                className="sd-btn-secondary"
+              >
+                <ArrowLeft size={16} />
+                타이틀로 돌아가기
+              </button>
             </div>
-          ) : (
-            <div className="animate-scene max-w-2xl border-4 border-ink bg-card p-5 text-left text-card-foreground shadow-[8px_8px_0_var(--ink)] sm:p-6">
-              <h2 className="mb-4 font-display text-3xl text-primary">게임 방법</h2>
-              <ul className="space-y-3 text-sm sm:text-base">
-                {theme.howTo.map((h) => <li key={h} className="flex gap-2"><span className="text-ball">●</span>{h}</li>)}
-              </ul>
-              <button onClick={() => { click(); setS((p) => ({ ...p, phase: "title" })); }} className="mt-6 min-h-[48px] border-4 border-ink bg-primary px-5 py-2 font-display text-lg text-primary-foreground hover:bg-trust">돌아가기</button>
-            </div>
-          )}
+          </div>
         </div>
-      </main>
+      );
+    }
+
+    if (s.phase === "howto") {
+      return (
+        <div className="sd-prologue-screen" aria-label="게임 방법">
+          <div className="sd-bg-texture" aria-hidden="true" />
+          <div className="sd-prologue-backdrop" aria-hidden="true">
+            {gymBgUrl && <div className="sd-bg-photo" style={{ backgroundImage: gymBgUrl }} />}
+            <div className="sd-bg-readability" />
+          </div>
+
+          <div className="sd-prologue-card">
+            <span className="sd-prologue-kicker">MANAGER HANDBOOK · 플레이 가이드</span>
+            <h2>게임 방법</h2>
+            <ul className="sd-howto-list">
+              {theme.howTo.map((h, i) => (
+                <li key={h}>
+                  <span className="sd-howto-dot">{i + 1}</span>
+                  <span>{h}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="sd-prologue-actions">
+              <button
+                type="button"
+                onClick={() => {
+                  click();
+                  reset("opening");
+                }}
+                className="sd-btn-primary"
+              >
+                <Play size={17} />
+                바로 시작하기
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  click();
+                  setS((p) => ({ ...p, phase: "title" }));
+                }}
+                className="sd-btn-ghost"
+              >
+                <ArrowLeft size={16} />
+                타이틀로 돌아가기
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <section className="sd-title-screen" aria-label="슬램덩크 시작 화면">
+        <div className="sd-bg-texture" aria-hidden="true" />
+        <div className="sd-title-backdrop" aria-hidden="true">
+          {gymBgUrl && (
+            <div
+              className="sd-bg-photo"
+              style={{ backgroundImage: gymBgUrl }}
+              data-bg-src={theme.backgrounds["gym"]?.image}
+            />
+          )}
+          <div className="sd-bg-readability" />
+          <div className="sd-title-sunburst" />
+          <div className="sd-title-characters">
+            {titleCast.map(({ id, slotClass }) => {
+              const char = theme.characters[id];
+              return char ? (
+                <EndingPortraitImg key={id} c={char} className={`sd-title-char ${slotClass}`} />
+              ) : null;
+            })}
+          </div>
+          <div className="sd-title-scrim" />
+        </div>
+
+        <div className="sd-title-panel">
+          <div className="sd-title-badge-bar" aria-hidden="true" />
+          <div className="sd-title-emblem" aria-hidden="true">
+            <Flame size={34} />
+          </div>
+
+          <p className="sd-title-eyebrow">SHOHOKU HIGH · BASKETBALL CLUB</p>
+          <h1 className="sd-title-main">
+            {theme.title}
+            <span>{theme.subtitle}</span>
+          </h1>
+          <p className="sd-title-sub">
+            북산고 농구부의 신입 매니저가 되어 열 가지 코트 위 위기를 돌파하고 팀의 신뢰와 판단력을 증명하세요.
+          </p>
+
+          <div className="sd-title-actions">
+            <button
+              type="button"
+              data-start="true"
+              onClick={() => {
+                click();
+                reset("opening");
+              }}
+              className="sd-btn-primary sd-btn-lg"
+            >
+              <Play size={18} />
+              새 게임 시작하기
+            </button>
+
+            {hasSavedProgress && (
+              <button
+                type="button"
+                onClick={() => {
+                  click();
+                  setS((p) => ({ ...p, phase: "question", step: 0 }));
+                }}
+                className="sd-btn-secondary sd-btn-lg"
+              >
+                <Save size={18} />
+                이어하기 (Q{String(s.qIndex + 1).padStart(2, "0")} / {theme.questions.length})
+              </button>
+            )}
+
+            <div className="sd-title-actions-row">
+              <button
+                type="button"
+                onClick={() => {
+                  click();
+                  setShowCollection(true);
+                }}
+                className="sd-btn-secondary"
+              >
+                <Trophy size={16} />
+                엔딩 컬렉션 ({theme.endings.filter((e) => collection[e.id]).length}/{theme.endings.length})
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  click();
+                  setS((p) => ({ ...p, phase: "howto" }));
+                }}
+                className="sd-btn-ghost"
+              >
+                <BookOpen size={16} />
+                게임 방법
+              </button>
+            </div>
+          </div>
+
+          <p className="sd-title-hint">Enter 또는 Space 키로 시작 · 코트 효과음 및 자동 저장 지원</p>
+        </div>
+      </section>
     );
   }
 
   const showBanner = s.phase === "opening" && s.step >= lines.length;
-  const showChoices = s.phase === "question" && dialogDone;
+  const showChoices = s.phase === "question" && s.step >= lines.length;
   const showEndingCard = !!ending && s.step >= lines.length;
 
-  return (
-    <main
-      className={cn(
-        "relative flex min-h-[calc(100vh-58px)] min-h-[calc(100dvh-58px)] flex-col justify-between overflow-x-hidden overflow-y-auto md:block md:h-[calc(100dvh-58px)] md:min-h-[600px] md:overflow-hidden",
-        isImpacting && "sd-stage--shake",
-        !isImpacting && fx === "bad" && s.phase === "result" && "animate-shake",
-      )}
-      data-impacting={isImpacting ? "true" : "false"}
-      data-impact-tick={impactTick}
-    >
-      <Backdrop theme={theme} bg={bg} />
-      {isImpacting && impactTick > 0 && (
-        <div key={impactTick} aria-hidden="true">
-          <div className={cn("sd-court-flash", fx === "bad" && "sd-court-flash--bad")} />
-          <div className={cn("sd-rim-burst", fx === "bad" && "sd-rim-burst--bad")} />
+  /* ==================== OPENING PROLOGUE BANNER ==================== */
+  if (showBanner) {
+    return (
+      <section className="sd-prologue-screen" aria-label="프롤로그 안내">
+        <div className="sd-bg-texture" aria-hidden="true" />
+        <div className="sd-prologue-backdrop" aria-hidden="true">
+          {gymBgUrl && <div className="sd-bg-photo" style={{ backgroundImage: gymBgUrl }} />}
+          <div className="sd-bg-readability" />
         </div>
-      )}
 
-      {/* HUD */}
-      <header
-        className={cn(
-          "relative z-20 flex flex-wrap items-center gap-2.5 bg-ink/88 px-3 py-2 md:absolute md:inset-x-0 md:top-0 md:gap-6 md:px-6",
-          isImpacting && "sd-scoreboard--flash",
-          isImpacting && fx === "bad" && "sd-scoreboard--bad",
-        )}
-      >
-        <div className="font-display text-base text-ball sm:text-lg md:text-xl">
-          {s.phase === "opening" ? "OPENING" : ending ? "FINAL" : `QUESTION ${String(s.qIndex + 1).padStart(2, "0")} / ${theme.questions.length}`}
-        </div>
-        {theme.stats.map((d) => {
-          const v = s.stats[d.id] ?? d.initial;
-          const delta = s.phase === "result" ? s.lastDelta?.[d.id] : undefined;
-          return (
-            <div key={d.id} className="flex min-w-[125px] flex-1 items-center gap-2">
-              <span className={cn("whitespace-nowrap text-xs font-bold sm:text-sm", gaugeText[d.tone])}>{d.label}</span>
-              <div className="h-3.5 flex-1 overflow-hidden rounded-sm border-2 border-foreground/40 bg-foreground/10 sm:h-4">
-                <div className={cn("h-full transition-all duration-700", gaugeBg[d.tone])} style={{ width: `${((v - d.min) / (d.max - d.min)) * 100}%` }} />
+        <div className="sd-prologue-card">
+          <span className="sd-prologue-kicker">PROLOGUE · 북산고 농구부 입부 완료</span>
+          <h2>{theme.openingBanner}</h2>
+          <div className="sd-prologue-story">
+            {theme.openingGuide.map((g) => (
+              <p key={g}>{g}</p>
+            ))}
+          </div>
+
+          <div className="sd-prologue-stats">
+            <div className="sd-prologue-stat">
+              <Shield size={20} aria-hidden="true" />
+              <div>
+                <strong>팀 신뢰도 (초기 50)</strong>
+                <p>선수들과 감독이 매니저인 당신을 얼마나 믿고 의지하는지 나타냅니다.</p>
               </div>
-              <span className="w-7 text-right font-display text-sm text-foreground sm:w-8 sm:text-base">{v}</span>
-              {delta !== undefined && (
-                <span key={`${q?.id}-${d.id}`} className={cn("animate-float-up w-9 font-display text-sm", delta >= 0 ? gaugeText[d.tone] : "text-muted-foreground")}>{delta >= 0 ? `+${delta}` : delta}</span>
-              )}
             </div>
+            <div className="sd-prologue-stat">
+              <Brain size={20} aria-hidden="true" />
+              <div>
+                <strong>판단력 (초기 50)</strong>
+                <p>훈련·경기·선수 관리의 순간마다 냉정하고 현명한 결정을 내리는 능력입니다.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="sd-prologue-actions">
+            <button
+              type="button"
+              onClick={() => {
+                click();
+                setS((p) => ({ ...p, phase: "question", qIndex: 0, step: 0 }));
+              }}
+              className="sd-btn-primary sd-btn-lg"
+            >
+              첫 번째 상황으로
+              <ArrowRight size={18} />
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                click();
+                setS((p) => ({ ...p, phase: "title" }));
+              }}
+              className="sd-btn-ghost"
+            >
+              타이틀로 돌아가기
+            </button>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  /* ==================== ENDING / RESULT SCREEN ==================== */
+  if (showEndingCard && ending) {
+    const endingBg = theme.backgrounds[ending.background]?.image;
+    const endingBgUrl = endingBg ? `url('${encodeURI(endingBg)}')` : gymBgUrl;
+    const isHappy = ending.id === "happy";
+    const leadSpeaker = theme.characters[isHappy ? "chisu" : "hanna"]!;
+    const showcaseIds = ["chisu", "baekho", "taewoong", "hanna"];
+    const unlockedCount = theme.endings.filter(
+      (e) => collection[e.id] || e.id === ending.id,
+    ).length;
+
+    return (
+      <section className="sd-result-screen" aria-label="최종 매니저 결과 및 선수 평가">
+        <div className="sd-bg-texture" aria-hidden="true" />
+
+        <div className={`sd-ending-hero ${!isHappy ? "sd-ending-hero--sad" : ""}`}>
+          <div className="sd-ending-badge-row">
+            <span className="sd-ending-kicker">SHOHOKU HIGH BASKETBALL · 최종 매니저 보고</span>
+            <span className="sd-ending-cond">
+              {isHappy ? "팀 신뢰도 80↑ · 판단력 80↑ 달성" : "정식 매니저 재도전 엔딩"}
+            </span>
+          </div>
+
+          <h1 className="sd-ending-title">{ending.title}</h1>
+          <p className="sd-ending-subtitle">{ending.subtitle}</p>
+
+          <div className="sd-ending-visual">
+            {endingBgUrl && (
+              <div
+                className="sd-bg-photo"
+                style={{ backgroundImage: endingBgUrl }}
+                data-bg-src={endingBg}
+                aria-hidden="true"
+              />
+            )}
+            <div className="sd-bg-readability" aria-hidden="true" />
+            <div className="sd-ending-ensemble" aria-label="북산고 주요 인물">
+              {showcaseIds.map((id, idx) => {
+                const char = theme.characters[id];
+                if (!char) return null;
+                return (
+                  <div
+                    key={id}
+                    className={`sd-ending-member ${idx === 1 || idx === 2 ? "sd-ending-member--lead" : ""}`}
+                  >
+                    <EndingPortraitImg c={char} className="sd-ending-member-img" />
+                  </div>
+                );
+              })}
+            </div>
+            <div className="sd-ending-scrim" aria-hidden="true" />
+            <div className="sd-ending-banner-mark" aria-hidden="true">
+              <span>{isHappy ? "ENDING 01 · HAPPY" : "ENDING 02 · RETRY"}</span>
+              <strong>{ending.title}</strong>
+            </div>
+          </div>
+
+          <div className="sd-ending-quote-box">
+            <div className="sd-ending-quote-portrait">
+              <EndingPortraitImg c={leadSpeaker} />
+            </div>
+            <div className="sd-ending-quote-copy">
+              <div className="sd-ending-quote-speaker">
+                <strong>{leadSpeaker.name}</strong>
+                <span>북산고 농구부 최종 총평</span>
+              </div>
+              <blockquote>“{ending.quote}”</blockquote>
+            </div>
+          </div>
+
+          <div className="sd-final-stats">
+            {theme.stats.map((d) => {
+              const Icon = d.id === "trust" ? Shield : Brain;
+              return (
+                <div key={d.id} className="sd-final-stat">
+                  <Icon size={19} aria-hidden="true" />
+                  <span>{d.label}</span>
+                  <b>{s.stats[d.id]}</b>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Character Evaluations */}
+        <div className="sd-eval-section">
+          <div className="sd-eval-header">
+            <span className="sd-eval-kicker">SHOHOKU ROSTER EVALUATION · 선수단 개별 평가</span>
+            <h2>북산고 주역 4인의 매니저 평가</h2>
+            <p>10번의 훈련과 경기 속에서 당신이 보여 준 신뢰와 판단력을 북산고 멤버들이 평가했습니다.</p>
+          </div>
+
+          <div className="sd-eval-grid">
+            {reviews.map((r) => {
+              const char = theme.characters[r.id];
+              return (
+                <article key={r.id} className="sd-eval-card">
+                  <CharacterReviewImage c={char} />
+                  <div className="sd-eval-body">
+                    <span className="sd-eval-role">
+                      {char?.number ? `NO.${char.number} · SHOHOKU` : "SHOHOKU MANAGER"}
+                    </span>
+                    <h3 className="sd-eval-name">{r.title}</h3>
+                    <p className="sd-eval-comment">“{r.comment}”</p>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Ending Archive */}
+        <div className="sd-archive-strip" aria-label="엔딩 달성 현황">
+          <div className="sd-archive-head">
+            <Award size={18} aria-hidden="true" />
+            <strong>북산고 매니저 엔딩 도감 ({unlockedCount} / {theme.endings.length} 해금)</strong>
+          </div>
+          <div className="sd-archive-list">
+            {theme.endings.map((e, idx) => {
+              const unlocked = Boolean(collection[e.id] || e.id === ending.id);
+              const active = e.id === ending.id;
+              return (
+                <div
+                  key={e.id}
+                  className={`sd-archive-item ${unlocked ? "unlocked" : ""} ${active ? "current" : ""}`}
+                >
+                  <span className="sd-archive-num">ENDING 0{idx + 1}</span>
+                  <strong>{unlocked ? e.title : "??? 미해금 엔딩"}</strong>
+                  <small>{unlocked ? e.subtitle : "다른 선택으로 해금"}</small>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Action CTAs */}
+        <div className="sd-result-actions">
+          <button
+            type="button"
+            onClick={() => {
+              click();
+              reset("opening");
+            }}
+            className="sd-btn-primary sd-btn-lg"
+          >
+            <RotateCcw size={18} />
+            {ending.retryLabel}
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              click();
+              reset("title");
+            }}
+            className="sd-btn-secondary sd-btn-lg"
+          >
+            <Home size={18} />
+            타이틀로 돌아가기
+          </button>
+        </div>
+
+        <EndingShareAndReward
+          gameId="slamdunk"
+          animeTitle={theme.title}
+          endingTitle={ending.title}
+        />
+      </section>
+    );
+  }
+
+  /* ==================== GAMEPLAY SHELL ==================== */
+  const stageCode =
+    s.phase === "opening"
+      ? "OPENING"
+      : ending
+        ? "FINAL EPISODE"
+        : `QUESTION ${String(s.qIndex + 1).padStart(2, "0")} / ${String(theme.questions.length).padStart(2, "0")}`;
+  const stageTitle =
+    s.phase === "opening"
+      ? "북산고 농구부 입부 첫날"
+      : ending
+        ? ending.title
+        : q.title;
+  const stageLocation = theme.backgrounds[bg]?.label ?? "북산고 체육관";
+  const progressRatio =
+    s.phase === "opening"
+      ? 0.04
+      : ending
+        ? 1
+        : Math.min(
+            1,
+            (s.qIndex + (showChoices ? 0.65 : s.phase === "result" ? 0.92 : 0.25)) /
+              theme.questions.length,
           );
-        })}
-        <button aria-label={muted ? "소리 켜기" : "음소거"} onClick={() => setMuted((m) => !m)} className="min-h-[36px] min-w-[36px] inline-flex items-center justify-center text-foreground hover:text-ball">
-          {muted ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
-        </button>
-        <div className="absolute inset-x-0 bottom-0 h-1 bg-foreground/10">
-          <div className="h-full bg-primary transition-all" style={{ width: `${(Object.keys(s.answers).length / theme.questions.length) * 100}%` }} />
+
+  const nextLabel =
+    s.phase === "question" && isLastLine
+      ? "선택지 보기"
+      : s.phase === "result" && isLastLine
+        ? s.qIndex + 1 >= theme.questions.length
+          ? "최종 결과 확인"
+          : "다음 상황으로"
+        : ending && isLastLine
+          ? "최종 결과 확인"
+          : "계속 진행";
+
+  const handleDialogAdvance = () => {
+    if (s.phase === "result" && isLastLine) {
+      onNext();
+      return;
+    }
+    click();
+    setS((p) => ({ ...p, step: p.step + 1 }));
+  };
+
+  return (
+    <div className="sd-play-shell" data-phase={s.phase}>
+      <div className="sd-bg-texture" aria-hidden="true" />
+
+      {/* Unified Top HUD Bar */}
+      <header
+        className={`sd-hud ${isImpacting ? "sd-scoreboard--flash" : ""} ${
+          isImpacting && fx === "bad" ? "sd-scoreboard--bad" : ""
+        }`}
+        aria-label="진행 상황 및 능력치"
+      >
+        <div className="sd-hud-top">
+          <div className="sd-hud-ep">
+            <span className="sd-hud-code">{stageCode}</span>
+            <span className="sd-hud-title">{stageTitle}</span>
+            <span className="sd-hud-location">{stageLocation}</span>
+          </div>
+
+          <div className="sd-hud-actions">
+            <button
+              type="button"
+              onClick={() => setMuted((m) => !m)}
+              className="sd-icon-btn"
+              aria-label={muted ? "효과음 켜기" : "효과음 음소거"}
+              title={muted ? "효과음 켜기" : "효과음 음소거"}
+            >
+              {muted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                click();
+                reset("opening");
+              }}
+              className="sd-icon-btn"
+              aria-label="처음부터 다시하기"
+              title="처음부터 다시하기"
+            >
+              <RotateCcw size={16} />
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                click();
+                setS((p) => ({ ...p, phase: "title" }));
+              }}
+              className="sd-icon-btn"
+              aria-label="타이틀로 이동"
+              title="타이틀로 이동"
+            >
+              <Home size={16} />
+            </button>
+          </div>
+        </div>
+
+        <div className="sd-stats-row">
+          {theme.stats.map((d) => {
+            const v = s.stats[d.id] ?? d.initial;
+            const delta = s.phase === "result" ? s.lastDelta?.[d.id] : undefined;
+            const meta = STAT_META[d.id as keyof typeof STAT_META] ?? STAT_META.trust;
+            const Icon = meta.icon;
+            const pct = Math.max(0, Math.min(100, ((v - d.min) / (d.max - d.min)) * 100));
+
+            return (
+              <div key={d.id} className="sd-stat-card">
+                <div className="sd-stat-head">
+                  <span className="sd-stat-label">
+                    <Icon size={14} aria-hidden="true" />
+                    {d.label}
+                  </span>
+                  <span className="sd-stat-values">
+                    {delta !== undefined && delta !== 0 && (
+                      <span className={`sd-stat-delta ${delta > 0 ? "pos" : "neg"}`}>
+                        {delta > 0 ? `+${delta}` : delta}
+                      </span>
+                    )}
+                    <span className="sd-stat-num">{v}</span>
+                  </span>
+                </div>
+                <div
+                  className="sd-stat-bar"
+                  role="progressbar"
+                  aria-label={d.label}
+                  aria-valuemin={d.min}
+                  aria-valuemax={d.max}
+                  aria-valuenow={v}
+                >
+                  <div className={`sd-stat-fill ${meta.fillClass}`} style={{ width: `${pct}%` }} />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="sd-progress-track" aria-hidden="true">
+          <div className="sd-progress-fill" style={{ width: `${Math.round(progressRatio * 100)}%` }} />
         </div>
       </header>
 
-      {/* Cast */}
-      <div className="relative z-10 flex min-h-[210px] flex-1 items-end justify-center gap-1.5 px-2 pt-3 md:absolute md:inset-x-0 md:bottom-[34%] md:min-h-0 md:gap-8 md:px-0 md:pt-0">
-        {allCast.slice(0, 4).filter((id) => theme.characters[id]).map((id) => (
-          <Portrait key={id} c={theme.characters[id]!} mood={speaker?.id === id ? mood : "neutral"} active={speaker?.id === id} />
-        ))}
-      </div>
-      {fx === "good" && s.phase === "result" && (
-        <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
-          <div className="animate-ball h-14 w-14 rounded-full border-4 border-ink bg-ball" />
-          {[...Array(6)].map((_, i) => (
-            <span key={i} className="animate-sparkle absolute text-3xl text-ball" style={{ left: `${20 + i * 12}%`, top: `${25 + (i % 3) * 12}%`, animationDelay: `${i * 0.1}s` }}>✦</span>
-          ))}
-        </div>
-      )}
+      {/* Unified Visual Novel Stage */}
+      <SceneStage
+        theme={theme}
+        bg={bg}
+        cast={allCast}
+        activeSpeakerId={showChoices ? undefined : speaker?.id}
+        mood={mood}
+        isChoicePhase={showChoices}
+        isImpacting={isImpacting}
+        impactTick={impactTick}
+        fx={fx}
+      />
 
-      {/* Bottom panel */}
-      <section className="relative z-20 p-3 pb-[max(1rem,calc(env(safe-area-inset-bottom,0px)+0.75rem))] md:absolute md:inset-x-0 md:bottom-0 md:p-6">
-        {showBanner ? (
-          <div className="animate-scene mx-auto max-w-3xl border-4 border-ink bg-card p-5 text-center text-card-foreground shadow-[8px_8px_0_var(--ink)] md:p-6">
-            <p className="font-display text-2xl text-primary sm:text-3xl md:text-4xl">「{theme.openingBanner}」</p>
-            {theme.openingGuide.map((g) => <p key={g} className="mt-3 text-sm sm:text-base">{g}</p>)}
-            <button onClick={() => { click(); setS((p) => ({ ...p, phase: "question", qIndex: 0, step: 0 })); }} className="mt-5 min-h-[48px] border-4 border-ink bg-primary px-6 py-2.5 font-display text-xl text-primary-foreground hover:bg-trust">첫 번째 상황으로 ▶</button>
-          </div>
-        ) : showEndingCard && ending ? (
-          <div className="animate-scene mx-auto max-h-[72dvh] max-w-3xl overflow-y-auto border-4 border-ink bg-card p-4 text-center text-card-foreground shadow-[8px_8px_0_var(--ink)] md:p-6">
-            <p className={cn("font-display text-3xl sm:text-5xl", ending.id === "happy" ? "text-primary" : "text-ink")}>「{ending.title}」</p>
-            <p className="mt-2 font-display text-xl sm:text-2xl">「{ending.subtitle}」</p>
-            <p className="mt-4 italic text-muted-foreground">"{ending.quote}"</p>
-            <div className="mt-4 flex justify-center gap-6 font-display text-lg sm:text-xl">
-              {theme.stats.map((d) => <span key={d.id} className={gaugeText[d.tone]}>{d.label} {s.stats[d.id]}</span>)}
+      {/* Unified Bottom Panel */}
+      <section className="sd-bottom-panel" aria-live="polite">
+        {showChoices ? (
+          <div className="sd-choice-box">
+            <div className="sd-choice-header">
+              <span className="sd-choice-kicker">DECISION · 매니저의 판단</span>
+              <p className="sd-choice-prompt">{q.prompt}</p>
             </div>
-            <div className="mt-4 flex flex-wrap justify-center gap-2">
-              <button onClick={() => setShowReviews((v) => !v)} className="min-h-[44px] border-2 border-ink bg-ball px-4 py-2 font-display text-ink">{showReviews ? "캐릭터 평가 접기 ▲" : "캐릭터별 평가 보기 ▼"}</button>
-              <button onClick={() => setShowCollection((v) => !v)} className="min-h-[44px] border-2 border-ink bg-ink px-4 py-2 font-display text-foreground">{showCollection ? "컬렉션 접기 ▲" : "엔딩 컬렉션 보기 ▼"}</button>
+            <div className="sd-choices-grid" role="group" aria-label="선택지 목록">
+              {q.choices.map((c, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => onPick(i)}
+                  className="sd-choice-btn"
+                >
+                  <span className="sd-choice-badge">{"ABC"[i]}</span>
+                  <span className="sd-choice-label">{c.label}</span>
+                  <ChevronRight size={17} className="sd-choice-arrow" aria-hidden="true" />
+                </button>
+              ))}
             </div>
-            {showReviews && <div className="mt-3 grid max-h-[28vh] gap-2 overflow-y-auto text-left sm:grid-cols-2">{reviews.map((r) => <div key={r.id} className="flex gap-3 border-2 border-ink bg-background/10 p-2"><img src={theme.characters[r.id]?.image} alt="" className="h-16 w-14 shrink-0 object-cover" /><div><p className="font-display text-primary">{r.title}</p><p className="text-sm">{r.comment}</p></div></div>)}</div>}
-            {showCollection && <div className="mt-3 grid gap-2 text-left sm:grid-cols-2">{theme.endings.map((e) => <div key={e.id} className="border-2 border-ink p-2"><p className="font-display">{collection[e.id] || e.id === ending.id ? e.title : "??? 잠긴 엔딩"}</p><p className="text-xs">{collection[e.id] || e.id === ending.id ? e.subtitle : "아직 발견하지 못한 엔딩"}</p></div>)}</div>}
-            <div className="mt-5 flex flex-wrap justify-center gap-3">
-              <button onClick={() => { click(); reset("opening"); }} className="min-h-[48px] border-4 border-ink bg-primary px-5 py-2 font-display text-lg text-primary-foreground hover:bg-trust">{ending.retryLabel}</button>
-              <button onClick={() => { click(); reset("title"); }} className="min-h-[48px] border-4 border-ink bg-card px-5 py-2 font-display text-lg hover:bg-ball">처음 화면으로</button>
-            </div>
-            <EndingShareAndReward
-              gameId="slamdunk"
-              animeTitle={theme.title}
-              endingTitle={ending.title}
-            />
           </div>
         ) : (
-          <div className="mx-auto max-w-4xl">
-            {s.phase === "question" && s.step === 0 && (
-              <div className="mb-2 inline-block bg-primary px-3 py-1 font-display text-primary-foreground">{q.title}</div>
-            )}
-            <Dialog
-              key={`${s.phase}-${s.qIndex}-${s.step}`}
-              name={line?.speaker ? (theme.characters[line.speaker]?.name ?? "") : undefined}
-              text={line?.text ?? ""}
-              canAdvance={!showChoices}
-              onAdvance={() => { click(); setS((p) => ({ ...p, step: p.step + 1 })); }}
-            />
-            {showChoices && (
-              <div className="animate-scene mt-3">
-                <p className="mb-2 bg-ink/85 px-3 py-1.5 text-sm font-bold text-ball sm:text-base">{q.prompt}</p>
-                <div className="grid gap-2.5 md:grid-cols-3">
-                  {q.choices.map((c, i) => (
-                    <button key={i} onClick={() => onPick(i)} className="group flex min-h-[54px] items-start gap-3 border-4 border-ink bg-card p-3 text-left text-sm text-card-foreground shadow-[4px_4px_0_var(--ink)] transition-[transform,background-color] duration-150 hover:-translate-y-0.5 hover:bg-primary hover:text-primary-foreground">
-                      <span className="flex h-9 w-9 shrink-0 items-center justify-center bg-ink font-display text-xl text-ball group-hover:text-foreground">{"ABC"[i]}</span>
-                      <span>{c.label}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-            {s.phase === "result" && dialogDone && (
-              <div className="animate-scene mt-3 flex flex-wrap items-center justify-end gap-3">
-                <div className="flex gap-4 bg-ink/85 px-4 py-2 font-display">
-                  {theme.stats.map((d) => {
-                    const v = s.lastDelta?.[d.id] ?? 0;
-                    return <span key={d.id} className={gaugeText[d.tone]}>{d.label} {v >= 0 ? `+${v}` : v}</span>;
-                  })}
-                </div>
-                <button onClick={onNext} className="min-h-[48px] border-4 border-ink bg-primary px-6 py-2 font-display text-xl text-primary-foreground shadow-[4px_4px_0_var(--ink)] hover:bg-trust">
-                  {s.qIndex + 1 >= theme.questions.length ? "결과 보기 ▶" : "다음 상황으로 ▶"}
-                </button>
-              </div>
-            )}
-          </div>
+          <UnifiedDialog
+            key={`${s.phase}-${s.qIndex}-${s.step}`}
+            name={speaker?.name}
+            text={line?.text ?? ""}
+            nextLabel={nextLabel}
+            reactionDeltas={
+              s.phase === "result" && s.lastDelta
+                ? theme.stats.map((d) => ({
+                    id: d.id,
+                    label: d.label,
+                    value: s.lastDelta?.[d.id] ?? 0,
+                  }))
+                : undefined
+            }
+            onAdvance={handleDialogAdvance}
+          />
         )}
       </section>
-    </main>
+    </div>
   );
 }
 
-function Dialog({ name, text, canAdvance, onAdvance }: { name?: string | undefined; text: string; canAdvance: boolean; onAdvance: () => void }) {
+function UnifiedDialog({
+  name,
+  text,
+  nextLabel,
+  reactionDeltas,
+  onAdvance,
+}: {
+  name?: string;
+  text: string;
+  nextLabel: string;
+  reactionDeltas?: Array<{ id: string; label: string; value: number }>;
+  onAdvance: () => void;
+}) {
   const { shown, done, finish } = useTypewriter(text);
+
+  const handleClick = useCallback(() => {
+    if (!done) {
+      finish();
+    } else {
+      onAdvance();
+    }
+  }, [done, finish, onAdvance]);
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Enter" || e.key === " ") {
+        const tag = (e.target as HTMLElement | null)?.tagName;
+        if (tag === "BUTTON" || tag === "A") return;
+        e.preventDefault();
+        handleClick();
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [handleClick]);
+
   return (
     <div
       role="button"
       tabIndex={0}
-      onClick={() => (!done ? finish() : canAdvance && onAdvance())}
-      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); if (!done) finish(); else if (canAdvance) onAdvance(); } }}
-      className="mobile-light-blur relative min-h-[110px] cursor-pointer select-none border-4 border-ink bg-ink/90 p-4 pt-5 text-foreground md:bg-ink/80 md:backdrop-blur-sm"
+      onClick={handleClick}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          handleClick();
+        }
+      }}
+      className="sd-dialogue-card"
+      aria-label="대화 진행"
     >
-      {name && <div className="absolute -top-4 left-4 border-2 border-ink bg-primary px-3 py-0.5 font-display text-primary-foreground">{name}</div>}
-      <p className={cn("text-sm leading-relaxed sm:text-base md:text-lg", !name && "italic text-foreground/85")}>{name ? `"${shown}"` : shown}</p>
-      {done && canAdvance && <span className="absolute bottom-2 right-3 animate-pulse text-ball">▼ 클릭</span>}
+      <div className={`sd-speaker-plate ${!name ? "sd-speaker-plate--narrator" : ""}`}>
+        {name ?? "내레이션"}
+      </div>
+
+      <p className={`sd-dialogue-text ${!name ? "sd-dialogue-text--narrator" : ""}`}>
+        {name ? `“${shown}”` : shown}
+        {!done && <span className="sd-caret">▍</span>}
+      </p>
+
+      <div className="sd-dialogue-footer">
+        <div className="sd-reaction-deltas">
+          {reactionDeltas?.map((d) =>
+            d.value !== 0 ? (
+              <span key={d.id} className={`sd-delta-pill ${d.value > 0 ? "pos" : "neg"}`}>
+                {d.label} {d.value > 0 ? `+${d.value}` : d.value}
+              </span>
+            ) : null,
+          )}
+        </div>
+
+        <span className="sd-next-indicator">
+          {done ? nextLabel : "클릭하여 스킵"}
+          <ChevronRight size={16} aria-hidden="true" />
+        </span>
+      </div>
     </div>
   );
 }

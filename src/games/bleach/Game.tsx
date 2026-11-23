@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Flame, Play, Save, Shield, Swords } from "lucide-react";
 import { CHARACTERS } from "./data/characters";
+import { BLEACH_BACKGROUNDS, toBleachBgUrl } from "./data/backgrounds";
 import { EPISODES } from "./data/episodes";
 import {
   advanceEpisodeOrResult,
@@ -19,6 +20,11 @@ import {
   preloadBleachAudio,
   syncBleachAudioMute,
 } from "./sound";
+import {
+  getGlobalAudioMuted,
+  setGlobalAudioMuted,
+  subscribeGlobalAudioMuted,
+} from "../../utils/mobileAudio";
 import type { CharacterId, EndingId, GameState } from "./types";
 import "./styles.css";
 
@@ -63,13 +69,7 @@ export function BleachGame({ onReturnWorldSelect }: BleachGameProps) {
     return loaded;
   });
 
-  const [muted, setMuted] = useState<boolean>(() => {
-    try {
-      return localStorage.getItem(MUTE_KEY) === "1";
-    } catch {
-      return false;
-    }
-  });
+  const [muted, setMuted] = useState<boolean>(() => getGlobalAudioMuted());
 
   const [visibleChars, setVisibleChars] = useState(0);
   const [fxMood, setFxMood] = useState<"neutral" | "good" | "bad">("neutral");
@@ -97,8 +97,11 @@ export function BleachGame({ onReturnWorldSelect }: BleachGameProps) {
     preloadBleachAudio();
   }, []);
 
+  useEffect(() => subscribeGlobalAudioMuted(setMuted), []);
+
   useEffect(() => {
     syncBleachAudioMute(muted);
+    setGlobalAudioMuted(muted);
     try {
       localStorage.setItem(MUTE_KEY, muted ? "1" : "0");
     } catch {
@@ -269,7 +272,12 @@ export function BleachGame({ onReturnWorldSelect }: BleachGameProps) {
       {state.phase === "title" && (
         <section className="bl-title-screen" aria-label="블리치 시작 화면">
           <div className="bl-title-backdrop" aria-hidden="true">
-            <div className="bl-title-sky" />
+            <div
+              className="bl-bg-photo"
+              style={{ backgroundImage: toBleachBgUrl(BLEACH_BACKGROUNDS.titlePrologue) }}
+              data-bg-src={BLEACH_BACKGROUNDS.titlePrologue}
+            />
+            <div className="bl-bg-readability" />
             <div className="bl-title-slash-grid" />
             <div className="bl-title-reiatsu" />
             <div className="bl-title-characters">
@@ -343,6 +351,14 @@ export function BleachGame({ onReturnWorldSelect }: BleachGameProps) {
 
       {state.phase === "prologue" && (
         <section className="bl-prologue-screen" aria-label="프롤로그">
+          <div className="bl-prologue-backdrop" aria-hidden="true">
+            <div
+              className="bl-bg-photo"
+              style={{ backgroundImage: toBleachBgUrl(BLEACH_BACKGROUNDS.titlePrologue) }}
+              data-bg-src={BLEACH_BACKGROUNDS.titlePrologue}
+            />
+            <div className="bl-bg-readability" />
+          </div>
           <div className="bl-prologue-card">
             <span className="bl-prologue-kicker">PROLOGUE · 사신 대행증 수여</span>
             <h2>어둠을 베어 가르는 새로운 참백도</h2>
@@ -431,6 +447,7 @@ export function BleachGame({ onReturnWorldSelect }: BleachGameProps) {
 
           <SceneStage
             stageTheme={episode.stageTheme}
+            phase={state.phase}
             location={episode.location}
             cast={episode.featuredCast}
             activeSpeaker={activeLine?.speaker ?? "narrator"}

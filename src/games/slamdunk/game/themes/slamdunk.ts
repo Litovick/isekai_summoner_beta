@@ -22,10 +22,10 @@ export const slamdunk: Theme = {
   ],
   characters: {
     me: { id: "me", name: "나", tone: "muted" },
-    hanna: { id: "hanna", image: img_hanna, name: "이한나", tone: "orange" },
-    baekho: { id: "baekho", image: img_baekho, name: "강백호", number: "10", tone: "primary" },
-    taewoong: { id: "taewoong", image: img_taewoong, name: "서태웅", number: "11", tone: "ink" },
-    chisu: { id: "chisu", image: img_chisu, name: "채치수", number: "4", tone: "primary" },
+    hanna: { id: "hanna", image: "/slamdunk/characters/hanna.png", fallbackImage: img_hanna, name: "이한나", tone: "orange" },
+    baekho: { id: "baekho", image: "/slamdunk/characters/baekho.png", fallbackImage: img_baekho, name: "강백호", number: "10", tone: "primary" },
+    taewoong: { id: "taewoong", image: "/slamdunk/characters/taewoong.png", fallbackImage: img_taewoong, name: "서태웅", number: "11", tone: "ink" },
+    chisu: { id: "chisu", image: "/slamdunk/characters/chisu.png", fallbackImage: img_chisu, name: "채치수", number: "4", tone: "primary" },
     taeseop: { id: "taeseop", image: img_taeseop, name: "송태섭", number: "7", tone: "ink" },
     daeman: { id: "daeman", image: img_daeman, name: "정대만", number: "14", tone: "primary" },
     coach: { id: "coach", image: img_coach_new, name: "안 감독", tone: "court" },
@@ -33,11 +33,17 @@ export const slamdunk: Theme = {
     player: { id: "player", image: img_bench, name: "선수", number: "8", tone: "muted" },
   },
   backgrounds: {
-    gym: { label: "북산고 체육관" },
-    court: { label: "연습 경기 코트" },
-    bench: { label: "벤치" },
-    locker: { label: "라커룸" },
-    evening: { label: "해 질 녘 체육관" },
+    gym: { label: "북산고 체육관", image: "/slamdunk/backgrounds/gym.jpg" },
+    training: { label: "기초 훈련 코트", image: "/slamdunk/backgrounds/training.png" },
+    practice: { label: "연습 경기 코트", image: "/slamdunk/backgrounds/practice.png" },
+    qualifiers: { label: "지역 예선 경기장", image: "/slamdunk/backgrounds/qualifiers.png" },
+    camp: { label: "합숙 특훈 코트", image: "/slamdunk/backgrounds/camp.png" },
+    finals: { label: "전국대회 결승 코트", image: "/slamdunk/backgrounds/finals.jpg" },
+    ending: { label: "북산고 농구부", image: "/slamdunk/backgrounds/ending.png" },
+    court: { label: "연습 경기 코트", image: "/slamdunk/backgrounds/practice.png" },
+    bench: { label: "벤치", image: "/slamdunk/backgrounds/practice.png" },
+    locker: { label: "합숙 특훈 코트", image: "/slamdunk/backgrounds/camp.png" },
+    evening: { label: "북산고 농구부", image: "/slamdunk/backgrounds/ending.png" },
   },
   opening: [
     L(undefined, "북산고등학교에 입학한 당신. 평범한 학교생활을 꿈꾸던 어느 날, 우연히 체육관에서 농구부의 연습 경기를 구경하게 된다."),
@@ -72,7 +78,7 @@ export const slamdunk: Theme = {
   ],
   questions: [
     {
-      id: "q1", title: "강백호와 서태웅의 다툼", background: "gym", cast: ["baekho", "taewoong"],
+      id: "q1", title: "강백호와 서태웅의 다툼", background: "training", cast: ["baekho", "taewoong"],
       lines: [
         L(undefined, "농구부 연습 도중 강백호와 서태웅이 패스 문제로 말다툼을 벌인다."),
         L("baekho", "야! 서태웅! 왜 나한테 패스를 안 하는 거야?!"),
@@ -87,7 +93,7 @@ export const slamdunk: Theme = {
       ],
     },
     {
-      id: "q2", title: "무리하는 정대만", background: "gym", cast: ["daeman", "hanna"],
+      id: "q2", title: "무리하는 정대만", background: "training", cast: ["daeman", "hanna"],
       lines: [
         L(undefined, "격렬한 슈팅 연습을 이어가던 정대만이 지친 모습을 보인다."),
         L("hanna", "정대만 선배가 너무 무리하는 것 같은데..."),
@@ -101,7 +107,7 @@ export const slamdunk: Theme = {
       ],
     },
     {
-      id: "q3", title: "강백호의 무리한 훈련", background: "court", cast: ["baekho", "hanna"],
+      id: "q3", title: "강백호의 무리한 훈련", background: "camp", cast: ["baekho", "hanna"],
       lines: [
         L(undefined, "강백호가 자신의 실력을 증명하겠다며 쉬지 않고 슛 연습을 반복하고 있다."),
         L("baekho", "이 천재 강백호님은 연습 따위로 지치지 않는다고!"),
@@ -115,7 +121,7 @@ export const slamdunk: Theme = {
       ],
     },
     {
-      id: "q4", title: "경기 중 작전 타임", background: "court", cast: ["taeseop", "coach"],
+      id: "q4", title: "경기 중 작전 타임", background: "practice", cast: ["taeseop", "coach"],
       lines: [
         L(undefined, "연습 경기에서 상대 팀의 빠른 공격에 북산고가 연속 실점하고 있다."),
         L("taeseop", "상대 가드가 너무 빨라! 수비가 계속 뚫리고 있어!"),
@@ -129,7 +135,7 @@ export const slamdunk: Theme = {
       ],
     },
     {
-      id: "q5", title: "벤치에 앉은 선수", background: "bench", cast: ["bench"],
+      id: "q5", title: "벤치에 앉은 선수", background: "practice", cast: ["bench"],
       lines: [
         L(undefined, "경기에서 출전 기회를 얻지 못한 벤치 선수가 풀이 죽어 있다."),
         L("bench", "저는 아무래도 팀에 도움이 안 되는 것 같아요."),
@@ -142,7 +148,7 @@ export const slamdunk: Theme = {
       ],
     },
     {
-      id: "q6", title: "서태웅의 개인 플레이", background: "court", cast: ["taewoong", "taeseop"],
+      id: "q6", title: "서태웅의 개인 플레이", background: "qualifiers", cast: ["taewoong", "taeseop"],
       lines: [
         L(undefined, "연습 경기에서 서태웅이 혼자 공격을 시도하다 여러 번 상대 수비에 막힌다."),
         L("taeseop", "서태웅! 패스를 좀 하라고!"),
@@ -156,7 +162,7 @@ export const slamdunk: Theme = {
       ],
     },
     {
-      id: "q7", title: "팀의 연패", background: "locker", cast: ["chisu", "baekho"],
+      id: "q7", title: "팀의 연패", background: "camp", cast: ["chisu", "baekho"],
       lines: [
         L(undefined, "연습 경기에서 연달아 패배한 북산고 선수들의 분위기가 가라앉아 있다."),
         L("chisu", "이대로는 전국대회에서 좋은 성적을 낼 수 없어."),
@@ -170,7 +176,7 @@ export const slamdunk: Theme = {
       ],
     },
     {
-      id: "q8", title: "경기 직전의 부상", background: "locker", cast: ["player", "hanna"],
+      id: "q8", title: "경기 직전의 부상", background: "qualifiers", cast: ["player", "hanna"],
       lines: [
         L(undefined, "중요한 경기를 앞두고 한 선수가 발목에 통증을 느낀다."),
         L("player", "조금 아프긴 한데... 경기에 나갈 수 있을 것 같아요."),
@@ -184,7 +190,7 @@ export const slamdunk: Theme = {
       ],
     },
     {
-      id: "q9", title: "마지막 작전 회의", background: "court", cast: ["taeseop", "chisu"],
+      id: "q9", title: "마지막 작전 회의", background: "finals", cast: ["taeseop", "chisu"],
       lines: [
         L(undefined, "중요한 경기에서 북산고는 2점 차이로 뒤지고 있다. 경기 종료까지 남은 시간은 20초."),
         L("taeseop", "어떻게 공격해야 하지?"),
@@ -198,7 +204,7 @@ export const slamdunk: Theme = {
       ],
     },
     {
-      id: "q10", title: "진정한 매니저의 자격", background: "gym", cast: ["chisu", "coach", "hanna"],
+      id: "q10", title: "진정한 매니저의 자격", background: "finals", cast: ["chisu", "coach", "hanna"],
       lines: [
         L(undefined, "모든 훈련과 경기가 끝난 뒤, 북산고 농구부가 체육관에 모인다."),
         L("chisu", "그동안 수고 많았다."),
@@ -215,7 +221,7 @@ export const slamdunk: Theme = {
   ],
   endings: [
     {
-      id: "happy", title: "HAPPY ENDING", subtitle: "북산고 농구부 정식 매니저 임명!", background: "gym",
+      id: "happy", title: "HAPPY ENDING", subtitle: "북산고 농구부 정식 매니저 임명!", background: "ending",
       condition: (s) => (s["trust"] ?? 0) >= 80 && (s["judgment"] ?? 0) >= 80,
       lines: [
         L(undefined, "밝은 햇살이 들어오는 북산고 체육관. 선수들이 당신을 둘러싸고 있다."),
@@ -232,7 +238,7 @@ export const slamdunk: Theme = {
       retryLabel: "다시 플레이하기",
     },
     {
-      id: "sad", title: "SAD ENDING", subtitle: "정식 매니저 임명 실패! 신입 생활 연장 확정!", background: "evening",
+      id: "sad", title: "SAD ENDING", subtitle: "정식 매니저 임명 실패! 신입 생활 연장 확정!", background: "ending",
       condition: () => true,
       lines: [
         L(undefined, "해가 저문 북산고 체육관. 선수들은 훈련을 마치고 정리하고 있다."),

@@ -1,8 +1,10 @@
 import { CHARACTERS } from "../data/characters";
-import type { CharacterId, EpisodeStageTheme } from "../types";
+import { getBleachStageBackground, toBleachBgUrl } from "../data/backgrounds";
+import type { CharacterId, EpisodeStageTheme, GamePhase } from "../types";
 
 interface SceneStageProps {
   stageTheme: EpisodeStageTheme;
+  phase?: GamePhase;
   location: string;
   cast: CharacterId[];
   activeSpeaker: CharacterId | "narrator";
@@ -70,6 +72,7 @@ function CharacterStandee({
 
 export function SceneStage({
   stageTheme,
+  phase,
   location,
   cast,
   activeSpeaker,
@@ -88,6 +91,7 @@ export function SceneStage({
   })();
 
   const isEnsemble = visibleCast.length >= 5;
+  const backgroundPath = getBleachStageBackground(stageTheme, phase);
 
   return (
     <div
@@ -98,15 +102,18 @@ export function SceneStage({
       data-impacting={isImpacting ? "true" : "false"}
       data-impact-tick={impactTick}
     >
-      {/* Pure CSS Layered Bleach Atmosphere */}
+      {/* Original Anime Stage Background Photo + Atmospheric Particles */}
       <div
-        className={`bl-backdrop bl-env bl-env--${stageTheme}`}
+        className={`bl-backdrop bl-env bl-env--${stageTheme} bl-backdrop--photo`}
         role="region"
         aria-label={location}
       >
-        <div className="bl-env-sky" aria-hidden="true" />
-        <div className="bl-env-celestial" aria-hidden="true" />
-        <div className="bl-env-silhouette" aria-hidden="true" />
+        <div
+          className="bl-bg-photo"
+          style={{ backgroundImage: toBleachBgUrl(backgroundPath) }}
+          data-bg-src={backgroundPath}
+          aria-hidden="true"
+        />
         <div className="bl-env-aura" aria-hidden="true" />
         <div className="bl-env-mist" aria-hidden="true" />
 

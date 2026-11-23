@@ -48,10 +48,7 @@ export function DialogueBox({
                 className="bl-choice-btn"
               >
                 <span className="bl-choice-badge">{choice.id}</span>
-                <div className="bl-choice-copy">
-                  <span className="bl-choice-stance">{choice.stance}</span>
-                  <span className="bl-choice-label">{choice.label}</span>
-                </div>
+                <span className="bl-choice-label">{choice.label}</span>
                 <ChevronRight size={18} className="bl-choice-arrow" aria-hidden="true" />
               </button>
             ))}

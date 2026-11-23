@@ -1,4 +1,9 @@
 import { CHARACTERS } from "../data/characters";
+import {
+  getNarutoStageBackground,
+  isNarutoTopRightLogoCropBackground,
+  toNarutoBgUrl,
+} from "../data/backgrounds";
 import type { CharacterId, EpisodeStageTheme } from "../types";
 
 interface SceneStageProps {
@@ -90,6 +95,8 @@ export function SceneStage({
   })();
 
   const isEnsemble = visibleCast.length >= 5;
+  const backgroundPath = getNarutoStageBackground(stageTheme);
+  const cropTopRightLogo = isNarutoTopRightLogoCropBackground(backgroundPath);
 
   return (
     <div
@@ -100,15 +107,19 @@ export function SceneStage({
       data-impacting={isImpacting ? "true" : "false"}
       data-impact-tick={impactTick}
     >
-      {/* Pure CSS Layered Shinobi Environment */}
+      {/* Original Anime Stage Background Photo + Atmospheric Particles */}
       <div
-        className={`nr-backdrop nr-env nr-env--${stageTheme}`}
+        className={`nr-backdrop nr-env nr-env--${stageTheme} nr-backdrop--photo`}
         role="region"
         aria-label={location}
       >
-        <div className="nr-env-sky" aria-hidden="true" />
-        <div className="nr-env-celestial" aria-hidden="true" />
-        <div className="nr-env-silhouette" aria-hidden="true" />
+        <div
+          className={`nr-bg-photo ${cropTopRightLogo ? "nr-bg-photo--crop-top-right" : ""}`}
+          style={{ backgroundImage: toNarutoBgUrl(backgroundPath) }}
+          data-bg-src={backgroundPath}
+          data-logo-crop={cropTopRightLogo ? "top-right" : "none"}
+          aria-hidden="true"
+        />
         <div className="nr-env-aura" aria-hidden="true" />
         <div className="nr-env-mist" aria-hidden="true" />
 
