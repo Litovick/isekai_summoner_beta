@@ -993,7 +993,7 @@
   animation: nr-spark-twinkle calc(var(--p-dur) * 0.75) ease-in-out var(--p-delay) infinite;
 }
 
-/* EP 7: 4대 호카게의 의지와 불의 의지 계승 (황금빛 비뢰신 섬광 + 붉은 불꽃 입자) */
+/* EP 7: 전설의 3닌자 지라이야와 불의 의지 계승 (황금빛 선술 오라 + 붉은 불꽃 입자) */
 .nr-env--fourth-hokage-will .nr-env-sky {
   background:
     radial-gradient(circle at 50% 34%, rgba(251, 191, 36, 0.45), transparent 54%),
@@ -1491,6 +1491,66 @@
   margin-top: 12px;
 }
 
+.nr-ending-badge-group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.nr-ending-hidden-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 11px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  color: #1c1203;
+  background: linear-gradient(135deg, #fef08a 0%, #f59e0b 100%);
+  box-shadow: 0 0 18px rgba(251, 191, 36, 0.48);
+}
+
+.nr-ending-theme--six-paths-eclipse .nr-ending-beams {
+  background:
+    radial-gradient(circle at 50% 18%, rgba(254, 240, 138, 0.34), transparent 58%),
+    repeating-linear-gradient(
+      118deg,
+      transparent 0 24px,
+      rgba(251, 191, 36, 0.14) 24px 30px,
+      transparent 30px 60px
+    );
+}
+
+.nr-ending-hero--hidden {
+  border-color: rgba(251, 191, 36, 0.62);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.28), transparent 60%),
+    linear-gradient(180deg, rgba(22, 15, 7, 0.96), rgba(10, 8, 12, 0.98));
+  box-shadow: 0 0 34px rgba(245, 158, 11, 0.16);
+}
+
+.nr-ending-hero--hidden .nr-ending-kicker,
+.nr-ending-hero--hidden .nr-ending-banner-mark span {
+  color: #fde047;
+}
+
+.nr-ending-hero--hidden .nr-ending-cond {
+  background: rgba(120, 53, 15, 0.42);
+  border-color: rgba(251, 191, 36, 0.58);
+  color: #fef3c7;
+}
+
+.nr-ending-hero--hidden .nr-ending-subtitle {
+  color: #fde68a;
+}
+
+.nr-ending-quote-box--hidden {
+  background: radial-gradient(circle at 12% 50%, rgba(217, 119, 6, 0.26), rgba(14, 10, 8, 0.94));
+  border-color: rgba(251, 191, 36, 0.48);
+}
+
 .nr-ending-ensemble {
   position: relative;
   z-index: 2;
@@ -1877,6 +1937,21 @@
 
 .nr-archive-item.current {
   border-color: var(--nr-gold);
+}
+
+.nr-archive-item--hidden {
+  grid-column: 1 / -1;
+  border-color: rgba(251, 191, 36, 0.34);
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.1), rgba(255, 255, 255, 0.03));
+}
+
+.nr-archive-item--hidden.unlocked {
+  border-color: rgba(251, 191, 36, 0.65);
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.22), rgba(251, 191, 36, 0.08));
+}
+
+.nr-archive-item--hidden .nr-archive-num {
+  color: #fde047;
 }
 
 .nr-archive-num {

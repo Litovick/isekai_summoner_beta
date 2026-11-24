@@ -3,7 +3,7 @@ export type CharacterId =
   | "sasuke"
   | "sakura"
   | "kakashi"
-  | "minato"
+  | "jiraiya"
   | "itachi";
 
 export type StatId = "ninjutsu" | "bond" | "willOfFire";
@@ -54,6 +54,7 @@ export type EpisodeStageTheme =
   | "fourth-hokage-will";
 
 export type EndingThemeId =
+  | "six-paths-eclipse"
   | "hokage-legacy"
   | "team7-bond"
   | "solitary-anbu"
@@ -71,7 +72,12 @@ export interface Episode {
   choices: [EpisodeChoice, EpisodeChoice, EpisodeChoice];
 }
 
-export type EndingId = "ending-01" | "ending-02" | "ending-03" | "ending-04";
+export type EndingId =
+  | "ending-hidden"
+  | "ending-01"
+  | "ending-02"
+  | "ending-03"
+  | "ending-04";
 
 export interface EndingInfo {
   id: EndingId;

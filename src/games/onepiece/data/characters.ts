@@ -10,7 +10,6 @@ export const CHARACTER_IDS: CharacterId[] = [
   "nami",
   "sanji",
   "chopper",
-  "ace",
   "shanks",
 ];
 
@@ -54,14 +53,6 @@ export const CHARACTERS: Record<CharacterId, CharacterMeta> = {
     specialty: "사람사람 열매 · 럼블 볼",
     image: "/onepiece/characters/chopper.png",
     accentColor: "#ec4899",
-  },
-  ace: {
-    id: "ace",
-    name: "포트거스 D. 에이스",
-    title: "흰수염 해적단 2번대 대장",
-    specialty: "이글이글 열매 · 화권",
-    image: "/onepiece/characters/ace.png",
-    accentColor: "#ef4444",
   },
   shanks: {
     id: "shanks",
@@ -132,17 +123,6 @@ export const CHARACTER_EVALUATION_PROFILES: Record<
       B: "열심히 싸워 준 건 알지만, 다친 동료들을 조금만 더 신경 써 주었으면 좋았을 거야… 다음엔 같이 돌보자!",
       C: "무서워… 그렇게 무모하게 굴다가 크게 다치면 나도 다 못 고쳐 준단 말이야! 왜 내 말을 안 들어주는 거야…!",
       D: "너무해!! 친구들이 쓰러져 가는데 혼자만 살려고 하거나 아무것도 못 하다니… 넌 동료가 아니야!!",
-    },
-  },
-  ace: {
-    id: "ace",
-    focus: "형제와 동료를 향한 뜨거운 의리와 기개",
-    comments: {
-      S: "하하! 대단한 녀석이군! 루피 녀석 곁에 너 같은 든든한 동료가 있으니 내가 멀리서도 안심이 돼. 한잔 걸치고 싶은 기분이다!",
-      A: "뜨거운 의리와 배짱이 느껴졌어! 어떤 불길 앞에서도 동료를 먼저 챙기는 모습, 정말 마음에 들었어.",
-      B: "나쁘지 않은 녀석이네. 다만 가끔은 손익 따지지 말고 동료의 등을 믿고 불꽃처럼 뛰어들 줄도 알아야 해.",
-      C: "어이, 그렇게 비겁하거나 우유부단한 태도로는 루피의 등을 지킬 수 없어. 스스로 부끄럽지 않게 똑바로 서라.",
-      D: "실망이다. 의리도 기개도 없는 자가 감히 내 동생의 동료를 자처하다니! 당장 내 눈앞에서 사라져!",
     },
   },
   shanks: {

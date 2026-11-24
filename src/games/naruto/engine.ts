@@ -62,8 +62,37 @@ export function gradeForScore(score: number): Grade {
   return "D";
 }
 
-export function resolveEnding(stats: Stats): EndingInfo {
+export const NARUTO_HIDDEN_KEYS = {
+  /** EP4 붉은 구름의 습격: B — 이타치에게 단독 돌격해 사륜안의 진의를 정면으로 마주함 */
+  ep4ChoiceIndex: 1,
+  /** EP5 종말의 계곡: A — 차크라 고갈을 감수하고 맨몸으로 나루토·사스케 사이에 뛰어듦 */
+  ep5ChoiceIndex: 0,
+  /** EP7 전설의 3닌자 지라이야: C — 지라이야의 선술과 제7반 합동 나선환 완성 */
+  ep7ChoiceIndex: 2,
+} as const;
+
+export function isNarutoHiddenRoute(answers: readonly number[]): boolean {
+  return (
+    answers[3] === NARUTO_HIDDEN_KEYS.ep4ChoiceIndex &&
+    answers[4] === NARUTO_HIDDEN_KEYS.ep5ChoiceIndex &&
+    answers[6] === NARUTO_HIDDEN_KEYS.ep7ChoiceIndex
+  );
+}
+
+export function resolveEnding(
+  stats: Stats,
+  answers: readonly number[] = [],
+): EndingInfo {
   const { ninjutsu, bond, willOfFire } = stats;
+  // Priority 0: Hidden Ending (all stats >= 80 + 3 secret lore choices)
+  if (
+    ninjutsu >= 80 &&
+    bond >= 80 &&
+    willOfFire >= 80 &&
+    isNarutoHiddenRoute(answers)
+  ) {
+    return ENDINGS["ending-hidden"];
+  }
   // Priority 1: all stats >= 75
   if (ninjutsu >= 75 && bond >= 75 && willOfFire >= 75) {
     return ENDINGS["ending-01"];
@@ -140,7 +169,7 @@ export function advanceEpisodeOrResult(state: GameState): GameState {
     }
 
     if (state.episodeIndex + 1 >= EPISODES.length) {
-      const ending = resolveEnding(state.stats);
+      const ending = resolveEnding(state.stats, state.answers);
       const unlocked = state.unlockedEndings.includes(ending.id)
         ? state.unlockedEndings
         : [...state.unlockedEndings, ending.id];

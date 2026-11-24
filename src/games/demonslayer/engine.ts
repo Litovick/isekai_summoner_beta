@@ -62,8 +62,37 @@ export function gradeForScore(score: number): Grade {
   return "D";
 }
 
-export function resolveEnding(stats: Stats): EndingInfo {
+export const DEMONSLAYER_HIDDEN_KEYS = {
+  /** EP4 환락의 거리: C — 홀로 다키의 목만 노리는 극한의 단독 기동 */
+  ep4ChoiceIndex: 2,
+  /** EP6 주 합동 강화 훈련: A — 피투성이가 되어도 사네미·오바나이 연격을 받아 내며 동료들과 바위를 밈 */
+  ep6ChoiceIndex: 0,
+  /** EP7 우부야시키 저택 무잔 습격: B — 호흡이 무너질 정도로 무리하게 탄지로 앞을 몸으로 막아섬 */
+  ep7ChoiceIndex: 1,
+} as const;
+
+export function isDemonSlayerHiddenRoute(answers: readonly number[]): boolean {
+  return (
+    answers[3] === DEMONSLAYER_HIDDEN_KEYS.ep4ChoiceIndex &&
+    answers[5] === DEMONSLAYER_HIDDEN_KEYS.ep6ChoiceIndex &&
+    answers[6] === DEMONSLAYER_HIDDEN_KEYS.ep7ChoiceIndex
+  );
+}
+
+export function resolveEnding(
+  stats: Stats,
+  answers: readonly number[] = [],
+): EndingInfo {
   const { breathing, trust, resolve } = stats;
+  // Priority 0: Hidden Ending (all stats >= 80 + 3 secret awakening keys)
+  if (
+    breathing >= 80 &&
+    trust >= 80 &&
+    resolve >= 80 &&
+    isDemonSlayerHiddenRoute(answers)
+  ) {
+    return ENDINGS["ending-hidden"];
+  }
   // Priority 1: all stats >= 75
   if (breathing >= 75 && trust >= 75 && resolve >= 75) {
     return ENDINGS["ending-01"];
@@ -140,7 +169,7 @@ export function advanceEpisodeOrResult(state: GameState): GameState {
     }
 
     if (state.episodeIndex + 1 >= EPISODES.length) {
-      const ending = resolveEnding(state.stats);
+      const ending = resolveEnding(state.stats, state.answers);
       const unlocked = state.unlockedEndings.includes(ending.id)
         ? state.unlockedEndings
         : [...state.unlockedEndings, ending.id];

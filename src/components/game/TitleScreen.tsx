@@ -1,75 +1,73 @@
+import { useEffect } from "react";
 import { useGame } from "@/contexts/GameContext";
 import { Sparkles, Wand2 } from "lucide-react";
 
-const TITLE_BACKGROUND = "/assets/anime-summoner-hero.webp";
+const DESKTOP_BG_SRC = "/assets/main_bg_desktop.png";
+const MOBILE_BG_SRC = "/assets/main_bg_mobile.png";
 
 export default function TitleScreen() {
   const { openWorldSelect } = useGame();
 
+  // Preload both desktop & mobile hero images so resizing across 768px swaps seamlessly
+  useEffect(() => {
+    const desktopImg = new Image();
+    desktopImg.src = DESKTOP_BG_SRC;
+    const mobileImg = new Image();
+    mobileImg.src = MOBILE_BG_SRC;
+  }, []);
+
   return (
     <main
       className="title-dvh-shell animate-screen-fast relative flex w-full flex-col justify-between overflow-x-hidden overflow-y-auto bg-[#100b22] text-white selection:bg-[#6C4DFF] selection:text-white"
-      style={{
-        backgroundImage:
-          "radial-gradient(ellipse at 50% 24%, rgba(108, 77, 255, 0.32) 0%, rgba(23, 14, 53, 0.72) 48%, #100b22 82%)",
-      }}
+      data-testid="title-screen"
     >
-      {/* Desktop full-bleed hero background */}
-      <img
-        src={TITLE_BACKGROUND}
-        alt="마법진 포털 앞에서 애니메이션 세계를 마주하는 소환사"
-        decoding="async"
-        className="pointer-events-none absolute inset-0 hidden h-full w-full object-cover object-center md:block"
+      {/* Responsive full-bleed background layer: <768px mobile 9:16, >=768px desktop 16:9 */}
+      <div
+        className="title-hero-bg pointer-events-none absolute inset-0"
+        role="img"
+        aria-label="마법진 포털 앞에서 애니메이션 세계를 마주하는 소환사"
+        data-testid="title-hero-bg"
       />
-      <div className="pointer-events-none absolute inset-0 hidden bg-gradient-to-b from-[#170e35]/25 via-transparent to-[#100b22]/80 md:block" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 hidden h-2/5 bg-gradient-to-t from-[#100b22]/92 to-transparent md:block" />
 
+      {/* Measured contrast scrims: keep upper artwork crisp while grounding bottom CTA legibility */}
+      <div
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#100b22]/30 via-transparent to-[#100b22]/80 md:from-[#170e35]/25 md:to-[#100b22]/85"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-[32dvh] bg-gradient-to-t from-[#0d081d]/92 via-[#100b22]/45 to-transparent md:h-[28dvh] md:from-[#0d081d]/90 md:via-[#100b22]/35"
+        aria-hidden="true"
+      />
+
+      {/* Quiet top brand kicker */}
       <header className="relative z-10 mx-auto flex w-full max-w-7xl shrink-0 items-center justify-between px-4 pt-3.5 sm:px-8 sm:pt-7">
-        <span className="mobile-light-blur inline-flex items-center gap-2 rounded-full border border-white/25 bg-[#180f36]/80 px-3.5 py-1.5 text-[10px] font-bold tracking-[0.2em] text-white/90 md:bg-[#180f36]/45 md:py-2 md:backdrop-blur-md sm:text-xs">
-          <Sparkles className="h-3.5 w-3.5 text-violet-200" />
+        <span className="text-[11px] font-bold tracking-[0.24em] text-violet-100/90 drop-shadow-[0_2px_8px_rgba(10,6,26,0.85)] sm:text-xs">
           ANIME DIMENSION
         </span>
       </header>
 
-      {/* Mobile full-width intact hero banner (prevents left/right clipping of baked-in title artwork) */}
-      <div className="relative z-10 mt-2 flex w-full shrink-0 items-center justify-center overflow-hidden md:hidden">
-        <img
-          src={TITLE_BACKGROUND}
-          alt="마법진 포털 앞에서 애니메이션 세계를 마주하는 소환사"
-          decoding="async"
-          className="block max-h-[44dvh] w-full object-contain object-center"
-        />
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-[#100b22] to-transparent" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[#100b22] to-transparent" />
-      </div>
+      {/* Bottom-anchored CTA zone:
+          Keeps both mobile (9:16) and desktop (16:9) key-visual artwork (title + portal + summoner)
+          completely unobstructed while placing a unified HTML CTA cleanly in the lower button zone. */}
+      <section className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col items-center justify-end px-5 pb-[max(7dvh,calc(env(safe-area-inset-bottom,0px)+1.75rem))] pt-8 text-center sm:px-6 md:pb-[5.5dvh]">
+        <h1 className="sr-only">이세계 소환사 : ANIME WORLD</h1>
 
-      <section className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col items-center justify-center px-4 pt-3 pb-4 text-center sm:px-6 md:justify-end md:pt-8 md:pb-[8dvh]">
-        <div className="mobile-light-blur w-full max-w-[min(92vw,34rem)] rounded-[1.5rem] border border-white/20 bg-[#120b29]/85 px-5 py-4 shadow-[0_14px_48px_rgba(20,8,58,.45)] md:bg-[#120b29]/55 md:backdrop-blur-md sm:rounded-[2rem] sm:px-10 sm:py-7">
-          <h1 className="text-[clamp(1.0625rem,4.6vw,1.375rem)] font-black leading-snug tracking-wide text-white break-keep">
-            이세계 소환사 : ANIME WORLD
-          </h1>
-          <p className="mt-1.5 text-[clamp(0.75rem,3.3vw,0.9375rem)] font-semibold tracking-[0.16em] text-violet-100/90 sm:tracking-[0.28em]">
-            좋아하는 애니메이션 세계에서
-          </p>
-          <p className="mt-1.5 text-[clamp(0.8125rem,3.6vw,1rem)] font-medium text-white/85 break-keep">
-            선택으로 만들어 가는 나만의 이야기
-          </p>
-        </div>
         <button
           type="button"
           onClick={openWorldSelect}
-          className="group mt-5 inline-flex min-h-[54px] w-full max-w-[min(86vw,18rem)] items-center justify-center gap-3 rounded-full bg-[#6C4DFF] px-8 py-3.5 text-[clamp(1rem,4.2vw,1.125rem)] font-extrabold tracking-wide text-white shadow-[0_10px_32px_rgba(108,77,255,.48)] ring-1 ring-white/30 transition-[transform,background-color] duration-150 hover:-translate-y-0.5 hover:bg-[#795eff] active:scale-[0.98] sm:mt-6 sm:w-auto sm:max-w-none sm:px-12 sm:py-4"
+          data-testid="title-start-button"
+          aria-label="게임 시작하기 — 애니메이션 세계 선택으로 이동"
+          className="group inline-flex min-h-[56px] w-full max-w-[min(82vw,20rem)] items-center justify-center gap-3 rounded-full border border-violet-200/45 bg-gradient-to-r from-[#5b3df5] via-[#6C4DFF] to-[#8462ff] px-8 py-4 text-[clamp(1.02rem,4.3vw,1.15rem)] font-extrabold tracking-wide text-white shadow-[0_12px_36px_rgba(108,77,255,.55),0_0_24px_rgba(167,139,250,.3)] transition-[transform,filter,box-shadow] duration-150 hover:-translate-y-0.5 hover:brightness-110 hover:shadow-[0_16px_42px_rgba(108,77,255,.68)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-200 focus-visible:ring-offset-2 focus-visible:ring-offset-[#100b22] active:scale-[0.98] md:min-h-[58px] md:w-auto md:max-w-none md:px-14"
         >
           <Wand2 className="h-5 w-5 shrink-0 transition-transform duration-150 group-hover:rotate-12" />
-          <span>소환되기</span>
+          <span className="whitespace-nowrap">게임 시작하기</span>
           <Sparkles className="h-5 w-5 shrink-0 text-violet-100 transition-transform duration-150 group-hover:scale-110" />
         </button>
-        <p className="mt-3 max-w-[90vw] text-[clamp(0.75rem,3.2vw,0.875rem)] text-white/80 drop-shadow break-keep">
+
+        <p className="mt-3 max-w-[90vw] text-[clamp(0.76rem,3.2vw,0.875rem)] font-medium text-violet-100/85 drop-shadow-[0_2px_8px_rgba(10,6,26,0.9)] break-keep">
           20개의 애니메이션 세계 중 이야기를 골라 보세요
         </p>
       </section>
     </main>
   );
 }
-
-

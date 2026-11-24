@@ -62,8 +62,37 @@ export function gradeForScore(score: number): Grade {
   return "D";
 }
 
-export function resolveEnding(stats: Stats): EndingInfo {
+export const ONEPIECE_HIDDEN_KEYS = {
+  /** EP3 드럼 왕국: C — 성채 지하에서 나미와 쵸파를 끝까지 감싸 안고 버팀 */
+  ep3ChoiceIndex: 2,
+  /** EP4 알라바스타 사막: B — 상디의 디아블 잠브와 함께 앞선 적진만 돌파하며 단독 진격 */
+  ep4ChoiceIndex: 1,
+  /** EP6 불타는 해군 포위선: A — 견문색 패기로 마그마 궤적을 읽어 상디·루피를 사수하고 샹크스와 합류 */
+  ep6ChoiceIndex: 0,
+} as const;
+
+export function isOnePieceHiddenRoute(answers: readonly number[]): boolean {
+  return (
+    answers[2] === ONEPIECE_HIDDEN_KEYS.ep3ChoiceIndex &&
+    answers[3] === ONEPIECE_HIDDEN_KEYS.ep4ChoiceIndex &&
+    answers[5] === ONEPIECE_HIDDEN_KEYS.ep6ChoiceIndex
+  );
+}
+
+export function resolveEnding(
+  stats: Stats,
+  answers: readonly number[] = [],
+): EndingInfo {
   const { haki, trust, adventure } = stats;
+  // Priority 0: Hidden Ending (all 3 stats >= 80 + 3 secret voyage keys)
+  if (
+    haki >= 80 &&
+    trust >= 80 &&
+    adventure >= 80 &&
+    isOnePieceHiddenRoute(answers)
+  ) {
+    return ENDINGS["ending-hidden"];
+  }
   // Priority 1: All 3 stats >= 75
   if (haki >= 75 && trust >= 75 && adventure >= 75) {
     return ENDINGS["ending-01"];
@@ -140,7 +169,7 @@ export function advanceEpisodeOrResult(state: GameState): GameState {
     }
 
     if (state.episodeIndex + 1 >= EPISODES.length) {
-      const ending = resolveEnding(state.stats);
+      const ending = resolveEnding(state.stats, state.answers);
       const unlocked = state.unlockedEndings.includes(ending.id)
         ? state.unlockedEndings
         : [...state.unlockedEndings, ending.id];

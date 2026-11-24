@@ -1,6 +1,24 @@
 import type { EndingId, EndingInfo } from "../types";
 
 export const ENDINGS: Record<EndingId, EndingInfo> = {
+  "ending-hidden": {
+    id: "ending-hidden",
+    priority: 0,
+    title: "해의 호흡 · 투명한 세계의 계승자",
+    subtitle: "모든 능력치 80 이상 & 3대 비밀 각성 달성 · 반점과 혁도로 끝낸 천 년의 밤",
+    conditionLabel: "모든 능력치 80↑ · 비밀 3분기 달성 (히든 엔딩)",
+    theme: "sun-breathing-dawn",
+    showcaseCast: ["gyomei", "rengoku", "tanjiro", "giyu", "muichiro"],
+    description:
+      "환락의 거리에서 극한의 단독 기동으로 상현의 틈을 꿰뚫었고, 주 합동 강화 훈련에서 피투성이가 되도록 바위를 밀어 한계를 돌파했으며, 우부야시키 저택의 습격 앞에서 온몸으로 탄지로를 지켜 냈습니다. 반점과 혁도, 그리고 '내비치는 세계'까지 모두 각성한 당신의 일륜도는 마침내 해의 호흡의 빛과 함께 천 년의 밤을 끝맺었습니다.",
+    speaker: "tanjiro",
+    quote:
+      "네 일륜도가 붉게 물들며 아침 해처럼 빛났을 때, 모두가 하나가 되어 새벽을 맞이할 수 있었어. 정말 고마워… 우린 결국 해냈어!",
+    companionQuote: {
+      speaker: "rengoku",
+      text: "음!! 마음을 불태워 한계를 넘어선 자에게만 열리는 경지다! 자네가 지킨 새벽의 태양은 영원히 꺼지지 않을 걸세!!",
+    },
+  },
   "ending-01": {
     id: "ending-01",
     priority: 1,
@@ -64,6 +82,7 @@ export const ENDINGS: Record<EndingId, EndingInfo> = {
 };
 
 export const ENDING_ORDER: EndingId[] = [
+  "ending-hidden",
   "ending-01",
   "ending-02",
   "ending-03",

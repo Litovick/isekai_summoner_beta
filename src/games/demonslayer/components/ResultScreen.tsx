@@ -82,14 +82,28 @@ export function ResultScreen({
     ? CHARACTERS[ending.companionQuote.speaker]
     : null;
   const isSadEnding = ending.id === "ending-04";
+  const isHiddenEnding = ending.id === "ending-hidden";
 
   return (
     <section className="ds-result-screen" aria-label="최종 결과 및 캐릭터 평가">
       {/* Ending Hero Card */}
-      <div className={`ds-ending-hero ${isSadEnding ? "ds-ending-hero--sad" : ""}`}>
+      <div
+        className={`ds-ending-hero ${
+          isHiddenEnding
+            ? "ds-ending-hero--hidden"
+            : isSadEnding
+            ? "ds-ending-hero--sad"
+            : ""
+        }`}
+      >
         <div className="ds-ending-badge-row">
           <span className="ds-ending-kicker">FINAL VERDICT · 귀살대 최종 기록</span>
-          <span className="ds-ending-cond">{ending.conditionLabel}</span>
+          <div className="ds-ending-badge-group">
+            {isHiddenEnding && (
+              <span className="ds-ending-hidden-badge">👑 히든 엔딩</span>
+            )}
+            <span className="ds-ending-cond">{ending.conditionLabel}</span>
+          </div>
         </div>
 
         <h1 className="ds-ending-title">{ending.title}</h1>
@@ -121,7 +135,7 @@ export function ResultScreen({
 
           <div className="ds-ending-scrim" aria-hidden="true" />
           <div className="ds-ending-banner-mark" aria-hidden="true">
-            <span>ENDING 0{ending.priority}</span>
+            <span>{isHiddenEnding ? "👑 HIDDEN ENDING" : `ENDING 0${ending.priority}`}</span>
             <strong>{ending.title}</strong>
           </div>
         </div>
@@ -129,7 +143,15 @@ export function ResultScreen({
         <p className="ds-ending-desc">{ending.description}</p>
 
         {/* Key Character Quote with transparent PNG */}
-        <div className={`ds-ending-quote-box ${isSadEnding ? "ds-ending-quote-box--sad" : ""}`}>
+        <div
+          className={`ds-ending-quote-box ${
+            isHiddenEnding
+              ? "ds-ending-quote-box--hidden"
+              : isSadEnding
+              ? "ds-ending-quote-box--sad"
+              : ""
+          }`}
+        >
           <div className="ds-ending-quote-portrait">
             {!quoteCharError ? (
               <img
@@ -154,7 +176,15 @@ export function ResultScreen({
         </div>
 
         {ending.companionQuote && companionMeta && (
-          <div className={`ds-ending-quote-box ds-ending-companion-quote ${isSadEnding ? "ds-ending-quote-box--sad" : ""}`}>
+          <div
+            className={`ds-ending-quote-box ds-ending-companion-quote ${
+              isHiddenEnding
+                ? "ds-ending-quote-box--hidden"
+                : isSadEnding
+                ? "ds-ending-quote-box--sad"
+                : ""
+            }`}
+          >
             <div className="ds-ending-quote-portrait">
               <img src={companionMeta.image} alt={companionMeta.name} />
             </div>
@@ -209,25 +239,38 @@ export function ResultScreen({
       <div className="ds-archive-strip" aria-label="엔딩 달성 현황">
         <div className="ds-archive-head">
           <Award size={18} aria-hidden="true" />
-          <strong>엔딩 도감 ({unlockedEndings.length} / 4 해금)</strong>
+          <strong>엔딩 도감 ({unlockedEndings.length} / {ENDING_ORDER.length} 해금)</strong>
         </div>
         <div className="ds-archive-list">
           {ENDING_ORDER.map((eid) => {
             const info = ENDINGS[eid];
             const unlocked = unlockedEndings.includes(eid);
             const active = eid === ending.id;
+            const isHiddenItem = eid === "ending-hidden";
             return (
               <div
                 key={eid}
                 className={`ds-archive-item ${unlocked ? "unlocked" : "locked"} ${
                   active ? "current" : ""
-                }`}
+                } ${isHiddenItem ? "ds-archive-item--hidden" : ""}`}
               >
                 <span className="ds-archive-num">
-                  ENDING 0{info.priority}
+                  {isHiddenItem ? "👑 HIDDEN ENDING" : `ENDING 0${info.priority}`}
                 </span>
-                <strong>{unlocked ? info.title : "??? 미해금 엔딩"}</strong>
-                <small>{unlocked ? info.conditionLabel : "다른 선택으로 해금"}</small>
+                <strong>
+                  {unlocked
+                    ? info.title
+                    : isHiddenItem
+                    ? "??? 히든 엔딩"
+                    : "??? 미해금 엔딩"}
+                </strong>
+                <small>
+                  {unlocked
+                    ? info.conditionLabel
+                    : isHiddenItem
+                    ? "비밀 3분기 + 능력치 80↑"
+                    : "다른 선택으로 해금"}
+                </small>
               </div>
             );
           })}

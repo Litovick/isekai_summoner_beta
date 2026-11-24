@@ -241,8 +241,11 @@ export function NarutoGame({ onReturnWorldSelect }: NarutoGameProps) {
     state.answers.length > 0 && state.answers.length < EPISODES.length;
 
   const ending = useMemo(
-    () => (state.phase === "result" ? resolveEnding(state.stats) : null),
-    [state.phase, state.stats],
+    () =>
+      state.phase === "result"
+        ? resolveEnding(state.stats, state.answers)
+        : null,
+    [state.phase, state.stats, state.answers],
   );
 
   const evaluations = useMemo(
@@ -261,7 +264,7 @@ export function NarutoGame({ onReturnWorldSelect }: NarutoGameProps) {
 
   const titleCast: Array<{ id: CharacterId; slotClass: string }> = [
     { id: "itachi", slotClass: "nr-title-char--far-left" },
-    { id: "minato", slotClass: "nr-title-char--far-right" },
+    { id: "jiraiya", slotClass: "nr-title-char--far-right" },
     { id: "kakashi", slotClass: "nr-title-char--center" },
     { id: "naruto", slotClass: "nr-title-char--left" },
     { id: "sasuke", slotClass: "nr-title-char--right" },
@@ -307,7 +310,7 @@ export function NarutoGame({ onReturnWorldSelect }: NarutoGameProps) {
               <span>나뭇잎 제7반 · 불의 의지</span>
             </h1>
             <p className="nr-title-sub">
-              방울 뺏기 시험에서 4대 호카게의 계승까지 — 일곱 번의 임무로 증명하는 당신의 닌자도
+              방울 뺏기 시험에서 전설의 3닌자 지라이야와의 결전까지 — 일곱 번의 임무로 증명하는 당신의 닌자도
             </p>
 
             <div className="nr-title-actions">
@@ -373,7 +376,7 @@ export function NarutoGame({ onReturnWorldSelect }: NarutoGameProps) {
               <p>
                 우즈마키 나루토, 우치하 사스케, 하루노 사쿠라와 함께 일곱 개의
                 긴박한 임무를 돌파하며 마을을 노리는 아카츠키의 그림자에 맞서고,
-                4대 호카게 미나토가 남긴 <strong>불의 의지</strong>를 계승해야 합니다.
+                전설의 3닌자 지라이야와 함께 나뭇잎의 <strong>불의 의지</strong>를 계승해야 합니다.
               </p>
             </div>
 
@@ -403,7 +406,7 @@ export function NarutoGame({ onReturnWorldSelect }: NarutoGameProps) {
 
             <p className="nr-prologue-note">
               각 에피소드의 선택은 3가지 능력치(0~100)뿐만 아니라 주요 닌자 6명의
-              개별 평가와 4가지 엔딩 분기에 직접 반영됩니다.
+              개별 평가와 5가지 엔딩(히든 엔딩 포함) 분기에 직접 반영됩니다.
             </p>
 
             <div className="nr-prologue-actions">

@@ -256,44 +256,44 @@ export const EPISODES: Episode[] = [
   {
     id: 4,
     code: "EP 04",
-    title: "알라바스타 사막, 불꽃의 형제와 크로커다일",
+    title: "알라바스타 사막, 흑족의 불꽃과 크로커다일",
     location: "알라바스타 사막 · 유바와 아루바나 사이",
     stageTheme: "alabasta-flame",
-    featuredCast: ["ace", "luffy", "zoro", "sanji"],
+    featuredCast: ["sanji", "luffy", "zoro"],
     lines: [
       {
         speaker: "narrator",
-        text: "타오르는 모래 폭풍이 휘몰아치는 알라바스타 사막. 반란군과 왕국군의 충돌 속에 칠무해 크로커다일의 함정이 일당을 에워싼 순간, 붉은 화염이 사막을 가릅니다.",
-      },
-      {
-        speaker: "ace",
-        text: "여어, 루피! 내 시끄러운 동생 녀석이 또 거물 해적이랑 사고를 치고 있더군. 덕분에 여기까지 불꽃으로 날아와 줬지.",
-      },
-      {
-        speaker: "luffy",
-        text: "에이스!! 우와아, 진짜 오래간만이야! 우리 지금 크로커다일 녀석을 날려 버리러 가는 길인데, 딱 맞춰 왔네!!",
-      },
-      {
-        speaker: "zoro",
-        text: "바로크 워크스의 간부들이 양쪽 모래 언덕에서 포위를 좁혀 오고 있다. 정면 돌파냐, 전선 분산이냐—결단해라.",
+        text: "타오르는 모래 폭풍이 휘몰아치는 알라바스타 사막. 반란군과 왕국군의 충돌 속에 칠무해 크로커다일의 함정이 일당을 에워싼 순간, 강렬한 화염을 두른 발차기가 모래바람을 가릅니다.",
       },
       {
         speaker: "sanji",
-        text: "모래 폭풍 때문에 시야도 엉망이야. 괜히 흩어졌다간 전멸할 수 있으니 작전다운 작전을 세워야 해.",
+        text: "후우… 요리사의 두 손은 소중한 요리를 위해 아껴 두는 법이지. 바로크 워크스의 함정 따위, 이 불타는 디아블 잠브로 깔끔하게 태워 치워 주마!",
+      },
+      {
+        speaker: "luffy",
+        text: "우와아, 상디!! 발에서 불꽃이 활활 타오르잖아! 우리 지금 크로커다일 녀석을 날려 버리러 가는 길인데, 완전 든든하네!!",
+      },
+      {
+        speaker: "zoro",
+        text: "치장할 시간 있으면 앞이나 봐, 요리사. 바로크 워크스의 간부들이 양쪽 모래 언덕에서 포위를 좁혀 오고 있다. 정면 돌파냐, 전선 분산이냐—결단해라.",
+      },
+      {
+        speaker: "sanji",
+        text: "모래 폭풍 때문에 시야도 엉망이야. 괜히 흩어졌다간 전멸할 수 있으니 내 화염 발차기로 길을 트는 타이밍에 맞춰 작전다운 작전을 세워야 해.",
       },
     ],
-    prompt: "불꽃의 에이스와 합류한 사막의 포위망, 바로크 워크스 대부대를 어떻게 돌파하시겠습니까?",
+    prompt: "흑족 상디의 불꽃 발차기로 돌파구를 연 사막의 포위망, 바로크 워크스 대부대를 어떻게 돌파하시겠습니까?",
     choices: [
       {
         id: "A",
         stance: "실책 · 전선 붕괴 및 우왕좌왕",
-        label: "에이스의 엄호를 외면한 채 사막 한복판에서 각자도생으로 도주하라고 지시한다",
+        label: "상디의 엄호를 외면한 채 사막 한복판에서 각자도생으로 도주하라고 지시한다",
         effects: { haki: -13, trust: -14, adventure: -14 },
-        affinityEffects: { ace: -14, luffy: -12, zoro: -12, sanji: -12 },
+        affinityEffects: { sanji: -14, luffy: -12, zoro: -12 },
         reactions: [
           {
-            speaker: "ace",
-            text: "어이, 잠깐! 등을 맡기고 싸우는 동료들한테 도망치라니… 내 동생 곁에 있을 그릇이 못 되는군!",
+            speaker: "sanji",
+            text: "어이, 잠깐! 등을 맡기고 싸우는 동료들한테 도망치라니… 그딴 비겁한 지시는 밀짚모자 일당에 어울리지 않아!",
           },
           {
             speaker: "zoro",
@@ -304,34 +304,34 @@ export const EPISODES: Episode[] = [
       {
         id: "B",
         stance: "트레이드오프 · 화력 독주 돌파",
-        label: "동료들의 후방 합류를 기다리지 않고 에이스와 앞선 적진만 태워 버리며 단독 진격한다",
+        label: "동료들의 후방 합류를 기다리지 않고 상디의 불꽃 발차기와 앞선 적진만 돌파하며 단독 진격한다",
         effects: { haki: 13, trust: -12, adventure: 2 },
-        affinityEffects: { ace: 4, zoro: 4, sanji: -8, luffy: -8 },
+        affinityEffects: { sanji: 4, zoro: 4, luffy: -8 },
         reactions: [
           {
-            speaker: "ace",
-            text: "기세는 나쁘지 않았지만, 루피와 친구들이 모래 구덩이에 갇힐 뻔했잖아. 등 뒤도 좀 챙기라고.",
+            speaker: "sanji",
+            text: "기세는 나쁘지 않았지만, 루피와 뒤쪽 동료들이 모래 구덩이에 갇힐 뻔했잖아. 등 뒤도 좀 챙기라고.",
           },
           {
-            speaker: "sanji",
-            text: "자기 혼자 멋있는 척 적진에 뛰어들면 뒤에 남은 동료들은 어떡하라는 거야?!",
+            speaker: "zoro",
+            text: "자기 혼자 멋있는 척 적진에 뛰어들면 뒤에 남은 동료들은 어떡하라는 거냐?! 호흡을 맞추라고!",
           },
         ],
       },
       {
         id: "C",
-        stance: "최선 · 화권과 일당의 완벽한 협공",
-        label: "에이스의 화권으로 시야를 확보하고, 루피·조로·상디와 4방향 포위망을 일시에 붕괴시킨다",
+        stance: "최선 · 흑족의 불꽃과 일당의 완벽한 협공",
+        label: "상디의 디아블 잠브로 시야를 확보하고, 루피·조로와 포위망의 핵심 진영을 일시에 붕괴시킨다",
         effects: { haki: 11, trust: 11, adventure: 11 },
-        affinityEffects: { ace: 14, luffy: 12, zoro: 10, sanji: 12 },
+        affinityEffects: { sanji: 14, luffy: 12, zoro: 10 },
         reactions: [
           {
-            speaker: "ace",
-            text: "하하! 이거 제법인데! 루피 녀석, 정말 믿음직한 동료들을 곁에 뒀구나! 안심하고 맡겨도 되겠어!",
+            speaker: "sanji",
+            text: "후우… 완벽한 타이밍이군! 최고의 재료가 모여 일품 요리가 완성되는 것처럼, 우리 호흡도 제법 쓸 만한데?",
           },
           {
             speaker: "luffy",
-            text: "에이스랑 같이 싸우니까 진짜 든든해!! 자, 이제 크로커다일이 기다리는 아루바나로 돌격이다!!",
+            text: "상디랑 같이 싸우니까 진짜 든든해!! 자, 이제 크로커다일이 기다리는 아루바나로 돌격이다!!",
           },
         ],
       },
@@ -424,40 +424,40 @@ export const EPISODES: Episode[] = [
   {
     id: 6,
     code: "EP 06",
-    title: "마린포드 정상전쟁, 붉은 화염과 패왕의 등장",
-    location: "해군 본부 마린포드 · 불타는 광장",
+    title: "불타는 해군 포위선, 흑족의 엄호와 패왕의 등장",
+    location: "해군 요새 결전장 · 불타는 포위 광장",
     stageTheme: "marineford-war",
-    featuredCast: ["ace", "luffy", "shanks"],
+    featuredCast: ["sanji", "luffy", "shanks"],
     lines: [
       {
         speaker: "narrator",
-        text: "해군 대장들과 흰수염 해적단이 격돌하는 마린포드. 붉은 용암과 불꽃이 뒤엉킨 광장에서 처형대의 에이스와 한계까지 지친 루피가 절체절명의 위기에 놓입니다.",
+        text: "해군 대장들의 대함대가 바다를 에워싼 절체절명의 결전장. 붉은 용암과 화염이 뒤엉킨 광장에서 한계까지 지친 루피 앞을 상디가 불타는 발차기로 가로막아 섭니다.",
       },
       {
-        speaker: "ace",
-        text: "오지 마, 루피!! 여긴 네가 감당할 수 있는 전장이 아니야! 내 때문에 너까지 위험에 빠지면 난…!",
+        speaker: "sanji",
+        text: "물러서, 루피! 네가 쓰러지면 이 배의 꿈도 끝이야! 여긴 내가 디아블 잠브로 퇴로를 뚫어 놓을 테니, 동료들 곁으로 돌아갈 기회만 놓치지 마!",
       },
       {
         speaker: "luffy",
-        text: "시끄러워!! 난 네 동생이야!! 무슨 일이 있어도 에이스를 구해서 같이 돌아갈 거라고!!",
+        text: "시끄러워, 상디!! 네가 없으면 난 해적왕이 못 된다고!! 무슨 일이 있어도 다 같이 살아서 이 포위망을 뚫고 돌아갈 거야!!",
       },
       {
         speaker: "shanks",
-        text: "목숨을 깎는 절규와 패기가 전장을 덮고 있군. 불필요한 희생을 멈추고 소중한 이들을 살려 낼 단 한 번의 결단이 필요한 순간이다.",
+        text: "목숨을 깎는 절규와 패기가 전장을 덮고 있군. 불필요한 희생을 멈추고 소중한 동료들을 살려 낼 단 한 번의 결단이 필요한 순간이다.",
       },
     ],
-    prompt: "불바다가 된 마린포드 광장, 에이스를 노리는 아카이누의 마그마 공세와 사황 샹크스의 중재 앞에서 어떻게 움직이시겠습니까?",
+    prompt: "불바다가 된 해군 포위 광장, 아카이누의 마그마 공세와 사황 샹크스의 중재 앞에서 어떻게 움직이시겠습니까?",
     choices: [
       {
         id: "A",
-        stance: "최선 · 형제의 구출과 명분 있는 휴전",
-        label: "견문색 패기로 마그마 궤적을 읽어 에이스와 루피를 사수하고, 샹크스의 정전 선언에 맞춰 완벽히 탈출한다",
+        stance: "최선 · 동료 사수와 명분 있는 휴전 돌파",
+        label: "견문색 패기로 마그마 궤적을 읽어 상디·루피의 퇴로를 사수하고, 샹크스의 정전 선언에 맞춰 완벽히 탈출한다",
         effects: { haki: 11, trust: 11, adventure: 11 },
-        affinityEffects: { ace: 14, luffy: 12, shanks: 14 },
+        affinityEffects: { sanji: 14, luffy: 12, shanks: 14 },
         reactions: [
           {
-            speaker: "ace",
-            text: "살아남았어…! 네가 끝까지 물러서지 않고 나와 루피의 등을 잡아 준 덕분이다! 진심으로 고맙다!",
+            speaker: "sanji",
+            text: "살아남았어…! 네가 끝까지 물러서지 않고 나와 루피의 등을 잡아 준 덕분이다! 배로 돌아가면 특제 만찬을 대접해 주지!",
           },
           {
             speaker: "shanks",
@@ -468,13 +468,13 @@ export const EPISODES: Episode[] = [
       {
         id: "B",
         stance: "실책 · 공포로 인한 전선 이탈",
-        label: "해군 대장들의 위압감에 눌려 에이스와 루피가 포위된 광장을 뒤로한 채 함선으로 후퇴한다",
+        label: "해군 대장들의 위압감에 눌려 상디와 루피가 포위된 광장을 뒤로한 채 함선으로 후퇴한다",
         effects: { haki: -13, trust: -12, adventure: -14 },
-        affinityEffects: { ace: -14, luffy: -12, shanks: -14 },
+        affinityEffects: { sanji: -14, luffy: -12, shanks: -14 },
         reactions: [
           {
             speaker: "luffy",
-            text: "거짓말이지…?! 에이스가 바로 눈앞에 있는데 혼자 도망친다고?! 난 절대 용서 못 해!!",
+            text: "거짓말이지…?! 상디가 목숨 걸고 길을 막고 있는데 혼자 도망친다고?! 난 절대 용서 못 해!!",
           },
           {
             speaker: "shanks",
@@ -487,14 +487,14 @@ export const EPISODES: Episode[] = [
         stance: "트레이드오프 · 무모한 복수 폭주",
         label: "샹크스의 정전 선언마저 거부하고 해군 진영 한가운데로 뛰어들어 무차별 패기를 난사한다",
         effects: { haki: 13, trust: -12, adventure: 1 },
-        affinityEffects: { ace: -6, luffy: -8, shanks: -8 },
+        affinityEffects: { sanji: -6, luffy: -8, shanks: -8 },
         reactions: [
           {
             speaker: "shanks",
             text: "패기는 거세지만 앞뒤를 가리지 않는 분노는 결국 네 곁의 동료들마저 불태우고 만다!",
           },
           {
-            speaker: "ace",
+            speaker: "sanji",
             text: "그만해! 겨우 열어 준 퇴로까지 닫혀 버리잖아! 분노에 눈이 멀어선 아무도 못 지킨다고!",
           },
         ],
@@ -507,11 +507,11 @@ export const EPISODES: Episode[] = [
     title: "신세계의 여명, 해적왕의 깃발 아래",
     location: "신세계 마지막 해역 · 새벽의 수평선",
     stageTheme: "new-world-dawn",
-    featuredCast: ["luffy", "zoro", "nami", "sanji", "chopper", "ace", "shanks"],
+    featuredCast: ["luffy", "zoro", "nami", "sanji", "chopper", "shanks"],
     lines: [
       {
         speaker: "narrator",
-        text: "마침내 신세계의 거대한 소용돌이와 사황 함대의 마지막 관문 앞. 여명이 붉게 물드는 바다 위에 루피, 조로, 나미, 상디, 쵸파, 에이스, 그리고 샹크스까지 한자리에 섰습니다.",
+        text: "마침내 신세계의 거대한 소용돌이와 사황 함대의 마지막 관문 앞. 여명이 붉게 물드는 바다 위에 루피, 조로, 나미, 상디, 쵸파, 그리고 사황 샹크스까지 한자리에 섰습니다.",
       },
       {
         speaker: "shanks",
@@ -527,22 +527,18 @@ export const EPISODES: Episode[] = [
       },
       {
         speaker: "sanji",
-        text: "올 블루도, 각자의 꿈도 저 너머에 있다. 자, 최고급 만찬을 위해 길을 열어 보자고!",
+        text: "올 블루도, 각자의 꿈도 저 너머에 있다. 최고의 동료들과 함께라면 이 바다에 영원히 남을 만찬을 열 수 있지!",
       },
       {
         speaker: "chopper",
         text: "무섭지 않아! 이제 난 누구의 상처도 고칠 수 있는 진짜 해적단 동료니까!!",
       },
       {
-        speaker: "ace",
-        text: "최고의 동료들이 모였군. 네가 어떤 선택을 하든 이 바다에 영원히 남을 전설이 될 거다!",
-      },
-      {
         speaker: "luffy",
         text: "가자!! 해적왕이 되는 그날까지—모두 함께 저 여명의 바다를 뚫고 나가는 거다!!",
       },
     ],
-    prompt: "신세계 최후의 파도와 일곱 명의 기대가 쏠린 순간, 당신이 내릴 마지막 항해의 결단은 무엇입니까?",
+    prompt: "신세계 최후의 파도와 여섯 명의 기대가 쏠린 순간, 당신이 내릴 마지막 항해의 결단은 무엇입니까?",
     choices: [
       {
         id: "A",
@@ -555,7 +551,6 @@ export const EPISODES: Episode[] = [
           nami: -12,
           sanji: -12,
           chopper: -12,
-          ace: -12,
           shanks: -12,
         },
         reactions: [
@@ -580,7 +575,6 @@ export const EPISODES: Episode[] = [
           nami: 12,
           sanji: 12,
           chopper: 12,
-          ace: 12,
           shanks: 12,
         },
         reactions: [

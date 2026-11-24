@@ -1429,6 +1429,66 @@
   margin-top: 12px;
 }
 
+.bl-ending-badge-group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.bl-ending-hidden-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 11px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  color: #1c1203;
+  background: linear-gradient(135deg, #fef08a 0%, #f59e0b 100%);
+  box-shadow: 0 0 18px rgba(251, 191, 36, 0.48);
+}
+
+.bl-ending-theme--final-getsuga .bl-ending-beams {
+  background:
+    radial-gradient(circle at 50% 18%, rgba(254, 240, 138, 0.32), transparent 58%),
+    repeating-linear-gradient(
+      118deg,
+      transparent 0 24px,
+      rgba(251, 191, 36, 0.14) 24px 30px,
+      transparent 30px 60px
+    );
+}
+
+.bl-ending-hero--hidden {
+  border-color: rgba(251, 191, 36, 0.62);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.26), transparent 60%),
+    linear-gradient(180deg, rgba(18, 13, 8, 0.96), rgba(7, 8, 13, 0.98));
+  box-shadow: 0 0 34px rgba(245, 158, 11, 0.16);
+}
+
+.bl-ending-hero--hidden .bl-ending-kicker,
+.bl-ending-hero--hidden .bl-ending-banner-mark span {
+  color: #fde047;
+}
+
+.bl-ending-hero--hidden .bl-ending-cond {
+  background: rgba(120, 53, 15, 0.42);
+  border-color: rgba(251, 191, 36, 0.58);
+  color: #fef3c7;
+}
+
+.bl-ending-hero--hidden .bl-ending-subtitle {
+  color: #fde68a;
+}
+
+.bl-ending-quote-box--hidden {
+  background: radial-gradient(circle at 12% 50%, rgba(217, 119, 6, 0.25), rgba(10, 9, 13, 0.94));
+  border-color: rgba(251, 191, 36, 0.48);
+}
+
 .bl-ending-ensemble {
   position: relative;
   z-index: 2;
@@ -1815,6 +1875,21 @@
 
 .bl-archive-item.current {
   border-color: var(--bl-orange);
+}
+
+.bl-archive-item--hidden {
+  grid-column: 1 / -1;
+  border-color: rgba(251, 191, 36, 0.34);
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.1), rgba(255, 255, 255, 0.03));
+}
+
+.bl-archive-item--hidden.unlocked {
+  border-color: rgba(251, 191, 36, 0.65);
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.22), rgba(251, 191, 36, 0.08));
+}
+
+.bl-archive-item--hidden .bl-archive-num {
+  color: #fde047;
 }
 
 .bl-archive-num {

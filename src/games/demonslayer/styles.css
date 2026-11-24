@@ -1456,6 +1456,66 @@
   margin-top: 12px;
 }
 
+.ds-ending-badge-group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.ds-ending-hidden-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 11px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  color: #1c1203;
+  background: linear-gradient(135deg, #fef08a 0%, #f59e0b 100%);
+  box-shadow: 0 0 18px rgba(251, 191, 36, 0.48);
+}
+
+.ds-ending-theme--sun-breathing-dawn .ds-ending-beams {
+  background:
+    radial-gradient(circle at 50% 18%, rgba(254, 240, 138, 0.35), transparent 58%),
+    repeating-linear-gradient(
+      118deg,
+      transparent 0 24px,
+      rgba(251, 191, 36, 0.14) 24px 30px,
+      transparent 30px 60px
+    );
+}
+
+.ds-ending-hero--hidden {
+  border-color: rgba(251, 191, 36, 0.62);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.28), transparent 60%),
+    linear-gradient(180deg, rgba(22, 14, 9, 0.96), rgba(10, 7, 10, 0.98));
+  box-shadow: 0 0 34px rgba(245, 158, 11, 0.16);
+}
+
+.ds-ending-hero--hidden .ds-ending-kicker,
+.ds-ending-hero--hidden .ds-ending-banner-mark span {
+  color: #fde047;
+}
+
+.ds-ending-hero--hidden .ds-ending-cond {
+  background: rgba(120, 53, 15, 0.42);
+  border-color: rgba(251, 191, 36, 0.58);
+  color: #fef3c7;
+}
+
+.ds-ending-hero--hidden .ds-ending-subtitle {
+  color: #fde68a;
+}
+
+.ds-ending-quote-box--hidden {
+  background: radial-gradient(circle at 12% 50%, rgba(217, 119, 6, 0.26), rgba(13, 9, 10, 0.94));
+  border-color: rgba(251, 191, 36, 0.48);
+}
+
 .ds-ending-haori-frame {
   opacity: 0.05;
   background-image: repeating-conic-gradient(#d4af37 0% 25%, transparent 0% 50%);
@@ -1917,6 +1977,21 @@
 
 .ds-archive-item.current {
   border-color: var(--ds-gold);
+}
+
+.ds-archive-item--hidden {
+  grid-column: 1 / -1;
+  border-color: rgba(251, 191, 36, 0.34);
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.1), rgba(255, 255, 255, 0.03));
+}
+
+.ds-archive-item--hidden.unlocked {
+  border-color: rgba(251, 191, 36, 0.65);
+  background: linear-gradient(90deg, rgba(245, 158, 11, 0.22), rgba(251, 191, 36, 0.08));
+}
+
+.ds-archive-item--hidden .ds-archive-num {
+  color: #fde047;
 }
 
 .ds-archive-num {

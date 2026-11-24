@@ -55,6 +55,7 @@ export type EpisodeStageTheme =
   | "final-karakura";
 
 export type EndingThemeId =
+  | "final-getsuga"
   | "soul-bridge"
   | "karakura-dawn"
   | "hollow-eclipse"
@@ -72,7 +73,12 @@ export interface Episode {
   choices: [EpisodeChoice, EpisodeChoice, EpisodeChoice];
 }
 
-export type EndingId = "ending-01" | "ending-02" | "ending-03" | "ending-04";
+export type EndingId =
+  | "ending-hidden"
+  | "ending-01"
+  | "ending-02"
+  | "ending-03"
+  | "ending-04";
 
 export interface EndingInfo {
   id: EndingId;

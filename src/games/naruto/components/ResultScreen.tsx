@@ -61,13 +61,27 @@ export function ResultScreen({
     ? CHARACTERS[ending.companionQuote.speaker]
     : null;
   const isSadEnding = ending.id === "ending-04";
+  const isHiddenEnding = ending.id === "ending-hidden";
 
   return (
     <section className="nr-result-screen" aria-label="최종 결과 및 캐릭터 평가">
-      <div className={`nr-ending-hero ${isSadEnding ? "nr-ending-hero--sad" : ""}`}>
+      <div
+        className={`nr-ending-hero ${
+          isHiddenEnding
+            ? "nr-ending-hero--hidden"
+            : isSadEnding
+            ? "nr-ending-hero--sad"
+            : ""
+        }`}
+      >
         <div className="nr-ending-badge-row">
           <span className="nr-ending-kicker">SHINOBI RECORD · 나뭇잎 임무 최종 보고</span>
-          <span className="nr-ending-cond">{ending.conditionLabel}</span>
+          <div className="nr-ending-badge-group">
+            {isHiddenEnding && (
+              <span className="nr-ending-hidden-badge">👑 히든 엔딩</span>
+            )}
+            <span className="nr-ending-cond">{ending.conditionLabel}</span>
+          </div>
         </div>
 
         <h1 className="nr-ending-title">{ending.title}</h1>
@@ -97,7 +111,7 @@ export function ResultScreen({
 
           <div className="nr-ending-scrim" aria-hidden="true" />
           <div className="nr-ending-banner-mark" aria-hidden="true">
-            <span>ENDING 0{ending.priority}</span>
+            <span>{isHiddenEnding ? "👑 HIDDEN ENDING" : `ENDING 0${ending.priority}`}</span>
             <strong>{ending.title}</strong>
           </div>
         </div>
@@ -105,7 +119,15 @@ export function ResultScreen({
         <p className="nr-ending-desc">{ending.description}</p>
 
         {/* Key Character Quote with transparent PNG */}
-        <div className={`nr-ending-quote-box ${isSadEnding ? "nr-ending-quote-box--sad" : ""}`}>
+        <div
+          className={`nr-ending-quote-box ${
+            isHiddenEnding
+              ? "nr-ending-quote-box--hidden"
+              : isSadEnding
+              ? "nr-ending-quote-box--sad"
+              : ""
+          }`}
+        >
           <div className="nr-ending-quote-portrait">
             <img src={speakerMeta.image} alt={speakerMeta.name} />
           </div>
@@ -119,7 +141,15 @@ export function ResultScreen({
         </div>
 
         {ending.companionQuote && companionMeta && (
-          <div className={`nr-ending-quote-box nr-ending-companion-quote ${isSadEnding ? "nr-ending-quote-box--sad" : ""}`}>
+          <div
+            className={`nr-ending-quote-box nr-ending-companion-quote ${
+              isHiddenEnding
+                ? "nr-ending-quote-box--hidden"
+                : isSadEnding
+                ? "nr-ending-quote-box--sad"
+                : ""
+            }`}
+          >
             <div className="nr-ending-quote-portrait">
               <img src={companionMeta.image} alt={companionMeta.name} />
             </div>
@@ -159,7 +189,7 @@ export function ResultScreen({
           <span className="nr-eval-kicker">SHINOBI EVALUATION · 6인의 평가</span>
           <h2>제7반과 선배 닌자들의 개별 평가</h2>
           <p>
-            일곱 번의 임무에서 당신이 증명한 시노비의 길을 나루토와 동료들, 그리고 카카시·미나토·이타치가 평가했습니다.
+            일곱 번의 임무에서 당신이 증명한 시노비의 길을 나루토와 동료들, 그리고 카카시·지라이야·이타치가 평가했습니다.
           </p>
         </div>
 
@@ -218,23 +248,38 @@ export function ResultScreen({
       <div className="nr-archive-strip" aria-label="엔딩 달성 현황">
         <div className="nr-archive-head">
           <Award size={18} aria-hidden="true" />
-          <strong>엔딩 도감 ({unlockedEndings.length} / 4 해금)</strong>
+          <strong>엔딩 도감 ({unlockedEndings.length} / {ENDING_ORDER.length} 해금)</strong>
         </div>
         <div className="nr-archive-list">
           {ENDING_ORDER.map((eid) => {
             const info = ENDINGS[eid];
             const unlocked = unlockedEndings.includes(eid);
             const active = eid === ending.id;
+            const isHiddenItem = eid === "ending-hidden";
             return (
               <div
                 key={eid}
                 className={`nr-archive-item ${unlocked ? "unlocked" : "locked"} ${
                   active ? "current" : ""
-                }`}
+                } ${isHiddenItem ? "nr-archive-item--hidden" : ""}`}
               >
-                <span className="nr-archive-num">ENDING 0{info.priority}</span>
-                <strong>{unlocked ? info.title : "??? 미해금 엔딩"}</strong>
-                <small>{unlocked ? info.conditionLabel : "다른 선택으로 해금"}</small>
+                <span className="nr-archive-num">
+                  {isHiddenItem ? "👑 HIDDEN ENDING" : `ENDING 0${info.priority}`}
+                </span>
+                <strong>
+                  {unlocked
+                    ? info.title
+                    : isHiddenItem
+                    ? "??? 히든 엔딩"
+                    : "??? 미해금 엔딩"}
+                </strong>
+                <small>
+                  {unlocked
+                    ? info.conditionLabel
+                    : isHiddenItem
+                    ? "비밀 3분기 + 능력치 80↑"
+                    : "다른 선택으로 해금"}
+                </small>
               </div>
             );
           })}

@@ -240,8 +240,11 @@ export function OnePieceGame({ onReturnWorldSelect }: OnePieceGameProps) {
     state.answers.length > 0 && state.answers.length < EPISODES.length;
 
   const ending = useMemo(
-    () => (state.phase === "result" ? resolveEnding(state.stats) : null),
-    [state.phase, state.stats],
+    () =>
+      state.phase === "result"
+        ? resolveEnding(state.stats, state.answers)
+        : null,
+    [state.phase, state.stats, state.answers],
   );
 
   const evaluations = useMemo(
@@ -260,7 +263,7 @@ export function OnePieceGame({ onReturnWorldSelect }: OnePieceGameProps) {
 
   const titleCast: Array<{ id: CharacterId; slotClass: string }> = [
     { id: "shanks", slotClass: "op-title-char--far-left" },
-    { id: "ace", slotClass: "op-title-char--far-right" },
+    { id: "sanji", slotClass: "op-title-char--far-right" },
     { id: "luffy", slotClass: "op-title-char--center" },
     { id: "zoro", slotClass: "op-title-char--left" },
     { id: "nami", slotClass: "op-title-char--right" },
@@ -308,7 +311,7 @@ export function OnePieceGame({ onReturnWorldSelect }: OnePieceGameProps) {
               <span>밀짚모자 일당 · 대해적의 항해</span>
             </h1>
             <p className="op-title-sub">
-              이스트 블루의 출항부터 마린포드와 신세계의 여명까지 — 일곱 바다의 선택으로 증명하는 당신의 패기와 모험심
+              이스트 블루의 출항부터 불타는 해군 포위선과 신세계의 여명까지 — 일곱 바다의 선택으로 증명하는 당신의 패기와 모험심
             </p>
 
             <div className="op-title-actions">
@@ -369,12 +372,12 @@ export function OnePieceGame({ onReturnWorldSelect }: OnePieceGameProps) {
             <div className="op-prologue-story">
               <p>
                 이스트 블루의 작은 항구에서 시작된 꿈은 이제 <strong>위대한 항로</strong>를
-                향합니다. 당신은 루피, 조로, 나미, 상디, 쵸파, 그리고 불꽃의 에이스와
-                사황 샹크스가 주목하는 새로운 항해의 동료로 배에 올랐습니다.
+                향합니다. 당신은 루피, 조로, 나미, 상디, 쵸파, 그리고 사황 샹크스가
+                주목하는 새로운 항해의 동료로 배에 올랐습니다.
               </p>
               <p>
                 눈보라 치는 드럼 왕국과 타오르는 알라바스타 사막, 1만 미터 상공의
-                하늘섬과 마린포드 정상전쟁까지—일곱 바다의 기로에서{" "}
+                하늘섬과 불타는 해군 포위선 돌파까지—일곱 바다의 기로에서{" "}
                 <strong>진정한 해적왕의 동료</strong>가 될 자격을 증명해야 합니다.
               </p>
             </div>
@@ -404,8 +407,8 @@ export function OnePieceGame({ onReturnWorldSelect }: OnePieceGameProps) {
             </div>
 
             <p className="op-prologue-note">
-              각 선택지의 결과는 능력치(0~100)뿐만 아니라 주요 7명의 개별 호감도
-              평가(S~D등급)와 4가지 엔딩 분기에 즉시 반영됩니다.
+              각 선택지의 결과는 능력치(0~100)뿐만 아니라 주요 6명의 개별 호감도
+              평가(S~D등급)와 5가지 엔딩(히든 엔딩 포함) 분기에 즉시 반영됩니다.
             </p>
 
             <div className="op-prologue-actions">

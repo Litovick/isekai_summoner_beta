@@ -1,6 +1,7 @@
 import type { EndingId, EndingInfo } from "../types";
 
 export const ENDING_ORDER: EndingId[] = [
+  "ending-hidden",
   "ending-01",
   "ending-02",
   "ending-03",
@@ -8,6 +9,24 @@ export const ENDING_ORDER: EndingId[] = [
 ];
 
 export const ENDINGS: Record<EndingId, EndingInfo> = {
+  "ending-hidden": {
+    id: "ending-hidden",
+    priority: 0,
+    title: "진·월아천충 · 삼계를 잇는 초월자",
+    subtitle: "모든 능력치 80 이상 & 3대 비밀 각성 달성 · 사신과 호로의 경계를 넘다",
+    conditionLabel: "모든 능력치 80↑ · 비밀 3분기 달성 (히든 엔딩)",
+    theme: "final-getsuga",
+    showcaseCast: ["urahara", "rukia", "ichigo", "ishida", "orihime"],
+    description:
+      "우라하라 상점 지하 수련장에서 오리히메와 사도 대신 파동을 온몸으로 받아 내며 수호의 그릇을 넓혔고, 정령정 선봉에서 홀로 영압을 극한까지 벼렸으며, 끝내 웨코문드에서 동료들의 치유·방어 영역과 영압을 하나로 공명시켰습니다. 사신과 인간, 호로의 경계를 초월한 당신의 참백도는 삼계를 지키는 전설의 빛으로 각성했습니다.",
+    speaker: "urahara",
+    quote:
+      "호오~ 이건 정말 예상 밖이군요! 수호의 의지와 극한의 영압이 이렇게 완벽하게 공명하다니… 이제 현세와 소울 소사이어티, 웨코문드까지 모두 당신의 검을 기억할 겁니다.",
+    companionQuote: {
+      speaker: "ichigo",
+      text: "그때 네 영압이 내 참월과 겹쳐졌을 때 확실히 느꼈어. 어떤 어둠이 와도 우리가 함께 검을 쥐는 한, 이 세상은 절대 무너지지 않아!",
+    },
+  },
   "ending-01": {
     id: "ending-01",
     priority: 1,

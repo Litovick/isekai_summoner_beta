@@ -63,13 +63,27 @@ export function ResultScreen({
     ? CHARACTERS[ending.companionQuote.speaker]
     : null;
   const isSadEnding = ending.id === "ending-04";
+  const isHiddenEnding = ending.id === "ending-hidden";
 
   return (
     <section className="op-result-screen" aria-label="최종 항해 결과 및 동료 평가">
-      <div className={`op-ending-hero ${isSadEnding ? "op-ending-hero--sad" : ""}`}>
+      <div
+        className={`op-ending-hero ${
+          isHiddenEnding
+            ? "op-ending-hero--hidden"
+            : isSadEnding
+            ? "op-ending-hero--sad"
+            : ""
+        }`}
+      >
         <div className="op-ending-badge-row">
           <span className="op-ending-kicker">GRAND LINE VOYAGE RECORD · 최종 항해 보고</span>
-          <span className="op-ending-cond">{ending.conditionLabel}</span>
+          <div className="op-ending-badge-group">
+            {isHiddenEnding && (
+              <span className="op-ending-hidden-badge">👑 히든 엔딩</span>
+            )}
+            <span className="op-ending-cond">{ending.conditionLabel}</span>
+          </div>
         </div>
 
         <h1 className="op-ending-title">{ending.title}</h1>
@@ -99,7 +113,7 @@ export function ResultScreen({
 
           <div className="op-ending-scrim" aria-hidden="true" />
           <div className="op-ending-banner-mark" aria-hidden="true">
-            <span>ENDING 0{ending.priority}</span>
+            <span>{isHiddenEnding ? "👑 HIDDEN ENDING" : `ENDING 0${ending.priority}`}</span>
             <strong>{ending.title}</strong>
           </div>
         </div>
@@ -107,7 +121,15 @@ export function ResultScreen({
         <p className="op-ending-desc">{ending.description}</p>
 
         {/* Primary Character Ending Quote */}
-        <div className={`op-ending-quote-box ${isSadEnding ? "op-ending-quote-box--sad" : ""}`}>
+        <div
+          className={`op-ending-quote-box ${
+            isHiddenEnding
+              ? "op-ending-quote-box--hidden"
+              : isSadEnding
+              ? "op-ending-quote-box--sad"
+              : ""
+          }`}
+        >
           <div className="op-ending-quote-portrait">
             <img
               src={speakerMeta.image}
@@ -127,7 +149,11 @@ export function ResultScreen({
         {ending.companionQuote && companionMeta && (
           <div
             className={`op-ending-quote-box op-ending-companion-quote ${
-              isSadEnding ? "op-ending-quote-box--sad" : ""
+              isHiddenEnding
+                ? "op-ending-quote-box--hidden"
+                : isSadEnding
+                ? "op-ending-quote-box--sad"
+                : ""
             }`}
           >
             <div className="op-ending-quote-portrait">
@@ -167,13 +193,13 @@ export function ResultScreen({
         </div>
       </div>
 
-      {/* All 7 One Piece Characters Evaluation Grid */}
+      {/* All 6 One Piece Characters Evaluation Grid */}
       <div className="op-eval-section">
         <div className="op-eval-header">
-          <span className="op-eval-kicker">PIRATE CREW EVALUATION · 7인의 동료 평가</span>
-          <h2>밀짚모자 일당과 에이스·샹크스의 개별 평가</h2>
+          <span className="op-eval-kicker">PIRATE CREW EVALUATION · 6인의 동료 평가</span>
+          <h2>밀짚모자 일당과 사황 샹크스의 개별 평가</h2>
           <p>
-            일곱 바다의 모험에서 당신이 보여 준 패기와 신뢰를 7명의 원작 인물이 각자의 시선으로 평가했습니다.
+            일곱 바다의 모험에서 당신이 보여 준 패기와 신뢰를 6명의 원작 인물이 각자의 시선으로 평가했습니다.
           </p>
         </div>
 
@@ -233,23 +259,38 @@ export function ResultScreen({
       <div className="op-archive-strip" aria-label="엔딩 달성 현황">
         <div className="op-archive-head">
           <Award size={18} aria-hidden="true" />
-          <strong>항해 일지 엔딩 도감 ({unlockedEndings.length} / 4 해금)</strong>
+          <strong>항해 일지 엔딩 도감 ({unlockedEndings.length} / {ENDING_ORDER.length} 해금)</strong>
         </div>
         <div className="op-archive-list">
           {ENDING_ORDER.map((eid) => {
             const info = ENDINGS[eid];
             const unlocked = unlockedEndings.includes(eid);
             const active = eid === ending.id;
+            const isHiddenItem = eid === "ending-hidden";
             return (
               <div
                 key={eid}
                 className={`op-archive-item ${unlocked ? "unlocked" : "locked"} ${
                   active ? "current" : ""
-                }`}
+                } ${isHiddenItem ? "op-archive-item--hidden" : ""}`}
               >
-                <span className="op-archive-num">ENDING 0{info.priority}</span>
-                <strong>{unlocked ? info.title : "??? 미해금 엔딩"}</strong>
-                <small>{unlocked ? info.conditionLabel : "다른 항로로 해금"}</small>
+                <span className="op-archive-num">
+                  {isHiddenItem ? "👑 HIDDEN ENDING" : `ENDING 0${info.priority}`}
+                </span>
+                <strong>
+                  {unlocked
+                    ? info.title
+                    : isHiddenItem
+                    ? "??? 히든 엔딩"
+                    : "??? 미해금 엔딩"}
+                </strong>
+                <small>
+                  {unlocked
+                    ? info.conditionLabel
+                    : isHiddenItem
+                    ? "비밀 3분기 + 능력치 80↑"
+                    : "다른 항로로 해금"}
+                </small>
               </div>
             );
           })}

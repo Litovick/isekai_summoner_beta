@@ -43,7 +43,7 @@ export const EPISODES: Episode[] = [
           kakashi: -9,
           naruto: -8,
           sakura: -8,
-          minato: -6,
+          jiraiya: -6,
         },
         reactions: [
           {
@@ -66,7 +66,7 @@ export const EPISODES: Episode[] = [
           naruto: -12,
           sakura: -12,
           sasuke: -11,
-          minato: -10,
+          jiraiya: -10,
           itachi: -9,
         },
         reactions: [
@@ -90,7 +90,7 @@ export const EPISODES: Episode[] = [
           naruto: 11,
           sakura: 11,
           sasuke: 8,
-          minato: 10,
+          jiraiya: 10,
           itachi: 7,
         },
         reactions: [
@@ -143,7 +143,7 @@ export const EPISODES: Episode[] = [
           naruto: 12,
           sasuke: 11,
           sakura: 9,
-          minato: 10,
+          jiraiya: 10,
           itachi: 8,
         },
         reactions: [
@@ -168,7 +168,7 @@ export const EPISODES: Episode[] = [
           naruto: -10,
           sakura: -9,
           kakashi: -7,
-          minato: -8,
+          jiraiya: -8,
         },
         reactions: [
           {
@@ -191,7 +191,7 @@ export const EPISODES: Episode[] = [
           naruto: -13,
           sasuke: -12,
           sakura: -11,
-          minato: -11,
+          jiraiya: -11,
           itachi: -8,
         },
         reactions: [
@@ -244,7 +244,7 @@ export const EPISODES: Episode[] = [
           sakura: -15,
           sasuke: -12,
           kakashi: -14,
-          minato: -14,
+          jiraiya: -14,
           itachi: -10,
         },
         reactions: [
@@ -268,7 +268,7 @@ export const EPISODES: Episode[] = [
           naruto: 11,
           sasuke: 10,
           kakashi: 11,
-          minato: 10,
+          jiraiya: 10,
           itachi: 8,
         },
         reactions: [
@@ -290,7 +290,7 @@ export const EPISODES: Episode[] = [
         affinityEffects: {
           naruto: 10,
           sakura: 10,
-          minato: 8,
+          jiraiya: 8,
           sasuke: -8,
           itachi: -9,
           kakashi: -4,
@@ -346,7 +346,7 @@ export const EPISODES: Episode[] = [
           sasuke: -11,
           sakura: -11,
           naruto: -10,
-          minato: -10,
+          jiraiya: -10,
         },
         reactions: [
           {
@@ -370,7 +370,7 @@ export const EPISODES: Episode[] = [
           kakashi: -9,
           sakura: -8,
           naruto: -8,
-          minato: -6,
+          jiraiya: -6,
         },
         reactions: [
           {
@@ -393,7 +393,7 @@ export const EPISODES: Episode[] = [
           itachi: 12,
           sakura: 10,
           sasuke: 9,
-          minato: 9,
+          jiraiya: 9,
           naruto: 8,
         },
         reactions: [
@@ -440,7 +440,7 @@ export const EPISODES: Episode[] = [
         affinityEffects: {
           naruto: 10,
           sakura: 9,
-          minato: 7,
+          jiraiya: 7,
           sasuke: -9,
           itachi: -8,
           kakashi: -5,
@@ -464,7 +464,7 @@ export const EPISODES: Episode[] = [
         affinityEffects: {
           naruto: 13,
           sakura: 11,
-          minato: 11,
+          jiraiya: 11,
           kakashi: 10,
           sasuke: 9,
           itachi: 9,
@@ -490,7 +490,7 @@ export const EPISODES: Episode[] = [
           sasuke: -12,
           sakura: -13,
           kakashi: -12,
-          minato: -12,
+          jiraiya: -12,
           itachi: -9,
         },
         reactions: [
@@ -542,7 +542,7 @@ export const EPISODES: Episode[] = [
           sakura: 14,
           naruto: 11,
           kakashi: 12,
-          minato: 10,
+          jiraiya: 10,
           sasuke: 8,
           itachi: 8,
         },
@@ -566,7 +566,7 @@ export const EPISODES: Episode[] = [
           sakura: -15,
           naruto: -13,
           kakashi: -13,
-          minato: -12,
+          jiraiya: -12,
           sasuke: -9,
           itachi: -8,
         },
@@ -592,7 +592,7 @@ export const EPISODES: Episode[] = [
           sakura: -11,
           naruto: -9,
           kakashi: -7,
-          minato: -8,
+          jiraiya: -8,
         },
         reactions: [
           {
@@ -610,22 +610,22 @@ export const EPISODES: Episode[] = [
   {
     id: 7,
     code: "EPISODE 07",
-    title: "4대 호카게의 의지와 불의 의지 계승",
-    location: "나뭇잎 결전장 · 금빛 섬광의 진",
+    title: "전설의 3닌자, 두꺼비 선인과 불의 의지 계승",
+    location: "나뭇잎 결전장 · 묘목산 선술의 진",
     stageTheme: "fourth-hokage-will",
-    featuredCast: ["minato", "naruto", "kakashi", "sasuke", "sakura", "itachi"],
+    featuredCast: ["jiraiya", "naruto", "kakashi", "sasuke", "sakura", "itachi"],
     lines: [
       {
         speaker: "narrator",
-        text: "황금빛 섬광과 붉은 불꽃이 밤하늘을 수놓는 최후의 결전. 시공을 가르는 비뢰신의 술식과 함께 4대 호카게 나미카제 미나토, 그리고 제7반과 이타치의 시선이 한곳으로 모인다.",
+        text: "황금빛 선술 오라와 붉은 불꽃이 밤하늘을 수놓는 최후의 결전. 묘목산 두꺼비 소환의 굉음과 함께 전설의 3닌자 지라이야, 그리고 제7반과 이타치의 시선이 한곳으로 모인다.",
       },
       {
-        speaker: "minato",
-        text: "모두의 차크라가 하나로 이어지고 있군요. 나뭇잎의 내일을 지키기 위해, 마지막 일격에 당신의 의지를 실어 주겠어요?",
+        speaker: "jiraiya",
+        text: "하하하! 드디어 진가가 드러날 때가 왔군. 묘목산의 두꺼비 선인이 지켜보고 있다—나뭇잎의 내일을 지키기 위해, 포기하지 않는 그 근성으로 마지막 일격에 네 의지를 실어 보거라!",
       },
       {
         speaker: "naruto",
-        text: "아버지! 그리고 제7반 모두! 우리의 힘이 모이면 절대 지지 않아니깐!",
+        text: "호색선인!! 그리고 제7반 모두! 스승님이 가르쳐 준 나선환과 우리의 힘이 모이면 절대 지지 않아니깐!",
       },
       {
         speaker: "itachi",
@@ -636,11 +636,11 @@ export const EPISODES: Episode[] = [
     choices: [
       {
         id: "A",
-        label: "압도적인 위협에 차크라가 역류할 정도로 흔들리며 비뢰신 표식마저 놓치고 결전장에서 주저앉는다.",
+        label: "압도적인 위협에 차크라가 역류할 정도로 흔들리며 선술 결계와의 동조마저 놓치고 결전장에서 주저앉는다.",
         stance: "의지 상실과 결계 붕괴",
         effects: { ninjutsu: -15, bond: -15, willOfFire: -17 },
         affinityEffects: {
-          minato: -15,
+          jiraiya: -15,
           naruto: -14,
           kakashi: -14,
           sakura: -13,
@@ -649,8 +649,8 @@ export const EPISODES: Episode[] = [
         },
         reactions: [
           {
-            speaker: "minato",
-            text: "안 됩니다…! 여기서 의지를 꺾어 버리면 마을 전체가 삼켜지고 맙니다!",
+            speaker: "jiraiya",
+            text: "어이, 여기서 주저앉으면 안 되지!! 포기하는 순간 닌자의 길도, 마을의 내일도 끝장이라네!",
           },
           {
             speaker: "kakashi",
@@ -666,15 +666,15 @@ export const EPISODES: Episode[] = [
         affinityEffects: {
           naruto: 10,
           sakura: 11,
-          minato: 9,
+          jiraiya: 9,
           sasuke: -8,
           itachi: -8,
           kakashi: -2,
         },
         reactions: [
           {
-            speaker: "minato",
-            text: "사람을 지키려는 따뜻한 마음은 훌륭합니다. 하지만 공격할 힘이 함께여야 적을 멈출 수 있어요.",
+            speaker: "jiraiya",
+            text: "사람을 지키려는 따뜻한 마음은 훌륭하네. 하지만 방패만으로는 어둠을 밀어낼 수 없지—싸워 이길 힘과 배짱이 함께여야 해.",
           },
           {
             speaker: "sakura",
@@ -684,11 +684,11 @@ export const EPISODES: Episode[] = [
       },
       {
         id: "C",
-        label: "미나토의 비뢰신 표식과 제7반의 차크라를 완벽히 동조시켜 합동 나선환의 금빛 섬광을 쏘아 올린다.",
-        stance: "금빛 섬광 · 제7반 완전 합동",
+        label: "지라이야의 선술 차크라와 제7반의 호흡을 완벽히 동조시켜 거대 합동 나선환의 찬란한 선술의 빛을 쏘아 올린다.",
+        stance: "선술 나선환 · 제7반 완전 합동",
         effects: { ninjutsu: 11, bond: 11, willOfFire: 12 },
         affinityEffects: {
-          minato: 14,
+          jiraiya: 14,
           naruto: 12,
           kakashi: 11,
           sakura: 11,
@@ -697,12 +697,12 @@ export const EPISODES: Episode[] = [
         },
         reactions: [
           {
-            speaker: "minato",
-            text: "훌륭해요! 제 비뢰신과 제7반의 차크라가 완벽히 공명했어요. 나뭇잎의 미래는 이제 여러분의 것입니다!",
+            speaker: "jiraiya",
+            text: "하하하! 기가 막히군!! 내 선술과 제7반의 나선환이 완벽히 공명했어. 이 스승의 예언대로 나뭇잎의 미래는 이제 너희 것이로구나!",
           },
           {
             speaker: "naruto",
-            text: "해냈어!! 우리가 같이 만든 이 빛… 호카게 바위까지 닿을 거라니깐!!",
+            text: "해냈어, 호색선인!! 우리가 같이 만든 이 나선환… 호카게 바위까지 닿을 거라니깐!!",
           },
         ],
       },

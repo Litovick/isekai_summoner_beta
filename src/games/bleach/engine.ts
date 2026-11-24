@@ -62,8 +62,37 @@ export function gradeForScore(score: number): Grade {
   return "D";
 }
 
-export function resolveEnding(stats: Stats): EndingInfo {
+export const BLEACH_HIDDEN_KEYS = {
+  /** EP3 우라하라 지하 수련장: C — 오리히메와 사도 대신 파동 공격을 온몸으로 받아냄 */
+  ep3ChoiceIndex: 2,
+  /** EP4 소울 소사이어티 정령정: B — 홀로 영압을 날카롭게 끌어올려 정령정 선봉 돌파 */
+  ep4ChoiceIndex: 1,
+  /** EP6 허권 웨코문드: A — 오리히메의 치유·방어 영역을 중심으로 사도·이시다와 협공 */
+  ep6ChoiceIndex: 0,
+} as const;
+
+export function isBleachHiddenRoute(answers: readonly number[]): boolean {
+  return (
+    answers[2] === BLEACH_HIDDEN_KEYS.ep3ChoiceIndex &&
+    answers[3] === BLEACH_HIDDEN_KEYS.ep4ChoiceIndex &&
+    answers[5] === BLEACH_HIDDEN_KEYS.ep6ChoiceIndex
+  );
+}
+
+export function resolveEnding(
+  stats: Stats,
+  answers: readonly number[] = [],
+): EndingInfo {
   const { reiatsu, bond, resolve } = stats;
+  // Priority 0: Hidden Ending (all stats >= 80 + 3 secret awakening keys)
+  if (
+    reiatsu >= 80 &&
+    bond >= 80 &&
+    resolve >= 80 &&
+    isBleachHiddenRoute(answers)
+  ) {
+    return ENDINGS["ending-hidden"];
+  }
   // Priority 1: all stats >= 75
   if (reiatsu >= 75 && bond >= 75 && resolve >= 75) {
     return ENDINGS["ending-01"];
@@ -140,7 +169,7 @@ export function advanceEpisodeOrResult(state: GameState): GameState {
     }
 
     if (state.episodeIndex + 1 >= EPISODES.length) {
-      const ending = resolveEnding(state.stats);
+      const ending = resolveEnding(state.stats, state.answers);
       const unlocked = state.unlockedEndings.includes(ending.id)
         ? state.unlockedEndings
         : [...state.unlockedEndings, ending.id];

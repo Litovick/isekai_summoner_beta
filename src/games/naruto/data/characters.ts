@@ -9,7 +9,7 @@ export const CHARACTER_IDS: CharacterId[] = [
   "sasuke",
   "sakura",
   "kakashi",
-  "minato",
+  "jiraiya",
   "itachi",
 ];
 
@@ -46,12 +46,12 @@ export const CHARACTERS: Record<CharacterId, CharacterMeta> = {
     image: "/naruto/characters/kakashi.png",
     accentColor: "#94a3b8",
   },
-  minato: {
-    id: "minato",
-    name: "나미카제 미나토",
-    title: "4대 호카게 · 금빛 섬광",
-    specialty: "비뢰신술 · 나선환 창시자",
-    image: "/naruto/characters/minato.png",
+  jiraiya: {
+    id: "jiraiya",
+    name: "지라이야",
+    title: "전설의 3닌자 · 묘목산 두꺼비 선인",
+    specialty: "선술 · 나선환 · 두꺼비 소환",
+    image: "/naruto/characters/jiraiya.png",
     accentColor: "#fbbf24",
   },
   itachi: {
@@ -113,15 +113,15 @@ export const CHARACTER_EVALUATION_PROFILES: Record<
       D: "최악의 결과다. 전략도 신뢰도 전부 무너졌어. 아카데미부터 다시 시작해야겠군.",
     },
   },
-  minato: {
-    id: "minato",
-    focus: "희생정신과 불의 의지",
+  jiraiya: {
+    id: "jiraiya",
+    focus: "포기하지 않는 근성과 스승의 신념",
     comments: {
-      S: "눈부실 정도로 따뜻한 불의 의지였어요. 동료를 지키고자 하는 그 진심이 차크라를 빛나게 했군요. 나뭇잎의 미래는 든든합니다.",
-      A: "자신을 돌보지 않고 마을과 동료를 지키는 모습에서 과거의 우리들이 보였습니다. 정말 훌륭한 시노비로 성장했네요.",
-      B: "선한 의지와 용기가 느껴졌습니다. 그 마음을 잃지 않고 수련을 이어간다면 머지않아 모두를 이끄는 빛이 될 겁니다.",
-      C: "신념 없는 판단은 결국 마을과 동료를 위기에 빠뜨립니다. 왜 나뭇잎 서클렛을 찼는지 냉정하게 되돌아보세요.",
-      D: "안타깝지만… 지금의 당신에게서는 불의 의지도, 동료를 지키려는 각오도 전혀 느껴지지 않습니다.",
+      S: "하하하! 두꺼비 선인의 눈은 못 속이지! 끝까지 포기하지 않는 그 근성과 호쾌한 배짱… 나뭇잎의 미래는 이제 안심하고 맡겨도 되겠구먼!",
+      A: "호오, 꽤 쓸 만한 녀석이 나타났군! 동료를 지키려 몸을 던지는 그 신념, 나루토와 꼭 닮은 진짜 시노비의 기질이야!",
+      B: "나쁘지 않아! 선한 의지와 용기는 충분하네. 포기하지 않는 근성만 더 갈고닦으면 머지않아 전설의 이름을 잇게 될 게야.",
+      C: "어이, 신념 없이 흔들리는 판단은 결국 마을과 동료를 위기에 빠뜨린다네. 닌자란 무엇을 견디는 자인지 다시 새겨 보거라.",
+      D: "끌끌… 안타깝구먼. 지금의 자네에게선 포기하지 않는 근성도, 동료를 지키려는 시노비의 각오도 전혀 보이지 않는구나.",
     },
   },
   itachi: {

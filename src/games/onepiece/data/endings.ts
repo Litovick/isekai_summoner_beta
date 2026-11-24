@@ -1,6 +1,7 @@
 import type { EndingId, EndingInfo } from "../types";
 
 export const ENDING_ORDER: EndingId[] = [
+  "ending-hidden",
   "ending-01",
   "ending-02",
   "ending-03",
@@ -8,6 +9,24 @@ export const ENDING_ORDER: EndingId[] = [
 ];
 
 export const ENDINGS: Record<EndingId, EndingInfo> = {
+  "ending-hidden": {
+    id: "ending-hidden",
+    priority: 0,
+    title: "라프텔의 붉은 새벽 · 패왕의 계승자",
+    subtitle: "모든 능력치 80 이상 & 3대 비밀 항로 달성 · 상디와 샹크스가 축복한 전설",
+    conditionLabel: "모든 능력치 80↑ · 비밀 3분기 달성 (히든 엔딩)",
+    theme: "laugh-tale-dawn",
+    showcaseCast: ["shanks", "sanji", "luffy", "zoro", "nami"],
+    description:
+      "드럼 왕국의 눈보라 속에서 온몸으로 나미와 쵸파를 지켜 내고, 알라바스타의 열사 위에서 상디의 디아블 잠브와 함께 선봉을 뚫었으며, 불바다가 된 해군 포위선의 마그마를 견문색 패기로 꿰뚫어 동료들을 구해 냈습니다. 사황 샹크스와 흑족 상디, 그리고 밀짚모자 일당 모두가 축복하는 가운데 당신은 라프텔의 새벽을 여는 전설의 계승자가 되었습니다.",
+    speaker: "shanks",
+    quote:
+      "하하하! 내 밀짚모자를 맡긴 보람이 두 배로 돌아왔군. 네가 보여 준 패기와 의리라면, 이 새 시대의 바다도 충분히 넘겨줄 수 있겠어.",
+    companionQuote: {
+      speaker: "sanji",
+      text: "불바다 한복판에서 내 등을 지켜 줬을 때 이미 알았지. 루피와 함께 올 블루와 신세계의 정상까지, 최고의 풀코스로 불태워 보자고!",
+    },
+  },
   "ending-01": {
     id: "ending-01",
     priority: 1,
@@ -15,7 +34,7 @@ export const ENDINGS: Record<EndingId, EndingInfo> = {
     subtitle: "모든 능력치 75 이상 달성 · 패기와 신뢰, 모험심이 하나 된 최고의 항해",
     conditionLabel: "모든 능력치 75 이상 (진엔딩)",
     theme: "pirate-king-era",
-    showcaseCast: ["shanks", "zoro", "luffy", "ace", "nami"],
+    showcaseCast: ["shanks", "zoro", "luffy", "sanji", "nami"],
     description:
       "단련된 견문색·무장색 패기와 완벽한 항해 지혜, 그리고 어떤 폭풍 앞에서도 흔들리지 않는 동료의 신뢰가 하나로 어우러졌습니다. 이스트 블루에서 신세계까지 거친 파도를 돌파한 당신은 루피와 어깨를 나란히 하며 해적왕의 전설을 함께 써 내려가는 최고의 동료로 이름을 남겼습니다.",
     speaker: "luffy",

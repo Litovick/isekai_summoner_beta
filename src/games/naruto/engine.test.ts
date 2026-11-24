@@ -63,6 +63,8 @@ test("all 6 characters appear across the 7 episodes and every episode has Best +
   assert.equal(EPISODES.length, 7);
   assert.equal(Object.keys(CHARACTERS).length, 6);
   assert.equal(CHARACTER_IDS.length, 6);
+  assert.equal(CHARACTERS.jiraiya.image, "/naruto/characters/jiraiya.png");
+  assert.equal("minato" in CHARACTERS, false);
 
   const appeared = new Set<CharacterId>();
   const bestIndices = new Set<number>();
@@ -130,32 +132,38 @@ test("ending priority order resolves strictly (75+ / 65&65 / 70&<45 / Sad fallba
   );
 });
 
-test("full 7-episode playthroughs reach all 4 endings and mashing A/B/C never clears Ending 1 or 2", () => {
-  // Path 1: All Best -> Ending 01 (True Ending)
+test("full 7-episode playthroughs reach all 5 endings (including Hidden) and mashing A/B/C never clears Hidden/1/2", () => {
+  // Path 0: Hidden Ending (EP4=B, EP5=A, EP7=C + high stats >= 80)
+  const runHidden = simulateRun([2, 0, 1, 1, 0, 0, 2]);
+  assert.equal(resolveEnding(runHidden.stats, runHidden.answers).id, "ending-hidden");
+  assert.ok(runHidden.unlockedEndings.includes("ending-hidden"));
+
+  // Path 1: All Best -> Ending 01 (True Ending, does NOT hijack into hidden)
   const run1 = simulateRun([2, 0, 1, 2, 1, 0, 2]);
-  assert.equal(resolveEnding(run1.stats).id, "ending-01");
+  assert.equal(resolveEnding(run1.stats, run1.answers).id, "ending-01");
+  assert.ok(run1.unlockedEndings.includes("ending-01"));
 
   // Path 2: Bond Tradeoffs on EP 3,5,7 + Best on EP 1,2,4,6 -> Ending 02
   const run2 = simulateRun([2, 0, 2, 2, 0, 0, 1]);
-  assert.equal(resolveEnding(run2.stats).id, "ending-02");
+  assert.equal(resolveEnding(run2.stats, run2.answers).id, "ending-02");
 
   // Path 3: Solitary Tradeoffs on EP 1,2,4,6 + Best on EP 3,5,7 -> Ending 03
   const run3 = simulateRun([0, 1, 1, 1, 1, 2, 2]);
-  assert.equal(resolveEnding(run3.stats).id, "ending-03");
+  assert.equal(resolveEnding(run3.stats, run3.answers).id, "ending-03");
 
   // Path 4: All Mistakes -> Sad Ending (Ending 04, avg < 45)
   const run4 = simulateRun([1, 2, 0, 0, 2, 1, 0]);
-  assert.equal(resolveEnding(run4.stats).id, "ending-04");
+  assert.equal(resolveEnding(run4.stats, run4.answers).id, "ending-04");
   const avg4 = (run4.stats.ninjutsu + run4.stats.bond + run4.stats.willOfFire) / 3;
   assert.ok(avg4 < 45, `Expected Sad Ending avg < 45, got ${avg4}`);
 
-  // Anti-spam check: blindly picking A, B, or C every episode must NOT clear Ending 1 or 2
+  // Anti-spam check: blindly picking A, B, or C every episode must NOT clear Hidden, Ending 1, or Ending 2
   for (const col of [0, 1, 2]) {
     const mashRun = simulateRun(Array(7).fill(col));
-    const endingId = resolveEnding(mashRun.stats).id;
+    const endingId = resolveEnding(mashRun.stats, mashRun.answers).id;
     assert.ok(
       endingId === "ending-03" || endingId === "ending-04",
-      `Spamming column ${col} should never clear Ending 1/2 (got ${endingId})`,
+      `Spamming column ${col} should never clear Hidden/Ending 1/2 (got ${endingId})`,
     );
   }
 });
@@ -165,7 +173,7 @@ test("character evaluations reflect affinity penalties with C and D grades on po
   const bestEvals = evaluateCharacters(bestRun.affinities);
   assert.equal(bestEvals.length, 6);
   assert.equal(bestEvals.find((e) => e.id === "naruto")!.grade, "S");
-  assert.equal(bestEvals.find((e) => e.id === "minato")!.grade, "S");
+  assert.equal(bestEvals.find((e) => e.id === "jiraiya")!.grade, "S");
 
   const mistakeRun = simulateRun([1, 2, 0, 0, 2, 1, 0]);
   const mistakeEvals = evaluateCharacters(mistakeRun.affinities);

@@ -259,8 +259,11 @@ export function DemonSlayerGame({ onReturnWorldSelect }: DemonSlayerGameProps) {
     state.answers.length > 0 && state.answers.length < EPISODES.length;
 
   const ending = useMemo(
-    () => (state.phase === "result" ? resolveEnding(state.stats) : null),
-    [state.phase, state.stats],
+    () =>
+      state.phase === "result"
+        ? resolveEnding(state.stats, state.answers)
+        : null,
+    [state.phase, state.stats, state.answers],
   );
 
   const evaluations = useMemo(
@@ -457,7 +460,7 @@ export function DemonSlayerGame({ onReturnWorldSelect }: DemonSlayerGameProps) {
 
             <p className="ds-prologue-note">
               각 에피소드의 선택은 3가지 능력치(0~100)뿐만 아니라 귀살대 13명의 개별 평가와
-              최종 4가지 엔딩 분기에 직접적인 영향을 미칩니다.
+              최종 5가지 엔딩(히든 엔딩 포함) 분기에 직접적인 영향을 미칩니다.
             </p>
 
             <div className="ds-prologue-actions">

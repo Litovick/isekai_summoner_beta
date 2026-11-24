@@ -1,19 +1,37 @@
 import type { EndingId, EndingInfo } from "../types";
 
 export const ENDINGS: Record<EndingId, EndingInfo> = {
+  "ending-hidden": {
+    id: "ending-hidden",
+    priority: 0,
+    title: "빛과 그림자의 계승 · 선인의 예언",
+    subtitle: "모든 능력치 80 이상 & 3대 비밀 분기 달성 · 지라이야가 축복한 전설의 시노비",
+    conditionLabel: "모든 능력치 80↑ · 비밀 3분기 달성 (히든 엔딩)",
+    theme: "six-paths-eclipse",
+    showcaseCast: ["itachi", "jiraiya", "naruto", "sasuke", "kakashi"],
+    description:
+      "이타치의 만화경 사륜안에 정면으로 맞서며 그림자의 각오를 증명했고, 종말의 계곡에서 두 영웅의 충돌을 맨몸으로 막아 유대를 지켜 냈으며, 끝내 전설의 3닌자 지라이야의 선술과 제7반의 합동 나선환을 하나로 완성했습니다. 빛과 그림자 양쪽의 의지를 모두 품은 당신은 나뭇잎 마을 역사에 전설로 남을 진정한 계승자가 되었습니다.",
+    speaker: "itachi",
+    quote:
+      "어둠을 정면으로 마주하고도 동료를 놓지 않다니… 사스케와 나루토, 그리고 이 마을의 미래는 이제 네게 맡겨도 되겠군.",
+    companionQuote: {
+      speaker: "jiraiya",
+      text: "하하하! 나루토의 곁을 끝까지 지켜 낸 포기하지 않는 근성… 묘목산 두꺼비 선인이 평생 찾아 헤맨 진정한 평화의 계승자가 바로 여기 있었구먼!",
+    },
+  },
   "ending-01": {
     id: "ending-01",
     priority: 1,
     title: "불의 의지를 잇는 차세대 호카게",
-    subtitle: "모든 능력치 75 이상 · 나뭇잎 마을을 비추는 황금빛 섬광",
+    subtitle: "모든 능력치 75 이상 · 두꺼비 선인의 가르침과 불의 의지를 이은 영웅",
     conditionLabel: "인술 · 유대 · 불의 의지 모두 75 이상",
     theme: "hokage-legacy",
-    showcaseCast: ["minato", "kakashi", "naruto", "sakura", "sasuke"],
+    showcaseCast: ["jiraiya", "kakashi", "naruto", "sakura", "sasuke"],
     description:
-      "극한의 차크라 제어와 제7반의 흔들리지 않는 팀워크, 그리고 어떤 어둠 앞에서도 꺼지지 않는 불의 의지를 모두 증명했습니다. 4대 호카게 미나토의 황금빛 섬광과 카카시의 가르침, 그리고 나루토·사스케·사쿠라와의 깊은 인연이 하나로 모여, 당신은 나뭇잎 마을의 차세대를 짊어질 진정한 영웅으로 인정받았습니다.",
-    speaker: "minato",
+      "극한의 차크라 제어와 제7반의 흔들리지 않는 팀워크, 그리고 어떤 어둠 앞에서도 꺼지지 않는 불의 의지를 모두 증명했습니다. 전설의 3닌자 지라이야의 호탕한 가르침과 카카시의 전술, 그리고 나루토·사스케·사쿠라와의 깊은 인연이 하나로 모여, 당신은 나뭇잎 마을의 차세대를 짊어질 진정한 영웅으로 인정받았습니다.",
+    speaker: "jiraiya",
     quote:
-      "동료를 믿고 마을을 지키는 그 빛… 이제 당신이 다음 세대의 불의 의지를 비추는 등불이 되었군요.",
+      "하하하! 동료를 믿고 끝까지 포기하지 않는 그 근성… 이제 자네가 다음 세대의 불의 의지를 비추는 등불이 되었구먼!",
   },
   "ending-02": {
     id: "ending-02",
@@ -64,6 +82,7 @@ export const ENDINGS: Record<EndingId, EndingInfo> = {
 };
 
 export const ENDING_ORDER: EndingId[] = [
+  "ending-hidden",
   "ending-01",
   "ending-02",
   "ending-03",
