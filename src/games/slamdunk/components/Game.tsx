@@ -87,7 +87,7 @@ export function Game({ theme }: { theme: Theme }) {
   );
 
   const q = theme.questions[s.qIndex]!;
-  const ending = s.phase === "ending" ? resolveEnding(theme, s.stats) : null;
+  const ending = s.phase === "ending" ? resolveEnding(theme, s.stats, s.answers) : null;
   const reviews = ending ? characterReviews(s) : [];
 
   useEffect(() => {
@@ -127,7 +127,7 @@ export function Game({ theme }: { theme: Theme }) {
     s.phase === "result"
       ? (fx ?? "neutral")
       : ending
-        ? ending.id === "happy"
+        ? ending.type === "hidden" || ending.type === "happy"
           ? "good"
           : "neutral"
         : "neutral";
@@ -214,7 +214,9 @@ export function Game({ theme }: { theme: Theme }) {
                 const unlocked = Boolean(collection[e.id]);
                 return (
                   <div key={e.id} className={`sd-archive-item ${unlocked ? "unlocked" : ""}`}>
-                    <span className="sd-archive-num">ENDING 0{idx + 1}</span>
+                    <span className="sd-archive-num">
+                      ENDING 0{idx + 1} · {e.icon} {e.typeLabel}
+                    </span>
                     <strong>{unlocked ? e.title : "??? 잠긴 엔딩"}</strong>
                     <small>{unlocked ? e.subtitle : "게임을 플레이해 해금하세요."}</small>
                   </div>
@@ -460,8 +462,10 @@ export function Game({ theme }: { theme: Theme }) {
   if (showEndingCard && ending) {
     const endingBg = theme.backgrounds[ending.background]?.image;
     const endingBgUrl = endingBg ? `url('${encodeURI(endingBg)}')` : gymBgUrl;
-    const isHappy = ending.id === "happy";
-    const leadSpeaker = theme.characters[isHappy ? "chisu" : "hanna"]!;
+    const endingIndex = Math.max(0, theme.endings.findIndex((e) => e.id === ending.id));
+    const leadSpeaker =
+      theme.characters[ending.leadSpeakerId ?? (ending.type === "happy" ? "chisu" : "hanna")] ??
+      theme.characters["hanna"]!;
     const showcaseIds = ["chisu", "baekho", "taewoong", "hanna"];
     const unlockedCount = theme.endings.filter(
       (e) => collection[e.id] || e.id === ending.id,
@@ -471,12 +475,15 @@ export function Game({ theme }: { theme: Theme }) {
       <section className="sd-result-screen" aria-label="최종 매니저 결과 및 선수 평가">
         <div className="sd-bg-texture" aria-hidden="true" />
 
-        <div className={`sd-ending-hero ${!isHappy ? "sd-ending-hero--sad" : ""}`}>
+        <div className={`sd-ending-hero sd-ending-hero--${ending.type}`}>
           <div className="sd-ending-badge-row">
-            <span className="sd-ending-kicker">SHOHOKU HIGH BASKETBALL · 최종 매니저 보고</span>
-            <span className="sd-ending-cond">
-              {isHappy ? "팀 신뢰도 80↑ · 판단력 80↑ 달성" : "정식 매니저 재도전 엔딩"}
-            </span>
+            <div className="sd-ending-type-group">
+              <span className={`sd-ending-type-badge sd-ending-type--${ending.type}`}>
+                {ending.icon} {ending.typeLabel}
+              </span>
+              <span className="sd-ending-kicker">SHOHOKU HIGH BASKETBALL · 최종 매니저 보고</span>
+            </div>
+            <span className="sd-ending-cond">{ending.conditionLabel}</span>
           </div>
 
           <h1 className="sd-ending-title">{ending.title}</h1>
@@ -508,10 +515,14 @@ export function Game({ theme }: { theme: Theme }) {
             </div>
             <div className="sd-ending-scrim" aria-hidden="true" />
             <div className="sd-ending-banner-mark" aria-hidden="true">
-              <span>{isHappy ? "ENDING 01 · HAPPY" : "ENDING 02 · RETRY"}</span>
+              <span>
+                ENDING 0{endingIndex + 1} · {ending.type.toUpperCase()}
+              </span>
               <strong>{ending.title}</strong>
             </div>
           </div>
+
+          <p className="sd-ending-narration">{ending.narration}</p>
 
           <div className="sd-ending-quote-box">
             <div className="sd-ending-quote-portrait">
@@ -582,7 +593,9 @@ export function Game({ theme }: { theme: Theme }) {
                   key={e.id}
                   className={`sd-archive-item ${unlocked ? "unlocked" : ""} ${active ? "current" : ""}`}
                 >
-                  <span className="sd-archive-num">ENDING 0{idx + 1}</span>
+                  <span className="sd-archive-num">
+                    ENDING 0{idx + 1} · {e.icon} {e.typeLabel}
+                  </span>
                   <strong>{unlocked ? e.title : "??? 미해금 엔딩"}</strong>
                   <small>{unlocked ? e.subtitle : "다른 선택으로 해금"}</small>
                 </div>

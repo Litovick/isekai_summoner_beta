@@ -50,6 +50,9 @@ export function advance(theme: Theme, state: GameState): GameState {
   return { ...state, phase: "question", qIndex: next, lastDelta: null };
 }
 
-export function resolveEnding(theme: Theme, stats: Stats) {
-  return theme.endings.find((e) => e.condition(stats)) ?? theme.endings[theme.endings.length - 1];
+export function resolveEnding(theme: Theme, stats: Stats, answers: Record<string, number> = {}) {
+  return (
+    theme.endings.find((e) => e.condition(stats, answers)) ??
+    theme.endings[theme.endings.length - 1]
+  );
 }

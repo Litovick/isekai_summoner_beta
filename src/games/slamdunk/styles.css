@@ -1073,8 +1073,21 @@
   box-shadow: 0 22px 54px rgba(0, 0, 0, 0.6);
 }
 
+.slam-game .sd-ending-hero--hidden {
+  border-color: rgba(251, 191, 36, 0.72);
+  box-shadow: 0 22px 58px rgba(251, 191, 36, 0.2), 0 12px 32px rgba(0, 0, 0, 0.65);
+}
+
+.slam-game .sd-ending-hero--happy {
+  border-color: rgba(249, 115, 22, 0.56);
+}
+
+.slam-game .sd-ending-hero--normal {
+  border-color: rgba(148, 163, 184, 0.42);
+}
+
 .slam-game .sd-ending-hero--sad {
-  border-color: rgba(248, 113, 113, 0.34);
+  border-color: rgba(248, 113, 113, 0.48);
 }
 
 .slam-game .sd-ending-badge-row {
@@ -1084,6 +1097,49 @@
   flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 10px;
+}
+
+.slam-game .sd-ending-type-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.slam-game .sd-ending-type-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.slam-game .sd-ending-type--hidden {
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.28), rgba(220, 38, 38, 0.34));
+  border: 1px solid rgba(251, 191, 36, 0.75);
+  color: #fef08a;
+  box-shadow: 0 0 18px rgba(251, 191, 36, 0.24);
+}
+
+.slam-game .sd-ending-type--happy {
+  background: rgba(249, 115, 22, 0.22);
+  border: 1px solid rgba(251, 146, 60, 0.65);
+  color: #fed7aa;
+}
+
+.slam-game .sd-ending-type--normal {
+  background: rgba(56, 189, 248, 0.16);
+  border: 1px solid rgba(125, 211, 252, 0.45);
+  color: #bae6fd;
+}
+
+.slam-game .sd-ending-type--sad {
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(248, 113, 113, 0.55);
+  color: #fecaca;
 }
 
 .slam-game .sd-ending-kicker {
@@ -1101,6 +1157,18 @@
   background: rgba(220, 38, 38, 0.22);
   border: 1px solid rgba(251, 191, 36, 0.34);
   color: var(--sd-gold-soft);
+}
+
+.slam-game .sd-ending-narration {
+  margin: 16px 0 0;
+  padding: 15px 17px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border-left: 3px solid var(--sd-gold);
+  font-size: 14.5px;
+  line-height: 1.72;
+  color: #f5f5f4;
+  word-break: keep-all;
 }
 
 .slam-game .sd-ending-title {

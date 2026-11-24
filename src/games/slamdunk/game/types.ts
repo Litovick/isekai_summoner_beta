@@ -42,16 +42,24 @@ export type Question = {
   choices: Choice[];
 };
 
+export type EndingType = "hidden" | "happy" | "normal" | "sad";
+
 export type Ending = {
   id: string;
+  type: EndingType;
+  typeLabel: string;
+  icon: string;
   title: string;
   subtitle: string;
+  conditionLabel: string;
+  narration: string;
+  leadSpeakerId?: string;
   background: string;
   lines: Line[];
   quote: string;
   retryLabel: string;
-  /** returns true when the ending applies to the final stats */
-  condition: (stats: Stats) => boolean;
+  /** returns true when the ending applies to the final stats and choices */
+  condition: (stats: Stats, answers?: Record<string, number>) => boolean;
 };
 
 export type Theme = {

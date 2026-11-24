@@ -22,7 +22,13 @@ import {
   setGlobalAudioMuted,
   subscribeGlobalAudioMuted,
 } from "../../utils/mobileAudio";
-import { missions, endings, outcome, type Outcome } from "./game/attack-data";
+import {
+  ENDING_ORDER,
+  missions,
+  endings,
+  outcome,
+  type Outcome,
+} from "./game/attack-data";
 import { AOT_PEOPLE, Scene, useTypewriter, beep } from "./Scene";
 import {
   preloadAttackAudio,
@@ -57,15 +63,6 @@ const key = "game:attack-on-titan:v2";
 const galleryKey = "game:attack-on-titan:gallery";
 const clamp = (n: number) => Math.max(0, Math.min(100, n));
 
-const ENDING_ORDER: Outcome[] = ["hero", "survivor", "sacrifice", "fallen"];
-
-const ENDING_META: Record<Outcome, { priority: number; condition: string; speaker: string }> = {
-  hero: { priority: 1, condition: "생존 80↑ · 신뢰 80↑ 달성", speaker: "엘빈" },
-  survivor: { priority: 2, condition: "생존 60↑ · 신뢰 50↑ 달성", speaker: "리바이" },
-  sacrifice: { priority: 3, condition: "신뢰 80↑ · 최후의 희생 선택", speaker: "미카사" },
-  fallen: { priority: 4, condition: "벽 외 조사 전사 엔딩", speaker: "아르민" },
-};
-
 const reviews = (s: SaveState) => [
   {
     name: "리바이",
@@ -77,23 +74,23 @@ const reviews = (s: SaveState) => [
   {
     name: "엘빈",
     text:
-      s.answers[8] === 1
-        ? "위험을 계산하며 임무를 수행했다. 좋은 판단이었다."
+      s.answers[8] === 0
+        ? "유인과 철수를 동시에 설계했다. 탁월한 전술적 판단이었다."
         : "결정에는 반드시 대가가 따른다. 그것을 잊지 말게.",
   },
   {
     name: "미카사",
     text:
       s.trust >= 80
-        ? "동료를 지키려 했다는 걸 알아. 고마워."
-        : "다음에는 주변 사람들의 위치도 살펴줘.",
+        ? "끝까지 동료를 지키려 했다는 걸 알아. 고마워."
+        : "다음에는 주변 동료들의 위치도 함께 살펴줘.",
   },
   {
     name: "아르민",
     text:
-      s.answers[7] === 1
-        ? "지형을 활용한 선택이 모두에게 도움이 됐어."
-        : "다른 방법도 있었을 거야. 다음엔 함께 생각해 보자.",
+      s.answers[7] === 2
+        ? "절벽 위 사각지대를 읽어 낸 우회 선택이 모두를 살렸어."
+        : "지형을 활용했다면 다른 돌파구도 있었을 거야. 다음엔 함께 생각해 보자.",
   },
 ];
 
@@ -164,7 +161,7 @@ export function AttackGame() {
     if (loaded) setGlobalAudioMuted(muted);
   }, [muted, loaded]);
 
-  const result = outcome(s.survival, s.trust, s.answers[9] ?? -1);
+  const result = outcome(s.survival, s.trust, s.answers);
 
   useEffect(() => {
     if (!loaded || s.phase !== "end") return;
@@ -289,6 +286,7 @@ export function AttackGame() {
   }, [s.phase, showGallery, start, next]);
 
   const endingArt: Record<Outcome, string> = {
+    hidden: endingBackground,
     hero: endingBackground,
     survivor: missionBackgrounds[9]!,
     sacrifice: missionBackgrounds[8]!,
@@ -341,7 +339,9 @@ export function AttackGame() {
                       alt={unlocked ? `${endings[k].title} 엔딩 배경` : ""}
                       loading="lazy"
                     />
-                    <span className="aot-ending-number">RECORD 0{i + 1}</span>
+                    <span className="aot-ending-number">
+                      RECORD 0{i + 1} · {endings[k].icon} {endings[k].typeLabel}
+                    </span>
                     {!unlocked && (
                       <span className="aot-ending-lock" aria-label="미해금">
                         <Lock size={28} />
@@ -465,8 +465,7 @@ export function AttackGame() {
   /* ==================== ENDING / RESULT SCREEN ==================== */
   if (s.phase === "end") {
     const endingInfo = endings[result];
-    const meta = ENDING_META[result];
-    const quoteSpeakerKey = meta.speaker;
+    const quoteSpeakerKey = endingInfo.speaker;
     const quotePerson = AOT_PEOPLE[quoteSpeakerKey] ?? AOT_PEOPLE["리바이"]!;
     const ensembleOrder = ["엘빈", "리바이", "미카사", "아르민"];
     const unlockedSet = Array.from(new Set([...gallery, result]));
@@ -476,11 +475,18 @@ export function AttackGame() {
         <div className="aot-bg-texture" aria-hidden="true" />
 
         <div
-          className={`aot-ending-hero ${result === "fallen" ? "aot-ending-hero--fallen" : ""}`}
+          className={`aot-ending-hero aot-ending-hero--${endingInfo.type} ${
+            result === "fallen" ? "aot-ending-hero--fallen" : ""
+          }`}
         >
           <div className="aot-ending-badge-row">
-            <span className="aot-ending-kicker">SURVEY CORPS REPORT · 최종 원정 보고</span>
-            <span className="aot-ending-cond">{meta.condition}</span>
+            <div className="aot-ending-type-group">
+              <span className={`aot-ending-type-badge aot-ending-type--${endingInfo.type}`}>
+                {endingInfo.icon} {endingInfo.typeLabel}
+              </span>
+              <span className="aot-ending-kicker">SURVEY CORPS REPORT · 최종 원정 보고</span>
+            </div>
+            <span className="aot-ending-cond">{endingInfo.condition}</span>
           </div>
 
           <h1 className="aot-ending-title">{endingInfo.title}</h1>
@@ -489,8 +495,8 @@ export function AttackGame() {
           <div className="aot-ending-visual">
             <div
               className="aot-bg-photo"
-              style={{ backgroundImage: `url("${encodeURI(endingBackground)}")` }}
-              data-bg-src={endingBackground}
+              style={{ backgroundImage: `url("${encodeURI(endingArt[result])}")` }}
+              data-bg-src={endingArt[result]}
               aria-hidden="true"
             />
             <div className="aot-bg-readability" aria-hidden="true" />
@@ -514,10 +520,14 @@ export function AttackGame() {
             </div>
             <div className="aot-ending-scrim" aria-hidden="true" />
             <div className="aot-ending-banner-mark" aria-hidden="true">
-              <span>ENDING 0{meta.priority}</span>
+              <span>
+                ENDING 0{endingInfo.priority} · {endingInfo.type.toUpperCase()}
+              </span>
               <strong>{endingInfo.title}</strong>
             </div>
           </div>
+
+          <p className="aot-ending-narration">{endingInfo.narration}</p>
 
           <div className="aot-ending-quote-box">
             {portraits[quoteSpeakerKey] && (
@@ -595,7 +605,6 @@ export function AttackGame() {
           <div className="aot-archive-list">
             {ENDING_ORDER.map((eid) => {
               const info = endings[eid];
-              const m = ENDING_META[eid];
               const unlocked = unlockedSet.includes(eid);
               const active = eid === result;
               return (
@@ -605,7 +614,9 @@ export function AttackGame() {
                     active ? "current" : ""
                   }`}
                 >
-                  <span className="aot-archive-num">ENDING 0{m.priority}</span>
+                  <span className="aot-archive-num">
+                    ENDING 0{info.priority} · {info.icon} {info.typeLabel}
+                  </span>
                   <strong>{unlocked ? info.title : "??? 미해금 엔딩"}</strong>
                   <small>{unlocked ? info.subtitle : "다른 선택으로 해금"}</small>
                 </div>
