@@ -50,6 +50,7 @@ function EndingShowcaseMember({
         <img
           src={meta.image}
           alt={meta.name}
+          decoding="async"
           className="ds-ending-member-img"
           onError={() => setImgError(true)}
         />
@@ -157,6 +158,7 @@ export function ResultScreen({
               <img
                 src={speakerMeta.image}
                 alt={speakerMeta.name}
+                decoding="async"
                 onError={() => setQuoteCharError(true)}
               />
             ) : (
@@ -186,7 +188,7 @@ export function ResultScreen({
             }`}
           >
             <div className="ds-ending-quote-portrait">
-              <img src={companionMeta.image} alt={companionMeta.name} />
+              <img src={companionMeta.image} alt={companionMeta.name} decoding="async" />
             </div>
             <div className="ds-ending-quote-copy">
               <div className="ds-ending-quote-speaker">
@@ -315,6 +317,7 @@ function EvaluationCard({ evaluation }: { evaluation: CharacterEvaluation }) {
           <img
             src={evaluation.image}
             alt={evaluation.name}
+            decoding="async"
             className="ds-eval-portrait"
             onError={() => setImgError(true)}
           />

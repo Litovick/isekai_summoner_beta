@@ -86,7 +86,7 @@ export const EPISODES: Episode[] = [
       },
       {
         id: "C",
-        label: "혈귀가 낀 팀과는 싸울 수 없다며 소란을 피우고, 밤어둠이 짙어지자 후방 짐칸 뒤로 물러난다.",
+        label: "혈귀가 낀 팀과는 싸울 수 없다며 소란을 피우고, 어둠이 짙어지자 슬그머니 대열 뒤쪽으로 물러난다.",
         stance: "불신과 전열 이탈",
         effects: { breathing: -12, trust: -15, resolve: -14 },
         affinityEffects: {
@@ -131,7 +131,7 @@ export const EPISODES: Episode[] = [
       },
       {
         speaker: "inosuke",
-        text: "시끄럽다 몬이츠!! 나는 벌써 호리병 세 개를 부술 기세다! 신입 녀석, 나랑 누가 더 먼저 시노부의 약탕을 들이키는지 승부다!!",
+        text: "시끄럽다 몬이츠!! 나는 벌써 호리병 세 개를 부술 기세다! 신입 녀석, 나랑 누가 더 먼저 시노부의 약탕 컵을 뺏는지 승부다!!",
       },
       {
         speaker: "shinobu",
@@ -501,7 +501,7 @@ export const EPISODES: Episode[] = [
           },
           {
             speaker: "mitsuri",
-            text: "꺄아! 호흡이 딱 맞았어요! 장인분들도 무사하고 적도 물리쳤어요!!",
+            text: "꺄아! 호흡이 딱 맞았어요! 장인 분들도 무사하고 적도 물리쳤어요!!",
           },
         ],
       },
@@ -768,7 +768,7 @@ export const EPISODES: Episode[] = [
       },
       {
         speaker: "sanemi",
-        text: "어이, 신입! 뒈지지 말고 끝까지 내 옆에 붙어 있으라고!! 무잔 놈의 숨통을 완전히 끊어 버린다!",
+        text: "어이, 신입! 죽지 말고 끝까지 내 옆에 붙어 있으라고!! 무잔 놈의 숨통을 완전히 끊어 버린다!",
       },
       {
         speaker: "tanjiro",
@@ -795,7 +795,7 @@ export const EPISODES: Episode[] = [
         reactions: [
           {
             speaker: "sanemi",
-            text: "제법 독종이군… 하지만 그 따위로 동료들 버리고 혼자 싸운 꼴이라니, 꼴사납다!",
+            text: "제법 독종이군… 하지만 그따위로 동료들 버리고 혼자 싸우려 들다니, 꼴사납다!",
           },
           {
             speaker: "tanjiro",

@@ -29,7 +29,7 @@ export default function WorldSelectScreen() {
           <button
             type="button"
             onClick={openTitle}
-            className="mobile-light-blur group inline-flex min-h-[44px] items-center gap-2 rounded-full border border-white/15 bg-[#21183a]/88 px-4 py-2 text-xs font-semibold text-violet-100 shadow-lg transition-[transform,border-color,color] duration-150 hover:border-violet-300/60 hover:text-white active:scale-[0.98] md:bg-[#21183a]/75 md:backdrop-blur-md sm:text-sm"
+            className="mobile-light-blur group inline-flex min-h-[44px] items-center gap-2 rounded-full border border-white/15 bg-slate-900/85 px-4 py-2 text-xs font-semibold text-violet-100 shadow-lg transition-[transform,border-color,color] duration-150 hover:border-violet-300/60 hover:text-white active:scale-[0.98] md:bg-[#21183a]/80 md:backdrop-blur-sm sm:text-sm"
           >
             <ArrowLeft className="h-4 w-4 transition-transform duration-150 group-hover:-translate-x-1" />
             <span>메인으로</span>
@@ -116,7 +116,7 @@ export default function WorldSelectScreen() {
                     {/* Locked overlay lock icon */}
                     {!available && (
                       <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-                        <div className="mobile-light-blur flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-black/75 shadow-xl transition-transform duration-200 md:h-12 md:w-12 md:backdrop-blur-md md:group-hover:scale-110">
+                        <div className="mobile-light-blur flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-slate-900/85 shadow-xl transition-transform duration-200 md:h-12 md:w-12 md:backdrop-blur-sm md:group-hover:scale-110">
                           <Lock className="h-5 w-5 text-violet-200 md:h-6 md:w-6" />
                         </div>
                       </div>

@@ -27,6 +27,10 @@ import {
   setGlobalAudioMuted,
   subscribeGlobalAudioMuted,
 } from "../../../utils/mobileAudio";
+import {
+  preloadImagesInBackground,
+  preloadPriorityImages,
+} from "../../../utils/imagePreloader";
 
 type Saved = GameState & { step: number };
 
@@ -74,6 +78,26 @@ export function Game({ theme }: { theme: Theme }) {
   useEffect(() => {
     if (loaded) setGlobalAudioMuted(muted);
   }, [muted, loaded]);
+
+  useEffect(() => {
+    return preloadImagesInBackground([
+      ...Object.values(theme.backgrounds).map((b) => b.image),
+      ...Object.values(theme.characters).map((c) => c.image),
+    ]);
+  }, [theme]);
+
+  useEffect(() => {
+    const currentQ = theme.questions[s.qIndex];
+    const nextQ = theme.questions[s.qIndex + 1];
+    preloadPriorityImages([
+      currentQ ? theme.backgrounds[currentQ.background]?.image : undefined,
+      ...(currentQ ? currentQ.cast.map((id) => theme.characters[id]?.image) : []),
+      nextQ
+        ? theme.backgrounds[nextQ.background]?.image
+        : theme.backgrounds["ending"]?.image,
+      ...(nextQ ? nextQ.cast.map((id) => theme.characters[id]?.image) : []),
+    ]);
+  }, [theme, s.qIndex, s.phase]);
 
   const click = useCallback(() => beep("click", muted), [muted]);
 
@@ -217,7 +241,7 @@ export function Game({ theme }: { theme: Theme }) {
                     <span className="sd-archive-num">
                       ENDING 0{idx + 1} · {e.icon} {e.typeLabel}
                     </span>
-                    <strong>{unlocked ? e.title : "??? 잠긴 엔딩"}</strong>
+                    <strong>{unlocked ? e.title : "??? 미해금 엔딩"}</strong>
                     <small>{unlocked ? e.subtitle : "게임을 플레이해 해금하세요."}</small>
                   </div>
                 );

@@ -1,7 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Flame, Play, Save, Shield, Sword } from "lucide-react";
 import { CHARACTERS } from "./data/characters";
-import { DEMONSLAYER_BACKGROUNDS, toDemonSlayerBgUrl } from "./data/backgrounds";
+import {
+  DEMONSLAYER_BACKGROUNDS,
+  getDemonSlayerStageBackground,
+  toDemonSlayerBgUrl,
+} from "./data/backgrounds";
 import { EPISODES } from "./data/episodes";
 import {
   advanceEpisodeOrResult,
@@ -25,6 +29,10 @@ import {
   setGlobalAudioMuted,
   subscribeGlobalAudioMuted,
 } from "../../utils/mobileAudio";
+import {
+  preloadImagesInBackground,
+  preloadPriorityImages,
+} from "../../utils/imagePreloader";
 import type { CharacterId, EndingId, GameState } from "./types";
 import "./styles.css";
 
@@ -42,6 +50,7 @@ function TitleCharacterLayer({
     <img
       src={meta.image}
       alt={meta.name}
+      decoding="async"
       className={`ds-title-char ${slotClass}`}
       onError={() => setFailed(true)}
     />
@@ -115,7 +124,22 @@ export function DemonSlayerGame({ onReturnWorldSelect }: DemonSlayerGameProps) {
 
   useEffect(() => {
     preloadDemonSlayerAudio();
+    return preloadImagesInBackground([
+      ...Object.values(DEMONSLAYER_BACKGROUNDS),
+      ...Object.values(CHARACTERS).map((c) => c.image),
+    ]);
   }, []);
+
+  useEffect(() => {
+    const currentEp = EPISODES[state.episodeIndex];
+    const nextEp = EPISODES[state.episodeIndex + 1];
+    preloadPriorityImages([
+      currentEp ? getDemonSlayerStageBackground(currentEp.stageTheme) : undefined,
+      ...(currentEp ? currentEp.featuredCast.map((id) => CHARACTERS[id].image) : []),
+      nextEp ? getDemonSlayerStageBackground(nextEp.stageTheme) : DEMONSLAYER_BACKGROUNDS.endingSunset,
+      ...(nextEp ? nextEp.featuredCast.map((id) => CHARACTERS[id].image) : []),
+    ]);
+  }, [state.episodeIndex, state.phase]);
 
   useEffect(() => subscribeGlobalAudioMuted(setMuted), []);
 

@@ -15,7 +15,7 @@ export const EPISODES: Episode[] = [
       },
       {
         speaker: "shanks",
-        text: "기억해 두렴. 사소한 도발에 칼을 뽑아 들기 전에, 네가 목숨을 걸고 지켜야 할 동료와 모험이 무엇인지 먼저 바라보는 거다.",
+        text: "잘 기억해 둬. 사소한 도발에 칼을 뽑아 들기 전에, 네가 목숨을 걸고 지켜야 할 동료와 모험이 무엇인지 먼저 바라보는 거다.",
       },
       {
         speaker: "luffy",
@@ -62,7 +62,7 @@ export const EPISODES: Episode[] = [
           },
           {
             speaker: "shanks",
-            text: "첫 파도 앞에서부터 겁에 질려 눈을 돌린다면… 저 넓은 바다의 패자가 될 꿈은 아직 너무 이르구나.",
+            text: "첫 파도 앞에서부터 겁에 질려 눈을 돌린다면… 저 넓은 바다의 패자가 될 꿈은 아직 너무 일러.",
           },
         ],
       },
@@ -91,7 +91,7 @@ export const EPISODES: Episode[] = [
     title: "위대한 항로 돌입! 폭풍우와 기록지침",
     location: "위대한 항로 초입 · 거친 폭풍 해역",
     stageTheme: "grand-line-storm",
-    featuredCast: ["nami", "sanji", "zoro", "luffy"],
+    featuredCast: ["nami", "usopp", "sanji", "zoro", "luffy"],
     lines: [
       {
         speaker: "narrator",
@@ -102,30 +102,38 @@ export const EPISODES: Episode[] = [
         text: "나침반이 빙글빙글 돌고 있어!! 위대한 항로의 기상은 상식 밖이야! 갑판 위 물건들을 묶고 돛 각도를 바꿔야 해!",
       },
       {
+        speaker: "usopp",
+        text: "으아아악!! 나, 이 폭풍 해역에 들어가면 죽는 병에 걸렸어!! 내 뒤엔 8천 명의 부하가 기다린다고— 어, 잠깐! 왼쪽 파도 아래에 숨은 뾰족한 암초가 보여!! 돛줄도 풀리기 직전이야!!",
+      },
+      {
         speaker: "sanji",
         text: "어이, 조로! 멍 때리지 말고 밧줄 당겨! 나미 씨가 위험하잖아!!",
       },
       {
         speaker: "zoro",
-        text: "시끄러워, 연애 바보 요리사! 파도보다 거대한 암초가 정면에 버티고 있어. 베어 넘길 각오도 해 둬야 한다고!",
+        text: "시끄러워, 연애 바보 요리사! 우솝 말대로 파도 아래 거대한 암초가 정면에 버티고 있어. 베어 넘길 각오도 해 둬야 한다고!",
       },
       {
         speaker: "luffy",
         text: "우와아아, 파도가 산만해! 재밌긴 한데 배가 부서지면 큰일이야! 나미 지시대로 갈까, 아니면 정면으로 들이받을까?!",
       },
     ],
-    prompt: "번개가 내리치는 위대한 항로의 폭풍 해역, 나미의 항해 지시와 거대 암초 앞에서 어떻게 대처하시겠습니까?",
+    prompt: "번개가 내리치는 위대한 항로의 폭풍 해역, 나미의 항해 지시와 우솝이 포착한 거대 암초 앞에서 어떻게 대처하시겠습니까?",
     choices: [
       {
         id: "A",
         stance: "최선 · 항해술 신뢰와 합동 방어",
-        label: "나미의 기상 판독을 전적으로 신뢰해 돛을 조율하고, 루피·조로·상디와 흩어진 잔해를 튕겨 낸다",
+        label: "나미의 기상 판독과 우솝의 암초 정찰을 믿고 돛을 조율하며, 루피·조로·상디와 흩어진 잔해를 튕겨 낸다",
         effects: { haki: 11, trust: 10, adventure: 11 },
-        affinityEffects: { nami: 14, sanji: 11, luffy: 10, zoro: 8 },
+        affinityEffects: { nami: 14, usopp: 12, sanji: 11, luffy: 10, zoro: 8 },
         reactions: [
           {
             speaker: "nami",
             text: "좋아, 딱 맞았어!! 모두가 내 사인을 믿고 움직여 준 덕분에 폭풍의 눈을 빠져나왔어!",
+          },
+          {
+            speaker: "usopp",
+            text: "봤지?! 이 우솝 님의 매의 눈과 특제 밧줄 고정 탄환이 아니었으면 큰일 날 뻔했다고! 자, 나미! 다음 암초도 맡겨 둬!",
           },
           {
             speaker: "sanji",
@@ -138,11 +146,15 @@ export const EPISODES: Episode[] = [
         stance: "트레이드오프 · 무모한 단독 정면 돌파",
         label: "나미의 선회 경고를 무시하고 암초 정중앙을 일격에 박살 내어 억지로 직진한다",
         effects: { haki: 13, trust: -12, adventure: 2 },
-        affinityEffects: { zoro: 5, nami: -10, sanji: -6, luffy: -4 },
+        affinityEffects: { zoro: 5, nami: -10, usopp: -6, sanji: -6, luffy: -4 },
         reactions: [
           {
             speaker: "zoro",
             text: "암초를 부순 힘은 인정하지. 하지만 나미의 경고를 씹고 배에 금 가게 만든 건 어리석었어.",
+          },
+          {
+            speaker: "usopp",
+            text: "으아아, 메리호가 삐걱거린다고!! 내가 왼쪽 암초까지 다 봐 뒀는데 정면으로 들이받으면 어떡해!!",
           },
           {
             speaker: "nami",
@@ -155,15 +167,19 @@ export const EPISODES: Episode[] = [
         stance: "실책 · 패닉과 키 포기",
         label: "거친 파도에 당황해 키를 놓아 버리고 선실 아래로 대피해 버린다",
         effects: { haki: -14, trust: -12, adventure: -13 },
-        affinityEffects: { nami: -14, sanji: -12, luffy: -10, zoro: -10 },
+        affinityEffects: { nami: -14, usopp: -12, sanji: -12, luffy: -10, zoro: -10 },
         reactions: [
           {
             speaker: "nami",
             text: "지금 키를 놓으면 어떡해?! 모두가 죽을 뻔했잖아!! 항해를 대체 뭘로 아는 거야?!",
           },
           {
+            speaker: "usopp",
+            text: "야, 진짜 겁쟁이는 나 하나로 족하다고!! 다들 갑판에 매달려 버티는데 키를 놓고 도망치면 어떡해!!",
+          },
+          {
             speaker: "sanji",
-            text: "이 얼간이가!! 나미 씨와 동료들이 갑판에서 사투를 벌이는데 혼자 숨어 있다니 제정신이냐!!",
+            text: "이 멍청아!! 나미 씨와 동료들이 갑판에서 사투를 벌이는데 혼자 숨어 있다니 제정신이냐!!",
           },
         ],
       },
@@ -175,7 +191,7 @@ export const EPISODES: Episode[] = [
     title: "드럼 왕국, 눈보라 속의 분홍빛 벚꽃",
     location: "드럼 로키 설산 · 겨울 섬",
     stageTheme: "drum-sakura",
-    featuredCast: ["chopper", "luffy", "nami", "sanji"],
+    featuredCast: ["chopper", "usopp", "luffy", "nami", "sanji"],
     lines: [
       {
         speaker: "narrator",
@@ -188,6 +204,10 @@ export const EPISODES: Episode[] = [
       {
         speaker: "luffy",
         text: "울지 마, 순록! 저 깃발은 절대 안 부러지게 내가 막을 테니까! 자, 어서 나미를 치료해 줘!",
+      },
+      {
+        speaker: "usopp",
+        text: "덜덜덜… 대포 소리가 설산까지 울리네…! 그, 그래도 동료가 아파서 누워 있는데 도망칠 순 없지! 새총 장전 완료, 저 포병들 시선은 내 화약성으로 뺏어 볼게!",
       },
       {
         speaker: "sanji",
@@ -205,11 +225,15 @@ export const EPISODES: Episode[] = [
         stance: "실책 · 약품 방치 및 무리한 도주",
         label: "와포루의 대포 소리에 겁먹어 나미의 치료를 중단시키고 눈보라 속으로 무작정 도망친다",
         effects: { haki: -13, trust: -13, adventure: -14 },
-        affinityEffects: { chopper: -14, luffy: -10, nami: -12, sanji: -12 },
+        affinityEffects: { chopper: -14, usopp: -12, luffy: -10, nami: -12, sanji: -12 },
         reactions: [
           {
             speaker: "chopper",
             text: "안 돼!! 지금 나미를 눈보라 밖으로 데리고 나가면 생명이 위험하단 말이야!! 왜 내 말을 안 들어주는 거야!!",
+          },
+          {
+            speaker: "usopp",
+            text: "나도 무서워서 다리가 후들거리지만… 그래도 다친 나미를 버리고 도망치는 건 바다의 전사가 할 짓이 아니야!!",
           },
           {
             speaker: "luffy",
@@ -220,13 +244,17 @@ export const EPISODES: Episode[] = [
       {
         id: "B",
         stance: "최선 · 깃발 수호와 동료 치료 공조",
-        label: "쵸파에게 나미의 치료를 전적으로 맡기고, 루피·상디와 성벽 앞 포격을 몸으로 막아 낸다",
+        label: "쵸파에게 나미의 치료를 전적으로 맡기고, 루피·상디·우솝의 화염성 엄호와 함께 성벽 앞 포격을 막아 낸다",
         effects: { haki: 11, trust: 11, adventure: 10 },
-        affinityEffects: { chopper: 14, nami: 12, luffy: 10, sanji: 10 },
+        affinityEffects: { chopper: 14, usopp: 12, nami: 12, luffy: 10, sanji: 10 },
         reactions: [
           {
             speaker: "chopper",
             text: "고마워…!! 모두가 해적기와 나미를 지켜 준 덕분에 완벽하게 치료했어! 나도 너희랑 같이 바다로 나갈래!!",
+          },
+          {
+            speaker: "usopp",
+            text: "필살 화염성, 명중!! 히히, 봤냐?! 내 저격으로 적 포신을 통째로 날려 버렸다고! 쵸파, 이제 안심하고 바다로 가자!",
           },
           {
             speaker: "luffy",
@@ -239,7 +267,7 @@ export const EPISODES: Episode[] = [
         stance: "트레이드오프 · 환자 대피 우선 수비",
         label: "반격을 포기하고 성채 지하에 몸을 웅크린 채 나미와 쵸파만을 감싸 안고 버틴다",
         effects: { haki: -12, trust: 12, adventure: 6 },
-        affinityEffects: { chopper: 8, nami: 6, sanji: 4, luffy: -6 },
+        affinityEffects: { chopper: 8, usopp: 6, nami: 6, sanji: 4, luffy: -6 },
         reactions: [
           {
             speaker: "chopper",
@@ -259,7 +287,7 @@ export const EPISODES: Episode[] = [
     title: "알라바스타 사막, 흑족의 불꽃과 크로커다일",
     location: "알라바스타 사막 · 유바와 아루바나 사이",
     stageTheme: "alabasta-flame",
-    featuredCast: ["sanji", "luffy", "zoro"],
+    featuredCast: ["sanji", "robin", "luffy", "zoro"],
     lines: [
       {
         speaker: "narrator",
@@ -275,25 +303,33 @@ export const EPISODES: Episode[] = [
       },
       {
         speaker: "zoro",
-        text: "치장할 시간 있으면 앞이나 봐, 요리사. 바로크 워크스의 간부들이 양쪽 모래 언덕에서 포위를 좁혀 오고 있다. 정면 돌파냐, 전선 분산이냐—결단해라.",
+        text: "폼 잡을 시간 있으면 앞이나 봐, 요리사. 바로크 워크스의 간부들이 양쪽 모래 언덕에서 포위를 좁혀 오고 있다. 정면 돌파냐, 전선 분산이냐—결단해라.",
+      },
+      {
+        speaker: "robin",
+        text: "후훗… 바로크 워크스의 함정은 모래 언덕 아래 고대 수로와 이어져 있어. 섣불리 발을 디뎠다간 모래 밑바닥에서 영원히 잠들게 되겠네. 원한다면 내가 매복선을 묶어 둘게.",
       },
       {
         speaker: "sanji",
-        text: "모래 폭풍 때문에 시야도 엉망이야. 괜히 흩어졌다간 전멸할 수 있으니 내 화염 발차기로 길을 트는 타이밍에 맞춰 작전다운 작전을 세워야 해.",
+        text: "로빈 씨의 분석대로야! 모래 폭풍 때문에 시야도 엉망이니, 내 화염 발차기와 로빈 씨의 지원 타이밍에 맞춰 작전다운 작전을 세워야 해.",
       },
     ],
-    prompt: "흑족 상디의 불꽃 발차기로 돌파구를 연 사막의 포위망, 바로크 워크스 대부대를 어떻게 돌파하시겠습니까?",
+    prompt: "흑족 상디의 불꽃 발차기와 로빈의 함정 분석이 맞물린 사막의 포위망, 바로크 워크스 대부대를 어떻게 돌파하시겠습니까?",
     choices: [
       {
         id: "A",
         stance: "실책 · 전선 붕괴 및 우왕좌왕",
-        label: "상디의 엄호를 외면한 채 사막 한복판에서 각자도생으로 도주하라고 지시한다",
+        label: "상디의 엄호와 로빈의 경고를 외면한 채 사막 한복판에서 각자도생으로 도주하라고 지시한다",
         effects: { haki: -13, trust: -14, adventure: -14 },
-        affinityEffects: { sanji: -14, luffy: -12, zoro: -12 },
+        affinityEffects: { sanji: -14, robin: -12, luffy: -12, zoro: -12 },
         reactions: [
           {
             speaker: "sanji",
             text: "어이, 잠깐! 등을 맡기고 싸우는 동료들한테 도망치라니… 그딴 비겁한 지시는 밀짚모자 일당에 어울리지 않아!",
+          },
+          {
+            speaker: "robin",
+            text: "사막에서 대열을 흩뜨리다니… 내일 아침엔 모래바람 아래 하얀 뼈만 남게 될지도 모르겠네.",
           },
           {
             speaker: "zoro",
@@ -306,11 +342,15 @@ export const EPISODES: Episode[] = [
         stance: "트레이드오프 · 화력 독주 돌파",
         label: "동료들의 후방 합류를 기다리지 않고 상디의 불꽃 발차기와 앞선 적진만 돌파하며 단독 진격한다",
         effects: { haki: 13, trust: -12, adventure: 2 },
-        affinityEffects: { sanji: 4, zoro: 4, luffy: -8 },
+        affinityEffects: { sanji: 4, zoro: 4, robin: -6, luffy: -8 },
         reactions: [
           {
             speaker: "sanji",
             text: "기세는 나쁘지 않았지만, 루피와 뒤쪽 동료들이 모래 구덩이에 갇힐 뻔했잖아. 등 뒤도 좀 챙기라고.",
+          },
+          {
+            speaker: "robin",
+            text: "함정의 구조를 다 듣기도 전에 뛰어들다니… 용감하지만, 무사히 살아 돌아온 게 기적에 가까워.",
           },
           {
             speaker: "zoro",
@@ -321,17 +361,21 @@ export const EPISODES: Episode[] = [
       {
         id: "C",
         stance: "최선 · 흑족의 불꽃과 일당의 완벽한 협공",
-        label: "상디의 디아블 잠브로 시야를 확보하고, 루피·조로와 포위망의 핵심 진영을 일시에 붕괴시킨다",
+        label: "로빈의 함정 해독과 꽃꽃 열매 지원에 맞춰, 상디의 디아블 잠브와 루피·조로로 핵심 진영을 일시에 붕괴시킨다",
         effects: { haki: 11, trust: 11, adventure: 11 },
-        affinityEffects: { sanji: 14, luffy: 12, zoro: 10 },
+        affinityEffects: { sanji: 14, robin: 14, luffy: 12, zoro: 10 },
         reactions: [
+          {
+            speaker: "robin",
+            text: "트렌타 플뢰르 · 클러치. 후훗, 적의 매복선은 이걸로 정리됐어. 냉정하게 판을 읽는 눈이 훌륭하네.",
+          },
           {
             speaker: "sanji",
             text: "후우… 완벽한 타이밍이군! 최고의 재료가 모여 일품 요리가 완성되는 것처럼, 우리 호흡도 제법 쓸 만한데?",
           },
           {
             speaker: "luffy",
-            text: "상디랑 같이 싸우니까 진짜 든든해!! 자, 이제 크로커다일이 기다리는 아루바나로 돌격이다!!",
+            text: "상디랑 로빈이랑 같이 싸우니까 진짜 든든해!! 자, 이제 크로커다일이 기다리는 아루바나로 돌격이다!!",
           },
         ],
       },
@@ -343,7 +387,7 @@ export const EPISODES: Episode[] = [
     title: "하늘섬 스카이피아, 황금종을 울려라",
     location: "어퍼 야드 · 하늘섬 1만 미터 상공",
     stageTheme: "skypiea-bell",
-    featuredCast: ["luffy", "zoro", "nami", "chopper"],
+    featuredCast: ["luffy", "zoro", "nami", "usopp", "chopper", "robin"],
     lines: [
       {
         speaker: "narrator",
@@ -351,7 +395,15 @@ export const EPISODES: Episode[] = [
       },
       {
         speaker: "luffy",
-        text: "어이, 하늘 아래 있는 아저씨들에게도 들리게 저 샹도라의 황금종을 반드시 울려야 해! 400년 동안 기다렸다고 했잖아!!",
+        text: "어이, 하늘 아래 청해의 아저씨한테도 들리게 저 샹도라의 황금종을 반드시 울려야 해! 400년 동안 기다렸다고 했잖아!!",
+      },
+      {
+        speaker: "robin",
+        text: "저 유적의 고대 문자를 해독했어. 황금종은 거대 콩줄기 꼭대기 구름 제단에 매달려 있어. 시엔 플뢰르로 발판을 잡아 줄 테니 서둘러야 해… 떨어지면 1만 미터 아래 청해까지 산산조각 나겠네.",
+      },
+      {
+        speaker: "usopp",
+        text: "히익!! 로빈, 지금 그런 무서운 소리 하지 마!! 나, 하늘섬에 올라오면 심장 멈추는 병에— 어, 잠깐! 저 위 방주 맥심 동력부 틈새가 보여! 내가 화약성으로 궤도를 흔들어 볼 테니까 빨리 올라가자고!",
       },
       {
         speaker: "nami",
@@ -373,7 +425,7 @@ export const EPISODES: Episode[] = [
         stance: "트레이드오프 · 방어 위주 대피 유도",
         label: "황금종 등반을 미루고 쵸파와 나미의 안전부터 챙기며 뇌격이 멈추기를 기다린다",
         effects: { haki: -12, trust: 12, adventure: 6 },
-        affinityEffects: { chopper: 8, nami: 6, luffy: -4, zoro: -8 },
+        affinityEffects: { chopper: 8, nami: 6, usopp: 4, robin: 4, luffy: -4, zoro: -8 },
         reactions: [
           {
             speaker: "chopper",
@@ -388,13 +440,21 @@ export const EPISODES: Episode[] = [
       {
         id: "B",
         stance: "최선 · 하늘을 울리는 모험의 일격",
-        label: "나미의 웨이버로 뇌운 틈새를 가르고, 조로·쵸파와 콩줄기를 베어 루피를 황금종까지 올려 보낸다",
+        label: "로빈의 시엔 플뢰르 발판과 우솝의 화약성 엄호, 나미의 웨이버를 연계해 루피를 황금종까지 올려 보낸다",
         effects: { haki: 10, trust: 11, adventure: 12 },
-        affinityEffects: { luffy: 12, nami: 12, zoro: 10, chopper: 12 },
+        affinityEffects: { luffy: 12, nami: 12, zoro: 10, chopper: 12, robin: 14, usopp: 12 },
         reactions: [
           {
             speaker: "luffy",
             text: "들리냐아아아!! 400년 만의 황금종 소리!! 우리가 정말 하늘섬까지 올라왔다고!!",
+          },
+          {
+            speaker: "robin",
+            text: "400년의 역사가 마침내 푸른 바다까지 울려 퍼졌어… 고대 문자의 약속을 지켜 줘서 고마워.",
+          },
+          {
+            speaker: "usopp",
+            text: "우하하하!! 봤냐, 번개 녀석!! 이 캡틴 우솝의 저격과 우리 일당의 호흡 앞에선 신이라도 별수 없다고!!",
           },
           {
             speaker: "nami",
@@ -407,11 +467,15 @@ export const EPISODES: Episode[] = [
         stance: "실책 · 황금 보물 욕심 및 대열 이탈",
         label: "동료들과 황금종을 외면한 채 폐허 속 금은보화를 챙기느라 뇌격 지대에 고립된다",
         effects: { haki: -14, trust: -13, adventure: -15 },
-        affinityEffects: { luffy: -12, nami: -12, zoro: -12, chopper: -14 },
+        affinityEffects: { luffy: -12, nami: -12, zoro: -12, chopper: -14, robin: -12, usopp: -12 },
         reactions: [
           {
             speaker: "nami",
             text: "아무리 보물이 좋아도 그렇지, 지금 목숨이 오가는 판에 정신이 나갔어?! 당장 정신 차려!!",
+          },
+          {
+            speaker: "robin",
+            text: "역사적 유적과 동료들의 목숨보다 황금 조각에 눈이 멀다니… 하늘의 번개보다 더 차가운 욕심이네.",
           },
           {
             speaker: "chopper",
@@ -427,11 +491,15 @@ export const EPISODES: Episode[] = [
     title: "불타는 해군 포위선, 흑족의 엄호와 패왕의 등장",
     location: "해군 요새 결전장 · 불타는 포위 광장",
     stageTheme: "marineford-war",
-    featuredCast: ["sanji", "luffy", "shanks"],
+    featuredCast: ["sanji", "robin", "luffy", "shanks"],
     lines: [
       {
         speaker: "narrator",
-        text: "해군 대장들의 대함대가 바다를 에워싼 절체절명의 결전장. 붉은 용암과 화염이 뒤엉킨 광장에서 한계까지 지친 루피 앞을 상디가 불타는 발차기로 가로막아 섭니다.",
+        text: "해군 대장들의 대함대가 바다를 에워싼 절체절명의 결전장. 아카이누의 붉은 마그마와 화염이 뒤엉킨 광장에서 한계까지 지친 루피 앞을 상디가 불타는 발차기로 가로막아 섭니다.",
+      },
+      {
+        speaker: "robin",
+        text: "해군 본부 암호 통신을 읽어 냈어. 대장들의 포위망이 30초 안에 닫혀… 여기서 발이 묶이면 바다 밑바닥에서 영원히 잠들게 되겠네. 시엔 플뢰르로 후방 추격병들의 발을 묶어 둘 테니 퇴로를 결정해 줘.",
       },
       {
         speaker: "sanji",
@@ -446,15 +514,19 @@ export const EPISODES: Episode[] = [
         text: "목숨을 깎는 절규와 패기가 전장을 덮고 있군. 불필요한 희생을 멈추고 소중한 동료들을 살려 낼 단 한 번의 결단이 필요한 순간이다.",
       },
     ],
-    prompt: "불바다가 된 해군 포위 광장, 아카이누의 마그마 공세와 사황 샹크스의 중재 앞에서 어떻게 움직이시겠습니까?",
+    prompt: "불바다가 된 해군 포위 광장, 아카이누의 마그마 공세와 로빈의 암호 해독, 사황 샹크스의 중재 앞에서 어떻게 움직이시겠습니까?",
     choices: [
       {
         id: "A",
         stance: "최선 · 동료 사수와 명분 있는 휴전 돌파",
-        label: "견문색 패기로 마그마 궤적을 읽어 상디·루피의 퇴로를 사수하고, 샹크스의 정전 선언에 맞춰 완벽히 탈출한다",
+        label: "로빈의 암호 해독·원거리 견제와 견문색 패기로 마그마 궤적을 읽어 상디·루피를 사수하고, 샹크스의 정전 선언에 맞춰 탈출한다",
         effects: { haki: 11, trust: 11, adventure: 11 },
-        affinityEffects: { sanji: 14, luffy: 12, shanks: 14 },
+        affinityEffects: { sanji: 14, robin: 14, luffy: 12, shanks: 14 },
         reactions: [
+          {
+            speaker: "robin",
+            text: "시엔 플뢰르 · 윙. 후훗, 해군의 포위 계산을 완벽하게 뒤집었네. 역시 너희와 함께라면 어떤 절망도 살아남을 수 있어.",
+          },
           {
             speaker: "sanji",
             text: "살아남았어…! 네가 끝까지 물러서지 않고 나와 루피의 등을 잡아 준 덕분이다! 배로 돌아가면 특제 만찬을 대접해 주지!",
@@ -470,11 +542,15 @@ export const EPISODES: Episode[] = [
         stance: "실책 · 공포로 인한 전선 이탈",
         label: "해군 대장들의 위압감에 눌려 상디와 루피가 포위된 광장을 뒤로한 채 함선으로 후퇴한다",
         effects: { haki: -13, trust: -12, adventure: -14 },
-        affinityEffects: { sanji: -14, luffy: -12, shanks: -14 },
+        affinityEffects: { sanji: -14, robin: -12, luffy: -12, shanks: -14 },
         reactions: [
           {
             speaker: "luffy",
             text: "거짓말이지…?! 상디가 목숨 걸고 길을 막고 있는데 혼자 도망친다고?! 난 절대 용서 못 해!!",
+          },
+          {
+            speaker: "robin",
+            text: "가장 신뢰했던 이가 등을 돌리는 광경은… 오하라의 불길만큼이나 뼈아프네.",
           },
           {
             speaker: "shanks",
@@ -487,7 +563,7 @@ export const EPISODES: Episode[] = [
         stance: "트레이드오프 · 무모한 복수 폭주",
         label: "샹크스의 정전 선언마저 거부하고 해군 진영 한가운데로 뛰어들어 무차별 패기를 난사한다",
         effects: { haki: 13, trust: -12, adventure: 1 },
-        affinityEffects: { sanji: -6, luffy: -8, shanks: -8 },
+        affinityEffects: { sanji: -6, robin: -8, luffy: -8, shanks: -8 },
         reactions: [
           {
             speaker: "shanks",
@@ -507,11 +583,11 @@ export const EPISODES: Episode[] = [
     title: "신세계의 여명, 해적왕의 깃발 아래",
     location: "신세계 마지막 해역 · 새벽의 수평선",
     stageTheme: "new-world-dawn",
-    featuredCast: ["luffy", "zoro", "nami", "sanji", "chopper", "shanks"],
+    featuredCast: ["luffy", "zoro", "nami", "usopp", "sanji", "chopper", "robin", "shanks"],
     lines: [
       {
         speaker: "narrator",
-        text: "마침내 신세계의 거대한 소용돌이와 사황 함대의 마지막 관문 앞. 여명이 붉게 물드는 바다 위에 루피, 조로, 나미, 상디, 쵸파, 그리고 사황 샹크스까지 한자리에 섰습니다.",
+        text: "마침내 신세계의 거대한 소용돌이와 사황 함대의 마지막 관문 앞. 여명이 붉게 물드는 바다 위에 루피, 조로, 나미, 우솝, 상디, 쵸파, 로빈, 그리고 사황 샹크스까지 한자리에 섰습니다.",
       },
       {
         speaker: "shanks",
@@ -526,6 +602,10 @@ export const EPISODES: Episode[] = [
         text: "신세계 해도는 지금부터 우리가 그려 나가는 거야! 키도 나침반도 완벽해!",
       },
       {
+        speaker: "usopp",
+        text: "후들후들… 무섭긴 하지만, 내 뒤엔 믿음직한 동료들과 8천 명의 용기가 있다고! 바다의 용감한 전사 우솝, 마지막 저격 준비 완료다!!",
+      },
+      {
         speaker: "sanji",
         text: "올 블루도, 각자의 꿈도 저 너머에 있다. 최고의 동료들과 함께라면 이 바다에 영원히 남을 만찬을 열 수 있지!",
       },
@@ -534,11 +614,15 @@ export const EPISODES: Episode[] = [
         text: "무섭지 않아! 이제 난 누구의 상처도 고칠 수 있는 진짜 해적단 동료니까!!",
       },
       {
+        speaker: "robin",
+        text: "후훗, 저 수평선 너머에 진정한 역사가 기다리고 있어. 어떤 폭풍이 몰아쳐도 너희와 함께라면 끝까지 읽어 낼 수 있겠네.",
+      },
+      {
         speaker: "luffy",
         text: "가자!! 해적왕이 되는 그날까지—모두 함께 저 여명의 바다를 뚫고 나가는 거다!!",
       },
     ],
-    prompt: "신세계 최후의 파도와 여섯 명의 기대가 쏠린 순간, 당신이 내릴 마지막 항해의 결단은 무엇입니까?",
+    prompt: "신세계 최후의 파도와 여덟 명의 기대가 쏠린 순간, 당신이 내릴 마지막 항해의 결단은 무엇입니까?",
     choices: [
       {
         id: "A",
@@ -549,8 +633,10 @@ export const EPISODES: Episode[] = [
           luffy: -12,
           zoro: -12,
           nami: -12,
+          usopp: -12,
           sanji: -12,
           chopper: -12,
+          robin: -12,
           shanks: -12,
         },
         reactions: [
@@ -573,8 +659,10 @@ export const EPISODES: Episode[] = [
           luffy: 12,
           zoro: 12,
           nami: 12,
+          usopp: 12,
           sanji: 12,
           chopper: 12,
+          robin: 12,
           shanks: 12,
         },
         reactions: [
@@ -593,7 +681,7 @@ export const EPISODES: Episode[] = [
         stance: "트레이드오프 · 소극적 우회 항해",
         label: "정면 대결을 피하고 안전한 외곽 해류로 우회해 배와 동료들의 소모만 최소화한다",
         effects: { haki: -12, trust: 12, adventure: 6 },
-        affinityEffects: { nami: 6, chopper: 6, sanji: 4, zoro: -8, shanks: -6 },
+        affinityEffects: { nami: 6, chopper: 6, robin: 4, usopp: 4, sanji: 4, zoro: -8, shanks: -6 },
         reactions: [
           {
             speaker: "nami",

@@ -256,8 +256,8 @@
   background: rgba(14, 22, 17, 0.88);
   border: 1px solid var(--aot-border-bright);
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.68);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   text-align: center;
   animation: aot-fade-up 0.36s ease-out both;
 }
@@ -363,8 +363,8 @@
   background: rgba(14, 22, 17, 0.92);
   border: 1px solid var(--aot-border-bright);
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   animation: aot-fade-up 0.34s ease-out both;
 }
 
@@ -500,8 +500,8 @@
   border: 1px solid var(--aot-border);
   padding: 10px 14px 12px;
   overflow: hidden;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
 .aot-game .aot-hud-top {
@@ -722,7 +722,7 @@
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.08em;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(4px);
 }
 
 .aot-game .aot-cast {
@@ -866,8 +866,8 @@
   background: var(--aot-surface-strong);
   border: 1px solid var(--aot-border-bright);
   box-shadow: 0 16px 38px rgba(0, 0, 0, 0.56);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -970,8 +970,8 @@
   border: 1px solid var(--aot-border-bright);
   padding: 16px 18px 18px;
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.58);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   animation: aot-fade-up 0.22s ease-out both;
 }
 
@@ -1807,6 +1807,13 @@
 
   .aot-game .aot-ending-visual {
     height: clamp(190px, 30dvh, 240px);
+  }
+}
+
+@media (max-width: 768px) {
+  .aot-game * {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
   }
 }
 

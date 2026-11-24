@@ -37,6 +37,10 @@ import {
   setGlobalAudioMuted,
   subscribeGlobalAudioMuted,
 } from "../../utils/mobileAudio";
+import {
+  preloadImagesInBackground,
+  preloadPriorityImages,
+} from "../../utils/imagePreloader";
 import "./styles.css";
 
 type SaveData = {
@@ -117,7 +121,7 @@ const END_COPY: Record<
     priority: 2,
     condition: "제과 실력 75↑ · 팀워크 75↑ 달성",
     title: "꿈을 담은 최고의 디저트",
-    desc: "스위트 콘테스트 그랑프리 우승! A그룹의 땀과 우정이 가장 달콤한 결실을 맺었어.",
+    desc: "스위트 콘테스트 그랑프리 우승! A그룹의 땀과 우정이 빚어 낸 가장 달콤한 결실",
     narration:
       "오븐의 열기 속에서 밤늦도록 다듬어 온 기술과 동료들을 향한 믿음이 완벽한 하모니를 이루었습니다. 트로피를 들어 올리는 순간, 감딸기의 환한 웃음과 스위트 왕자들의 자부심 어린 박수가 콘테스트 무대를 가득 채웁니다.",
     speaker: "원가온",
@@ -131,7 +135,7 @@ const END_COPY: Record<
     priority: 3,
     condition: "제과 실력 45↑ · 팀워크 45↑ 달성",
     title: "아직 끝나지 않은 꿈",
-    desc: "우승 트로피는 한 끗 차로 놓쳤지만, 너만의 색깔과 가능성을 모두가 기억했어.",
+    desc: "우승 트로피는 한 끗 차로 놓쳤지만, 모두가 기억한 너만의 색깔과 가능성",
     narration:
       "완벽함에는 아직 작은 여백이 남았지만, 심사위원들은 당신의 접시에서 반짝이는 잠재력을 읽어 냈습니다. 콘테스트가 끝난 뒤 실습실에 남은 A그룹은 다음 대회를 향해 다시 앞치마 끈을 단단히 묶습니다.",
     speaker: "안도하",
@@ -145,7 +149,7 @@ const END_COPY: Record<
     priority: 4,
     condition: "제과 실력 45 미만 또는 팀워크 45 미만",
     title: "식어 버린 오븐, 남겨진 눈물",
-    desc: "조급함과 엇갈린 마음 끝에 디저트가 무너지고 말았어. 씁쓸하지만 잊지 못할 첫 교훈.",
+    desc: "조급함과 엇갈린 마음 끝에 무너진 디저트, 씁쓸하지만 잊지 못할 첫 교훈",
     narration:
       "결승 타이머가 멈추는 순간, 균형을 잃은 크림과 엇갈린 호흡이 접시 위에 고스란히 남고 말았습니다. 조명이 꺼진 실습실의 식어 가는 오븐 앞에서, 감딸기가 조용히 당신의 손을 잡으며 다시 일어서자고 속삭입니다.",
     speaker: "감딸기",
@@ -193,7 +197,7 @@ function buildCharacterReviews(skill: number, team: number, dessert: Dessert) {
       role: CHARACTER_ROLES["서로진"]!,
       comment:
         dessert === "creative" || skill >= 70
-          ? "플레이팅과 감각이 눈부시게 우아했어. 네만의 개성이 확실히 전해졌단다."
+          ? "플레이팅과 감각이 눈부시게 우아했어. 너만의 개성이 확실히 전해졌는걸?"
           : "맛만큼이나 첫인상도 중요해. 다음엔 네 상상력을 조금 더 과감하게 담아 봐.",
     },
   ];
@@ -258,6 +262,23 @@ export default function YumeiroGame() {
   const [isImpacting, setIsImpacting] = useState(false);
   const [impactMood, setImpactMood] = useState<"good" | "bad">("good");
   const impactTimerRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    return preloadImagesInBackground([
+      titleBackground,
+      endingBackground,
+      ...sceneArt,
+      ...Object.values(characterArt),
+      ...Object.values(dessertArt),
+    ]);
+  }, []);
+
+  useEffect(() => {
+    preloadPriorityImages([
+      sceneArt[game.step],
+      sceneArt[game.step + 1] ?? endingBackground,
+    ]);
+  }, [game.step, game.phase]);
 
   useEffect(() => {
     return () => {
@@ -502,6 +523,7 @@ export default function YumeiroGame() {
                     key={name}
                     src={characterArt[name]}
                     alt={name}
+                    decoding="async"
                     className={`ym-title-char ${slotClass}`}
                   />
                 ) : null,
@@ -522,7 +544,7 @@ export default function YumeiroGame() {
               <span>세인트 마리 · 스위트 그랑프리 도전기</span>
             </h1>
             <p className="ym-title-sub">
-              감딸기와 스위트 왕자들과 함께 10가지 제과 실습과 위기를 돌파해 세상에서 하나뿐인 디저트를 완성하세요!
+              감딸기, 그리고 스위트 왕자들과 함께 10가지 제과 실습과 위기를 돌파해 세상에서 하나뿐인 디저트를 완성하세요!
             </p>
 
             <div className="ym-title-actions">
@@ -606,6 +628,7 @@ export default function YumeiroGame() {
                       <img
                         src={characterArt[name]}
                         alt={name}
+                        decoding="async"
                         className="ym-ending-member-img"
                       />
                     </div>
@@ -629,6 +652,7 @@ export default function YumeiroGame() {
                 <img
                   src={dessertArt[dessert]}
                   alt={`${desserts[dessert].name} 디저트 일러스트`}
+                  decoding="async"
                   onError={(e) => {
                     e.currentTarget.src = cover;
                   }}
@@ -650,6 +674,7 @@ export default function YumeiroGame() {
                   <img
                     src={characterArt[END_COPY[result].speaker]}
                     alt={END_COPY[result].speaker}
+                    decoding="async"
                   />
                 </div>
               )}
@@ -697,6 +722,7 @@ export default function YumeiroGame() {
                         alt={ev.name}
                         className="ym-eval-portrait"
                         loading="lazy"
+                        decoding="async"
                       />
                     )}
                   </div>

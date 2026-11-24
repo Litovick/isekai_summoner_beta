@@ -48,7 +48,7 @@ export const ENDINGS: Record<EndingId, EndingInfo> = {
     subtitle: "동료의 신뢰 65 이상 & 항해와 모험심 65 이상 · 서로를 지킨 항해",
     conditionLabel: "신뢰 65+ & 모험심 65+ (노멀 엔딩)",
     theme: "legendary-crew",
-    showcaseCast: ["chopper", "nami", "luffy", "sanji", "zoro"],
+    showcaseCast: ["usopp", "nami", "luffy", "robin", "chopper"],
     description:
       "전투마다 압도적인 패기만 앞세우진 않았지만, 바다를 읽는 현명한 항해술과 서로의 등을 지키는 굳건한 우정이 숱한 절체절명의 고비를 넘겼습니다. 황금빛 햇살이 쏟아지는 갑판 위, 밀짚모자 일당은 변치 않는 웃음과 함께 다음 모험의 섬을 향해 닻을 올립니다.",
     speaker: "nami",
@@ -78,7 +78,7 @@ export const ENDINGS: Record<EndingId, EndingInfo> = {
     theme: "abyssal-storm",
     showcaseCast: ["nami", "luffy", "chopper"],
     description:
-      "어긋난 항해 판단과 무모한 실책이 거듭되면서 배는 위대한 항로의 거대한 폭풍 벽을 넘지 못했습니다. 찢겨 나간 해적기와 함께 차가운 심해의 소용돌이 속으로 꿈이 가라앉았고, 끝내 서로의 손을 잡지 못한 캄캄한 밤바다만 파도 소리를 삼켰습니다.",
+      "어긋난 항해 판단과 무모한 선택이 거듭되면서 배는 위대한 항로의 거대한 폭풍 벽을 넘지 못했습니다. 찢겨 나간 해적기와 함께 차가운 심해의 소용돌이 속으로 꿈이 가라앉았고, 끝내 서로의 손을 잡지 못한 캄캄한 밤바다만 파도 소리를 삼켰습니다.",
     speaker: "luffy",
     quote:
       "제기랄… 내 팔이 닿질 않아…! 다들 어디 있는 거야… 미안해, 내가 너무 약해서 아무도 지켜 주지 못했어……",

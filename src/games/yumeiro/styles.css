@@ -242,8 +242,8 @@
   background: rgba(24, 14, 21, 0.88);
   border: 1px solid var(--ym-border-bright);
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.66);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   text-align: center;
   animation: ym-fade-up 0.36s ease-out both;
 }
@@ -349,8 +349,8 @@
   background: rgba(22, 13, 19, 0.92);
   border: 1px solid var(--ym-border-bright);
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   animation: ym-fade-up 0.34s ease-out both;
 }
 
@@ -401,8 +401,8 @@
   border: 1px solid var(--ym-border);
   padding: 10px 14px 12px;
   overflow: hidden;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
 .yumeiro .ym-hud-top {
@@ -623,7 +623,7 @@
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.06em;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(4px);
 }
 
 .yumeiro .ym-cast {
@@ -736,8 +736,8 @@
   background: var(--ym-surface-strong);
   border: 1px solid var(--ym-border-bright);
   box-shadow: 0 16px 38px rgba(0, 0, 0, 0.56);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -834,8 +834,8 @@
   border: 1px solid var(--ym-border-bright);
   padding: 16px 18px 18px;
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.58);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   animation: ym-fade-up 0.22s ease-out both;
 }
 
@@ -1716,6 +1716,13 @@
 
   .yumeiro .ym-ending-visual {
     height: clamp(190px, 30dvh, 240px);
+  }
+}
+
+@media (max-width: 768px) {
+  .yumeiro * {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
   }
 }
 

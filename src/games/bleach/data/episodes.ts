@@ -55,7 +55,7 @@ export const EPISODES: Episode[] = [
       },
       {
         id: "B",
-        label: "영압을 통제하지 못한 채 당황하며 칼을 헛휘둘러, 콘과 루키아의 엄호 타이밍을 전부 놓치고 말았다.",
+        label: "영압을 통제하지 못한 채 당황하며 칼을 허공에 휘둘러, 콘과 루키아의 엄호 타이밍을 전부 놓치고 만다.",
         stance: "영압 폭주와 판단 미스",
         effects: { reiatsu: -13, bond: -13, resolve: -12 },
         affinityEffects: {
@@ -134,7 +134,7 @@ export const EPISODES: Episode[] = [
     choices: [
       {
         id: "A",
-        label: "이시다의 사거리 밖으로 적을 몰아넣고, 그의 영자 화살과 이치고의 참격 타이밍을 중계해 세로의 중심을 동시에 꿰뚫는다.",
+        label: "이시다의 유효 사거리 안으로 적을 몰아넣고, 그의 영자 화살과 이치고의 참격 타이밍을 중계해 세로의 중심을 동시에 꿰뚫는다.",
         stance: "퀸시·사신 합동 파쇄",
         effects: { reiatsu: 11, bond: 10, resolve: 11 },
         affinityEffects: {
@@ -307,7 +307,7 @@ export const EPISODES: Episode[] = [
           },
           {
             speaker: "urahara",
-            text: "의리는 좋습니다만, 영압으로 받아넘길 줄 모르면 실전에선 두 분 다 위험해집니다요~",
+            text: "의리는 좋습니다만, 영압으로 받아넘길 줄 모르면 실전에선 두 분 다 위험해진답니다~",
           },
         ],
       },
@@ -357,7 +357,7 @@ export const EPISODES: Episode[] = [
         reactions: [
           {
             speaker: "ishida",
-            text: "내가 저 쪽은 귀도 결계라고 경고했잖나!! 무모한 행동 때문에 전원 탈출로까지 막혔어!",
+            text: "내가 저쪽은 귀도 결계라고 경고했잖아!! 무모한 행동 때문에 전원 탈출로까지 막혔어!",
           },
           {
             speaker: "sado",
@@ -465,7 +465,7 @@ export const EPISODES: Episode[] = [
           },
           {
             speaker: "urahara",
-            text: "정신력은 대단하지만 영압을 깎아먹으며 막아 내시면 뒤가 없습니다요~!",
+            text: "정신력은 대단하지만 영압을 깎아먹으며 막아 내시면 뒤가 없답니다~!",
           },
         ],
       },
@@ -594,13 +594,13 @@ export const EPISODES: Episode[] = [
           },
           {
             speaker: "orihime",
-            text: "안 돼요… 방패가 깨지고 있어요! 왜 제 말을 듣지 않으신 건가요…!",
+            text: "안 돼요… 방패가 깨지고 있어요! 영압을 너무 무리해서 쓰셨어요…!",
           },
         ],
       },
       {
         id: "C",
-        label: "모래 폭풍 속에 동료들을 둔 채, 홀로 적의 우두머리를 추적하겠다며 위험한 호로화의 힘에 기대어 홀로 돌진한다.",
+        label: "모래 폭풍 속에 동료들을 둔 채, 적의 우두머리를 추적하겠다며 위험한 호로화의 힘에 기대어 홀로 돌진한다.",
         stance: "호로화 폭주 · 고독한 추격",
         effects: { reiatsu: 13, bond: -12, resolve: 1 },
         affinityEffects: {
@@ -629,7 +629,7 @@ export const EPISODES: Episode[] = [
     id: 7,
     code: "EPISODE 07",
     title: "현세 결전: 영압의 한계를 넘어선 일격",
-    location: "공중 카라쿠라 마을 상공 · 최후의 결전장",
+    location: "가짜 카라쿠라 마을 상공 · 최후의 결전장",
     stageTheme: "final-karakura",
     featuredCast: ["ichigo", "rukia", "urahara", "ishida", "orihime", "sado", "kon"],
     lines: [

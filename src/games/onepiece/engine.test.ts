@@ -59,10 +59,13 @@ test("grade thresholds follow S(75+), A(60-74), B(45-59), C(30-44), D(0-29)", ()
   assert.equal(gradeForScore(0), "D");
 });
 
-test("all 6 characters appear across the 7 episodes and every episode has Best + Tradeoff + Mistake choices", () => {
+test("all 8 characters appear across the 7 episodes and every episode has Best + Tradeoff + Mistake choices", () => {
   assert.equal(EPISODES.length, 7);
-  assert.equal(Object.keys(CHARACTERS).length, 6);
-  assert.equal(CHARACTER_IDS.length, 6);
+  assert.equal(Object.keys(CHARACTERS).length, 8);
+  assert.equal(CHARACTER_IDS.length, 8);
+  assert.equal(CHARACTERS.nami.image, "/onepiece/characters/nami.png");
+  assert.equal(CHARACTERS.robin.image, "/onepiece/characters/robin.png");
+  assert.equal(CHARACTERS.usopp.image, "/onepiece/characters/usopp.png");
   assert.equal(CHARACTERS.sanji.image, "/onepiece/characters/sanji.png");
   assert.equal("ace" in CHARACTERS, false);
 
@@ -171,8 +174,10 @@ test("full 7-episode playthroughs reach all 5 endings (including Hidden) and mas
 test("character evaluations reflect affinity penalties with C and D grades on poor play", () => {
   const bestRun = simulateRun([2, 0, 1, 2, 1, 0, 1]);
   const bestEvals = evaluateCharacters(bestRun.affinities);
-  assert.equal(bestEvals.length, 6);
+  assert.equal(bestEvals.length, 8);
   assert.equal(bestEvals.find((e) => e.id === "sanji")!.grade, "S");
+  assert.equal(bestEvals.find((e) => e.id === "robin")!.grade, "S");
+  assert.equal(bestEvals.find((e) => e.id === "usopp")!.grade, "S");
   for (const ev of bestEvals) {
     assert.equal(ev.grade, "S", `Expected S on best run for ${ev.id}, got ${ev.grade}`);
   }

@@ -78,8 +78,24 @@ function Screens() {
           </div>
           <Suspense
             fallback={
-              <div className="flex min-h-[50dvh] items-center justify-center px-4 py-10 text-center text-[clamp(0.85rem,3.4vw,0.95rem)] font-semibold text-violet-100">
-                게임을 불러오는 중...
+              <div
+                className="flex min-h-[calc(100dvh-56px)] flex-col items-center justify-center gap-4 bg-[#1A1438] px-4 py-10 text-center text-violet-100"
+                role="status"
+                aria-live="polite"
+                data-testid="game-suspense-fallback"
+              >
+                <div
+                  className="h-10 w-10 animate-spin rounded-full border-[3px] border-violet-400/25 border-t-violet-300"
+                  aria-hidden="true"
+                />
+                <div className="space-y-1">
+                  <p className="text-[clamp(0.9rem,3.6vw,1.05rem)] font-bold tracking-tight text-white">
+                    세계로 이동하는 중...
+                  </p>
+                  <p className="text-xs text-violet-300/80">
+                    잠시만 기다려 주세요
+                  </p>
+                </div>
               </div>
             }
           >

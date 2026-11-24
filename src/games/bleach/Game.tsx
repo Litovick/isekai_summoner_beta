@@ -1,7 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Flame, Play, Save, Shield, Swords } from "lucide-react";
 import { CHARACTERS } from "./data/characters";
-import { BLEACH_BACKGROUNDS, toBleachBgUrl } from "./data/backgrounds";
+import {
+  BLEACH_BACKGROUNDS,
+  getBleachStageBackground,
+  toBleachBgUrl,
+} from "./data/backgrounds";
 import { EPISODES } from "./data/episodes";
 import {
   advanceEpisodeOrResult,
@@ -25,6 +29,10 @@ import {
   setGlobalAudioMuted,
   subscribeGlobalAudioMuted,
 } from "../../utils/mobileAudio";
+import {
+  preloadImagesInBackground,
+  preloadPriorityImages,
+} from "../../utils/imagePreloader";
 import type { CharacterId, EndingId, GameState } from "./types";
 import "./styles.css";
 
@@ -95,7 +103,23 @@ export function BleachGame({ onReturnWorldSelect }: BleachGameProps) {
 
   useEffect(() => {
     preloadBleachAudio();
+    return preloadImagesInBackground([
+      ...Object.values(BLEACH_BACKGROUNDS),
+      ...Object.values(CHARACTERS).map((c) => c.image),
+    ]);
   }, []);
+
+  useEffect(() => {
+    const currentEp = EPISODES[state.episodeIndex];
+    const nextEp = EPISODES[state.episodeIndex + 1];
+    preloadPriorityImages([
+      currentEp ? getBleachStageBackground(currentEp.stageTheme, state.phase) : undefined,
+      currentEp?.stageTheme === "hueco-mundo" ? BLEACH_BACKGROUNDS.lasNoches : undefined,
+      ...(currentEp ? currentEp.featuredCast.map((id) => CHARACTERS[id].image) : []),
+      nextEp ? getBleachStageBackground(nextEp.stageTheme) : BLEACH_BACKGROUNDS.endingRiver,
+      ...(nextEp ? nextEp.featuredCast.map((id) => CHARACTERS[id].image) : []),
+    ]);
+  }, [state.episodeIndex, state.phase]);
 
   useEffect(() => subscribeGlobalAudioMuted(setMuted), []);
 
@@ -289,6 +313,7 @@ export function BleachGame({ onReturnWorldSelect }: BleachGameProps) {
                   key={id}
                   src={CHARACTERS[id].image}
                   alt={CHARACTERS[id].name}
+                  decoding="async"
                   className={`bl-title-char ${slotClass}`}
                 />
               ))}

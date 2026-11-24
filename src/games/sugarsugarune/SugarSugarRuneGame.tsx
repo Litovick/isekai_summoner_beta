@@ -23,6 +23,10 @@ import {
   setGlobalAudioMuted,
   subscribeGlobalAudioMuted,
 } from "../../utils/mobileAudio";
+import {
+  preloadImagesInBackground,
+  preloadPriorityImages,
+} from "../../utils/imagePreloader";
 import "./styles.css";
 import classroom from "../sugarsugarune_assets/backgrounds/classroom.svg";
 import garden from "../sugarsugarune_assets/backgrounds/school_garden.svg";
@@ -213,12 +217,26 @@ export default function SugarSugarRuneGame() {
   const impactTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
+    const cancelPreload = preloadImagesInBackground([
+      openingBackdrop,
+      endingBackdrop,
+      ...chapterBackdrops,
+      ...Object.values(portraits),
+    ]);
     return () => {
+      cancelPreload();
       if (impactTimerRef.current !== null) {
         window.clearTimeout(impactTimerRef.current);
       }
     };
   }, []);
+
+  useEffect(() => {
+    preloadPriorityImages([
+      chapterBackdrops[s.index],
+      chapterBackdrops[s.index + 1] ?? endingBackdrop,
+    ]);
+  }, [s.index, s.phase]);
 
   useEffect(
     () =>
@@ -419,6 +437,7 @@ export default function SugarSugarRuneGame() {
                     key={name}
                     src={portraits[name]}
                     alt={name}
+                    decoding="async"
                     className={`ssr-title-char ${slotClass}`}
                   />
                 ) : null,
@@ -510,27 +529,27 @@ export default function SugarSugarRuneGame() {
             <h2>마녀 여왕의 시험 안내</h2>
             <div className="ssr-guide-story">
               <p>
-                당신은 쇼콜라와 바닐라와 함께 인간계로 파견된 새로운 여왕 후보입니다. 10개의
+                당신은 쇼콜라, 바닐라와 함께 인간계로 파견된 새로운 여왕 후보입니다. 10개의
                 상황마다 세 가지 선택지 중 하나를 선택하세요. 두 능력치는 0~100 사이에서 변합니다.
               </p>
               <p>
                 하트와 자질 모두 80점 이상이면 진정한 마녀 여왕 해피 엔딩! 피에르의 위험한 유혹을
                 끝까지 파고드는 비밀 히든 엔딩을 포함해 총 {endings.length}종의 결말과 4인의 개별
-                평가를 확인할 수 있어요. 대화창을 클릭하면 다음 대사로 진행되며 자동 저장을
+                평가를 확인할 수 있습니다. 대화창을 클릭하면 다음 대사로 진행되며 자동 저장을
                 지원합니다.
               </p>
             </div>
 
             <div className="ssr-guide-stats">
               <div className="ssr-guide-stat">
-                <img src={pinkHeart} alt="" />
+                <img src={pinkHeart} alt="" decoding="async" />
                 <div>
                   <strong>하트 포인트 (시작 50점)</strong>
                   <p>사람들의 마음을 얻고 매력을 증명하는 능력입니다.</p>
                 </div>
               </div>
               <div className="ssr-guide-stat">
-                <img src={goldHeart} alt="" />
+                <img src={goldHeart} alt="" decoding="async" />
                 <div>
                   <strong>마녀의 자질 (시작 50점)</strong>
                   <p>공감과 용기, 여왕으로서의 올바른 판단력을 나타냅니다.</p>
@@ -591,7 +610,7 @@ export default function SugarSugarRuneGame() {
                     <span className="ssr-archive-num">
                       ENDING 0{e.priority} · {unlocked ? `${e.icon} ${e.typeLabel}` : "🔒 미해금"}
                     </span>
-                    <strong>{unlocked ? e.title : "??? 잠긴 엔딩"}</strong>
+                    <strong>{unlocked ? e.title : "??? 미해금 엔딩"}</strong>
                     <small>{unlocked ? e.condition : "여왕 시험에 도전해 해금하세요."}</small>
                   </div>
                 );
@@ -945,7 +964,7 @@ export default function SugarSugarRuneGame() {
                         idx === 1 || idx === 2 ? "ssr-ending-member--lead" : ""
                       }`}
                     >
-                      <img src={portraits[name]} alt={name} className="ssr-ending-member-img" />
+                      <img src={portraits[name]} alt={name} decoding="async" className="ssr-ending-member-img" />
                     </div>
                   ) : null,
                 )}
@@ -964,7 +983,7 @@ export default function SugarSugarRuneGame() {
             <div className="ssr-ending-quote-box">
               {portraits[ending.speaker] && (
                 <div className="ssr-ending-quote-portrait">
-                  <img src={portraits[ending.speaker]} alt={ending.speaker} />
+                  <img src={portraits[ending.speaker]} alt={ending.speaker} decoding="async" />
                 </div>
               )}
               <div className="ssr-ending-quote-copy">
@@ -978,12 +997,12 @@ export default function SugarSugarRuneGame() {
 
             <div className="ssr-final-stats">
               <div className="ssr-final-stat">
-                <img src={pinkHeart} alt="" />
+                <img src={pinkHeart} alt="" decoding="async" />
                 <span>하트 포인트</span>
                 <b>{s.heart}</b>
               </div>
               <div className="ssr-final-stat">
-                <img src={goldHeart} alt="" />
+                <img src={goldHeart} alt="" decoding="async" />
                 <span>마녀의 자질</span>
                 <b>{s.virtue}</b>
               </div>
@@ -1008,6 +1027,7 @@ export default function SugarSugarRuneGame() {
                         alt={r.name}
                         className="ssr-eval-portrait"
                         loading="lazy"
+                        decoding="async"
                       />
                     )}
                   </div>

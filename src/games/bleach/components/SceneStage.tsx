@@ -60,6 +60,7 @@ function CharacterStandee({
         <img
           src={meta.image}
           alt={meta.name}
+          decoding="async"
           className="bl-character-img"
         />
       </div>

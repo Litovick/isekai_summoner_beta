@@ -18,6 +18,7 @@ export default function TitleScreen() {
         <img
           src={DESKTOP_BG_SRC}
           alt="라프텔 이세계 소환사 메인 화면"
+          decoding="async"
           className="block h-full w-full object-contain"
           draggable={false}
           data-testid="title-hero-desktop"
@@ -39,6 +40,7 @@ export default function TitleScreen() {
         <img
           src={MOBILE_BG_SRC}
           alt="라프텔 이세계 소환사 모바일 메인 화면"
+          decoding="async"
           className="block h-full w-full object-contain"
           draggable={false}
           data-testid="title-hero-mobile"

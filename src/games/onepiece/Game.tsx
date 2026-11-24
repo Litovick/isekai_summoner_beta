@@ -1,7 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Anchor, ArrowLeft, ArrowRight, Compass, Play, Save, Shield, Swords } from "lucide-react";
 import { CHARACTERS } from "./data/characters";
-import { ONEPIECE_BACKGROUNDS, toOnePieceBgUrl } from "./data/backgrounds";
+import {
+  ONEPIECE_BACKGROUNDS,
+  getOnePieceStageBackground,
+  toOnePieceBgUrl,
+} from "./data/backgrounds";
 import { EPISODES } from "./data/episodes";
 import {
   advanceEpisodeOrResult,
@@ -26,6 +30,10 @@ import {
   setGlobalAudioMuted,
   subscribeGlobalAudioMuted,
 } from "../../utils/mobileAudio";
+import {
+  preloadImagesInBackground,
+  preloadPriorityImages,
+} from "../../utils/imagePreloader";
 import type { CharacterId, EndingId, GameState } from "./types";
 import "./styles.css";
 
@@ -96,7 +104,22 @@ export function OnePieceGame({ onReturnWorldSelect }: OnePieceGameProps) {
 
   useEffect(() => {
     preloadOnePieceAudio();
+    return preloadImagesInBackground([
+      ...Object.values(ONEPIECE_BACKGROUNDS),
+      ...Object.values(CHARACTERS).map((c) => c.image),
+    ]);
   }, []);
+
+  useEffect(() => {
+    const currentEp = EPISODES[state.episodeIndex];
+    const nextEp = EPISODES[state.episodeIndex + 1];
+    preloadPriorityImages([
+      currentEp ? getOnePieceStageBackground(currentEp.stageTheme) : undefined,
+      ...(currentEp ? currentEp.featuredCast.map((id) => CHARACTERS[id].image) : []),
+      nextEp ? getOnePieceStageBackground(nextEp.stageTheme) : ONEPIECE_BACKGROUNDS.endingSunset,
+      ...(nextEp ? nextEp.featuredCast.map((id) => CHARACTERS[id].image) : []),
+    ]);
+  }, [state.episodeIndex, state.phase]);
 
   useEffect(() => subscribeGlobalAudioMuted(setMuted), []);
 
@@ -289,6 +312,7 @@ export function OnePieceGame({ onReturnWorldSelect }: OnePieceGameProps) {
                   key={id}
                   src={CHARACTERS[id].image}
                   alt={CHARACTERS[id].name}
+                  decoding="async"
                   className={`op-title-char ${slotClass}`}
                   onError={(e) =>
                     applyImageFallback(e, CHARACTERS[id].fallbackImage)
@@ -372,7 +396,7 @@ export function OnePieceGame({ onReturnWorldSelect }: OnePieceGameProps) {
             <div className="op-prologue-story">
               <p>
                 이스트 블루의 작은 항구에서 시작된 꿈은 이제 <strong>위대한 항로</strong>를
-                향합니다. 당신은 루피, 조로, 나미, 상디, 쵸파, 그리고 사황 샹크스가
+                향합니다. 당신은 루피, 조로, 나미, 우솝, 상디, 쵸파, 로빈, 그리고 사황 샹크스가
                 주목하는 새로운 항해의 동료로 배에 올랐습니다.
               </p>
               <p>
@@ -407,7 +431,7 @@ export function OnePieceGame({ onReturnWorldSelect }: OnePieceGameProps) {
             </div>
 
             <p className="op-prologue-note">
-              각 선택지의 결과는 능력치(0~100)뿐만 아니라 주요 6명의 개별 호감도
+              각 선택지의 결과는 능력치(0~100)뿐만 아니라 주요 8명의 개별 호감도
               평가(S~D등급)와 5가지 엔딩(히든 엔딩 포함) 분기에 즉시 반영됩니다.
             </p>
 

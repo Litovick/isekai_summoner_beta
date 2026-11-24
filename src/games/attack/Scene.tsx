@@ -98,7 +98,7 @@ export function Scene({
             data-bg-src={bgSrc}
             aria-hidden="true"
           >
-            <img src={bgSrc} alt="" onError={handleBgError} />
+            <img src={bgSrc} alt="" decoding="async" onError={handleBgError} />
           </div>
         )}
         <div className="aot-backdrop-vignette" aria-hidden="true" />

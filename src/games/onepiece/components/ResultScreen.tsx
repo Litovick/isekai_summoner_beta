@@ -43,6 +43,7 @@ function EndingShowcaseMember({
       <img
         src={meta.image}
         alt={meta.name}
+        decoding="async"
         className="op-ending-member-img"
         onError={(e) => applyImageFallback(e, meta.fallbackImage)}
       />
@@ -134,6 +135,7 @@ export function ResultScreen({
             <img
               src={speakerMeta.image}
               alt={speakerMeta.name}
+              decoding="async"
               onError={(e) => applyImageFallback(e, speakerMeta.fallbackImage)}
             />
           </div>
@@ -160,6 +162,7 @@ export function ResultScreen({
               <img
                 src={companionMeta.image}
                 alt={companionMeta.name}
+                decoding="async"
                 onError={(e) => applyImageFallback(e, companionMeta.fallbackImage)}
               />
             </div>
@@ -196,10 +199,10 @@ export function ResultScreen({
       {/* All 6 One Piece Characters Evaluation Grid */}
       <div className="op-eval-section">
         <div className="op-eval-header">
-          <span className="op-eval-kicker">PIRATE CREW EVALUATION · 6인의 동료 평가</span>
+          <span className="op-eval-kicker">PIRATE CREW EVALUATION · 8인의 동료 평가</span>
           <h2>밀짚모자 일당과 사황 샹크스의 개별 평가</h2>
           <p>
-            일곱 바다의 모험에서 당신이 보여 준 패기와 신뢰를 6명의 원작 인물이 각자의 시선으로 평가했습니다.
+            일곱 바다의 모험에서 당신이 보여 준 패기와 신뢰를 8명의 원작 인물이 각자의 시선으로 평가했습니다.
           </p>
         </div>
 
@@ -214,6 +217,7 @@ export function ResultScreen({
                 <img
                   src={ev.image}
                   alt={ev.name}
+                  decoding="async"
                   className="op-eval-portrait"
                   onError={(e) => applyImageFallback(e, ev.fallbackImage)}
                 />

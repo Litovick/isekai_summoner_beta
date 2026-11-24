@@ -1,7 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Flame, Play, Save, Sparkles, Users } from "lucide-react";
 import { CHARACTERS } from "./data/characters";
-import { NARUTO_BACKGROUNDS, toNarutoBgUrl } from "./data/backgrounds";
+import {
+  NARUTO_BACKGROUNDS,
+  getNarutoStageBackground,
+  toNarutoBgUrl,
+} from "./data/backgrounds";
 import { EPISODES } from "./data/episodes";
 import {
   advanceEpisodeOrResult,
@@ -25,6 +29,10 @@ import {
   setGlobalAudioMuted,
   subscribeGlobalAudioMuted,
 } from "../../utils/mobileAudio";
+import {
+  preloadImagesInBackground,
+  preloadPriorityImages,
+} from "../../utils/imagePreloader";
 import type { CharacterId, EndingId, GameState } from "./types";
 import "./styles.css";
 
@@ -95,7 +103,22 @@ export function NarutoGame({ onReturnWorldSelect }: NarutoGameProps) {
 
   useEffect(() => {
     preloadNarutoAudio();
+    return preloadImagesInBackground([
+      ...Object.values(NARUTO_BACKGROUNDS),
+      ...Object.values(CHARACTERS).map((c) => c.image),
+    ]);
   }, []);
+
+  useEffect(() => {
+    const currentEp = EPISODES[state.episodeIndex];
+    const nextEp = EPISODES[state.episodeIndex + 1];
+    preloadPriorityImages([
+      currentEp ? getNarutoStageBackground(currentEp.stageTheme) : undefined,
+      ...(currentEp ? currentEp.featuredCast.map((id) => CHARACTERS[id].image) : []),
+      nextEp ? getNarutoStageBackground(nextEp.stageTheme) : NARUTO_BACKGROUNDS.endingSunset,
+      ...(nextEp ? nextEp.featuredCast.map((id) => CHARACTERS[id].image) : []),
+    ]);
+  }, [state.episodeIndex, state.phase]);
 
   useEffect(() => subscribeGlobalAudioMuted(setMuted), []);
 
@@ -291,6 +314,7 @@ export function NarutoGame({ onReturnWorldSelect }: NarutoGameProps) {
                   key={id}
                   src={CHARACTERS[id].image}
                   alt={CHARACTERS[id].name}
+                  decoding="async"
                   className={`nr-title-char ${slotClass}`}
                 />
               ))}
@@ -310,7 +334,7 @@ export function NarutoGame({ onReturnWorldSelect }: NarutoGameProps) {
               <span>나뭇잎 제7반 · 불의 의지</span>
             </h1>
             <p className="nr-title-sub">
-              방울 뺏기 시험에서 전설의 3닌자 지라이야와의 결전까지 — 일곱 번의 임무로 증명하는 당신의 닌자도
+              방울 뺏기 시험에서 전설의 3닌자 지라이야와 함께하는 최후의 결전까지 — 일곱 번의 임무로 증명하는 당신의 닌자도
             </p>
 
             <div className="nr-title-actions">

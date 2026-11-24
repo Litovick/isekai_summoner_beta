@@ -65,6 +65,7 @@ function CharacterStandee({
         <img
           src={meta.image}
           alt={meta.name}
+          decoding="async"
           className="nr-character-img"
         />
       </div>

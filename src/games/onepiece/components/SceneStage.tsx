@@ -62,6 +62,7 @@ function CharacterStandee({
         <img
           src={meta.image}
           alt={meta.name}
+          decoding="async"
           className="op-character-img"
           onError={(e) => applyImageFallback(e, meta.fallbackImage)}
         />
@@ -88,7 +89,7 @@ export function SceneStage({
     if (activeSpeaker !== "narrator" && !base.includes(activeSpeaker)) {
       base.push(activeSpeaker);
     }
-    return base.slice(0, 7);
+    return base.slice(0, 8);
   })();
 
   const isEnsemble = visibleCast.length >= 5;

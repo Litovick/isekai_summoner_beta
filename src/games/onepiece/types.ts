@@ -2,8 +2,10 @@ export type CharacterId =
   | "luffy"
   | "zoro"
   | "nami"
+  | "usopp"
   | "sanji"
   | "chopper"
+  | "robin"
   | "shanks";
 
 export type StatId = "haki" | "trust" | "adventure";

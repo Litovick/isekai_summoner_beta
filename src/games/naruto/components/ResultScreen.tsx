@@ -42,6 +42,7 @@ function EndingShowcaseMember({
       <img
         src={meta.image}
         alt={meta.name}
+        decoding="async"
         className="nr-ending-member-img"
       />
     </div>
@@ -129,7 +130,7 @@ export function ResultScreen({
           }`}
         >
           <div className="nr-ending-quote-portrait">
-            <img src={speakerMeta.image} alt={speakerMeta.name} />
+            <img src={speakerMeta.image} alt={speakerMeta.name} decoding="async" />
           </div>
           <div className="nr-ending-quote-copy">
             <div className="nr-ending-quote-speaker">
@@ -151,7 +152,7 @@ export function ResultScreen({
             }`}
           >
             <div className="nr-ending-quote-portrait">
-              <img src={companionMeta.image} alt={companionMeta.name} />
+              <img src={companionMeta.image} alt={companionMeta.name} decoding="async" />
             </div>
             <div className="nr-ending-quote-copy">
               <div className="nr-ending-quote-speaker">
@@ -204,6 +205,7 @@ export function ResultScreen({
                 <img
                   src={ev.image}
                   alt={ev.name}
+                  decoding="async"
                   className="nr-eval-portrait"
                 />
               </div>

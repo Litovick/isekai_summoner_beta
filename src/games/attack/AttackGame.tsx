@@ -23,6 +23,10 @@ import {
   subscribeGlobalAudioMuted,
 } from "../../utils/mobileAudio";
 import {
+  preloadImagesInBackground,
+  preloadPriorityImages,
+} from "../../utils/imagePreloader";
+import {
   ENDING_ORDER,
   missions,
   endings,
@@ -83,7 +87,7 @@ const reviews = (s: SaveState) => [
     text:
       s.trust >= 80
         ? "끝까지 동료를 지키려 했다는 걸 알아. 고마워."
-        : "다음에는 주변 동료들의 위치도 함께 살펴줘.",
+        : "다음에는 주변 동료들의 위치도 함께 살펴 줘.",
   },
   {
     name: "아르민",
@@ -117,6 +121,12 @@ export function AttackGame() {
 
   useEffect(() => {
     preloadAttackAudio();
+    const cancelPreload = preloadImagesInBackground([
+      homeBackground,
+      endingBackground,
+      ...missionBackgrounds,
+      ...Object.values(portraits),
+    ]);
     try {
       const raw = localStorage.getItem(key);
       if (raw) {
@@ -141,7 +151,15 @@ export function AttackGame() {
       // ignore storage errors
     }
     setLoaded(true);
+    return cancelPreload;
   }, []);
+
+  useEffect(() => {
+    preloadPriorityImages([
+      missionBackgrounds[s.index],
+      missionBackgrounds[s.index + 1] ?? endingBackground,
+    ]);
+  }, [s.index, s.phase]);
 
   useEffect(() => subscribeGlobalAudioMuted(setMuted), []);
 
@@ -185,11 +203,12 @@ export function AttackGame() {
 
   const q = missions[Math.min(s.index, missions.length - 1)]!;
   const last = s.answers[s.answers.length - 1] ?? 0;
+  const rawReaction = q.choices[last]?.reaction ?? "";
   const dialogue =
     s.phase === "story"
       ? q.story
       : s.phase === "reaction"
-        ? (q.choices[last]?.reaction ?? "")
+        ? rawReaction.replace(/^[^:]+:\s*/, "")
         : s.phase === "end"
           ? endings[result].description
           : "";
@@ -338,6 +357,7 @@ export function AttackGame() {
                       src={endingArt[k]}
                       alt={unlocked ? `${endings[k].title} 엔딩 배경` : ""}
                       loading="lazy"
+                      decoding="async"
                     />
                     <span className="aot-ending-number">
                       RECORD 0{i + 1} · {endings[k].icon} {endings[k].typeLabel}
@@ -349,7 +369,7 @@ export function AttackGame() {
                     )}
                   </div>
                   <div className="aot-ending-info">
-                    <b>{unlocked ? endings[k].title : "??? 잠긴 엔딩"}</b>
+                    <b>{unlocked ? endings[k].title : "??? 미해금 엔딩"}</b>
                     <p>{unlocked ? endings[k].subtitle : "다른 선택으로 해금"}</p>
                     {unlocked && (
                       <p className="aot-ending-description">{endings[k].description}</p>
@@ -398,6 +418,7 @@ export function AttackGame() {
                   key={name}
                   src={portraits[name]}
                   alt={AOT_PEOPLE[name]?.name ?? name}
+                  decoding="async"
                   className={`aot-title-char ${slotClass}`}
                 />
               ) : null,
@@ -512,6 +533,7 @@ export function AttackGame() {
                     <img
                       src={portraits[name]}
                       alt={AOT_PEOPLE[name]?.name ?? name}
+                      decoding="async"
                       className="aot-ending-member-img"
                     />
                   </div>
@@ -532,7 +554,7 @@ export function AttackGame() {
           <div className="aot-ending-quote-box">
             {portraits[quoteSpeakerKey] && (
               <div className="aot-ending-quote-portrait">
-                <img src={portraits[quoteSpeakerKey]} alt={quotePerson.name} />
+                <img src={portraits[quoteSpeakerKey]} alt={quotePerson.name} decoding="async" />
               </div>
             )}
             <div className="aot-ending-quote-copy">
@@ -580,6 +602,7 @@ export function AttackGame() {
                         alt={person?.name ?? r.name}
                         className="aot-eval-portrait"
                         loading="lazy"
+                        decoding="async"
                       />
                     )}
                   </div>

@@ -263,7 +263,7 @@ export function EndingShareAndReward({
       {/* Laftel Streaming Demo Modal */}
       {showLaftelModal && (
         <div
-          className="fixed inset-0 z-[140] flex items-center justify-center bg-black/80 p-4 pb-[max(1rem,env(safe-area-inset-bottom,0px))] backdrop-blur-sm"
+          className="fixed inset-0 z-[140] flex items-center justify-center bg-slate-950/85 p-4 pb-[max(1rem,env(safe-area-inset-bottom,0px))] md:bg-black/80 md:backdrop-blur-sm"
           role="dialog"
           aria-modal="true"
           aria-label="라프텔 원작 1화 바로보기 안내"

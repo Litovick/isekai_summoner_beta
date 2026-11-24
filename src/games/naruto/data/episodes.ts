@@ -23,7 +23,7 @@ export const EPISODES: Episode[] = [
       },
       {
         speaker: "sasuke",
-        text: "시끄러워, 도베. 방울은 세 개가 아니라 두 개다. 처음부터 네 녀석들을 갈라놓으려는 속셈이 뻔히 보이잖아.",
+        text: "시끄러워, 꼴찌. 방울은 세 개가 아니라 두 개다. 처음부터 우리를 갈라놓으려는 속셈이 뻔히 보이잖아.",
       },
       {
         speaker: "sakura",
@@ -221,11 +221,11 @@ export const EPISODES: Episode[] = [
       },
       {
         speaker: "sakura",
-        text: "나루토도 사스케 군도 한계까지 싸우다 쓰러졌어…! 이 숲에서 적들이 몰려오면 혼자선 절대 막지 못해…!",
+        text: "나루토도 사스케 군도 한계까지 싸우다 쓰러졌어요…! 이 숲에서 적들이 몰려오면 혼자선 절대 막지 못해요…!",
       },
       {
         speaker: "sasuke",
-        text: "큭… 몸에 깃든 저주인 같은 차크라가 멈추질 않아. 그래도 여기서 멈출 순 없다…!",
+        text: "큭… 몸에 깃든 주인의 차크라가 멈추질 않아. 그래도 여기서 멈출 순 없다…!",
       },
       {
         speaker: "naruto",
@@ -278,13 +278,13 @@ export const EPISODES: Episode[] = [
           },
           {
             speaker: "sasuke",
-            text: "혼자 무리하지 않고 빈틈없는 진형을 짰군… 꽤 쓸만한 전술안을 지녔어.",
+            text: "혼자 무리하지 않고 빈틈없는 진형을 짰군… 꽤 쓸 만한 전술안을 지녔어.",
           },
         ],
       },
       {
         id: "C",
-        label: "술법과 차크라 제어를 포기한 채, 무작정 쓰러진 동료들 앞을 맨몸으로 감싸고 몽둥이질처럼 버텨 낸다.",
+        label: "술법과 차크라 제어를 포기한 채, 무작정 쓰러진 동료들 앞을 맨몸으로 감싸 안고 공격을 받아 내며 버틴다.",
         stance: "무모한 육탄 보호",
         effects: { ninjutsu: -12, bond: 12, willOfFire: 6 },
         affinityEffects: {
@@ -351,7 +351,7 @@ export const EPISODES: Episode[] = [
         reactions: [
           {
             speaker: "kakashi",
-            text: "눈을 보지 말라고 몇 번이나 경고했잖나!! 경솔한 판단으로 팀 전체가 위험해졌어!",
+            text: "눈을 보지 말라고 몇 번이나 경고했잖아!! 경솔한 판단으로 팀 전체가 위험해졌어!",
           },
           {
             speaker: "itachi",
@@ -528,7 +528,7 @@ export const EPISODES: Episode[] = [
       },
       {
         speaker: "naruto",
-        text: "사쿠라쨩, 걱정 마! 한 녀석도 치료소 안으로 들여보내지 않을 테니까니깐!",
+        text: "사쿠라, 걱정 마! 한 녀석도 치료소 안으로 들여보내지 않을 거라니깐!",
       },
     ],
     prompt: "치유와 방어가 동시에 걸린 황혼의 전선에서 당신의 선택은?",
@@ -625,7 +625,7 @@ export const EPISODES: Episode[] = [
       },
       {
         speaker: "naruto",
-        text: "호색선인!! 그리고 제7반 모두! 스승님이 가르쳐 준 나선환과 우리의 힘이 모이면 절대 지지 않아니깐!",
+        text: "호색선인!! 그리고 제7반 모두! 스승님이 가르쳐 준 나선환과 우리의 힘이 모이면 절대 지지 않는다니깐!",
       },
       {
         speaker: "itachi",
@@ -650,7 +650,7 @@ export const EPISODES: Episode[] = [
         reactions: [
           {
             speaker: "jiraiya",
-            text: "어이, 여기서 주저앉으면 안 되지!! 포기하는 순간 닌자의 길도, 마을의 내일도 끝장이라네!",
+            text: "어이, 여기서 주저앉으면 안 되지!! 포기하는 순간 닌자의 길도, 마을의 내일도 끝장이야!",
           },
           {
             speaker: "kakashi",
@@ -674,7 +674,7 @@ export const EPISODES: Episode[] = [
         reactions: [
           {
             speaker: "jiraiya",
-            text: "사람을 지키려는 따뜻한 마음은 훌륭하네. 하지만 방패만으로는 어둠을 밀어낼 수 없지—싸워 이길 힘과 배짱이 함께여야 해.",
+            text: "사람을 지키려는 따뜻한 마음은 훌륭해. 하지만 방패만으로는 어둠을 밀어낼 수 없지—싸워 이길 힘과 배짱이 함께여야 해.",
           },
           {
             speaker: "sakura",
@@ -684,7 +684,7 @@ export const EPISODES: Episode[] = [
       },
       {
         id: "C",
-        label: "지라이야의 선술 차크라와 제7반의 호흡을 완벽히 동조시켜 거대 합동 나선환의 찬란한 선술의 빛을 쏘아 올린다.",
+        label: "지라이야의 선술 차크라와 제7반의 호흡을 완벽히 동조시켜 거대 합동 나선환으로 찬란한 빛을 쏘아 올린다.",
         stance: "선술 나선환 · 제7반 완전 합동",
         effects: { ninjutsu: 11, bond: 11, willOfFire: 12 },
         affinityEffects: {
